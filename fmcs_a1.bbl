@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{sip}
+{\sc Sipser, M.}
+\newblock {\em Introduction to the Theory of Computation}, 1st~ed.
+\newblock International Thomson Publishing, 1996.
+
+\bibitem{lec2}
+{\sc Watanabe, O.}
+\newblock {\em Lecture 2: Formal Language Theory - Regular Language}.
+\newblock Department of Mathematical and Computing Science - Tokyo Institute of
+  Technology, October 2015.
+
+\bibitem{lec3}
+{\sc Watanabe, O.}
+\newblock {\em Lecture 4: Selected Topics (1) \textendash PAC Learning
+  Framework}.
+\newblock Department of Mathematical and Computing Science - Tokyo Institute of
+  Technology, October 2015.
+
+\end{thebibliography}

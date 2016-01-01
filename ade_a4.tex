@@ -1,0 +1,231 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{ADE:Assignment 4}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Advanced Data Engineering: Assignment 4}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W831 Tue. Period 5-6 \\ \hfill Due date: 2015/11/17}
+
+\maketitle
+
+\section*{Problem}
+
+Assuming:
+\begin{itemize}
+    \setlength{\itemsep}{0cm}
+    \setlength{\parskip}{0cm}
+    \item Average seek time of the disk is 2ms.
+    \item Rotation Speed of the disk is 12,000 rpm.
+    \item Data transfer bandwidth is 20 MB/s = 20,971,520 Bytes/s.
+    \item A page size 4KB (4096 Bytes).
+    \item MTTF is 500,000 hours.
+    \item MTTR is 20 hours.
+\end{itemize}
+\section*{Question 1}
+
+\textit{Calculate disk page access time for the disk.} 
+
+\noindent
+\textbf{Answer:} \\ 
+Assuming there is no controller overhead, and the disk is idle at the time of calculation (no queuing delay), also the transfer bandwidth is the actual data throughput. We have the following formula for the page access time:
+\begin{equation*}
+    \begin{aligned}
+        T_{Page\ access} &= T_{seek\ time} + T_{rotational\ latency} + T_{data\ transfer} \\
+        & = 2 + \frac{60 \times 1000}{12,000 \times 2} + \frac{4096 \times 1000}{20,971,520} \ (ms) \\
+        & = 2 + 2.5 + 0.195 \ (ms) \\
+        & \approx 4.7 \ (ms)
+    \end{aligned}
+\end{equation*}
+
+\section*{Question 2}
+
+\textit{Calculate MTTDL for RAID 0, 10, 30, 50, and 60 where N (number of disks) is 50 and M (member number of a group) is 10.} 
+
+\noindent
+\textbf{Answer:} \\[-3em]
+\paragraph{RAID 0} is a simplest scheme where data stripping is spread across all disks and there is no data redundancy. The MTTDL is calculated as follow:
+\begin{equation*}
+    \begin{aligned}
+        MTTDL_{RAID\_0} &= \frac{MTTF}{N} \\
+        & = \frac{500,000}{50} \ (hours) \\
+        & = 10,000 \ (hours) \\
+        & \approx 1\ year\ and\ 2\ months
+    \end{aligned}
+\end{equation*}
+\paragraph{RAID 10} is a combination of RAID 1 (Mirrored) and RAID 0 (bit stripping). MTTDL of RAID 10 is calculated in the same way as RAID 1. We have:
+\begin{equation*}
+    \begin{aligned}
+        MTTDL_{RAID\_10} &= \frac{MTTF^{2}}{N \times MTTR} \\
+        & = \frac{500,000^{2}}{50 \times 20} \ (hours) \\ 
+        & = 250,000,000 \ (hours) \\
+        & \approx 28539 \ years
+    \end{aligned}
+\end{equation*}
+\paragraph{RAID 30} is a combination between RAID 3 (Byte stripping and parity) and RAID 0 (Data stripping). With the parity group size $G=N/M=5$, the MTTDL of RAID 30 is calculated as follow:
+\begin{equation*}
+    \begin{aligned}
+        MTTDL_{RAID\_30} &= \frac{MTTF^{2}}{G \times M \times (M-1) \times MTTR} \\
+        & = \frac{500,000^{2}}{5 \times 10 \times 9 \times 20} \ (hours) \\ 
+        & \approx 27,777,777 \ (hours) \\
+        & \approx 3170 \ years
+    \end{aligned}
+\end{equation*}
+\paragraph{RAID 50} is a combination between RAID 5 (Block stripping and distributed parity) and RAID 0 (Data stripping). This scheme is similar to RAID 30, the different is the load balancing for the parity. In term of MTTDL, RAID 50 has the same performance as RAID 30.
+\begin{equation*}
+    \begin{aligned}
+        MTTDL_{RAID\_50} &= \frac{MTTF^{2}}{G \times M \times (M-1) \times MTTR} \\
+        & = \frac{500,000^{2}}{5 \times 10 \times 9 \times 20} \ (hours) \\ 
+        & \approx 27,777,777 \ (hours) \\
+        & \approx 3170 \ years
+    \end{aligned}
+\end{equation*}
+\paragraph{RAID 60} is a double parity P+Q scheme, therefore it can handle double fault. The parity group size for RAID 60 is $G=5$. The MTTDL of RAID 60 is calculated as follow: 
+\begin{equation*}
+    \begin{aligned}
+        MTTDL_{RAID\_60} &= \frac{MTTF^{3}}{G \times M \times (M-1) \times (M-2) MTTR^{2}} \\
+        & = \frac{500,000^{3}}{5 \times 10 \times 9 \times 8 \times 20^{2}} \ (hours) \\ 
+        & \approx 86,805,555,555 \ (hours) \\
+        & \approx 9,909,310 \ years
+    \end{aligned}
+\end{equation*}
+\pagebreak
+\section*{Question 3}
+
+\textit{Calculate substantial total bandwidth of above RAIDs for small writes.} 
+
+\noindent
+\textbf{Answer:} 
+The total bandwidth for small writes of different configuration is calculated relatives to RAID 0. For the sake of simplicity, I consider only total bandwidth, but not the actual throughput of the RAID configurations.
+\paragraph{RAID 0} has N = 50 disks in its array, each disk has the bandwidth of 20 MB/s. The bandwidth of RAID 0 for small write operation is calculated as follow:
+\begin{equation*}
+    \begin{aligned}
+        B_{RAID\_0} &= B_{single\ disk} \times N \\
+        & = 20 \times 50 \\
+        & = 1000\ MB/s 
+    \end{aligned}
+\end{equation*}
+
+\paragraph{RAID 10} has N = 50 disks in its array, divided into 5 groups, each disk has the bandwidth of 20 MB/s. For each small write, this configuration has to write the data twice, therefore the bandwidth of RAID 10 for small write operation is calculated as follow:
+\begin{equation*}
+    \begin{aligned}
+        B_{RAID\_10} &= \frac{B_{single\ disk} \times M}{2} \\
+        & = \frac{20 \times 50}{2} \\
+        & = 500\ MB/s 
+    \end{aligned}
+\end{equation*}
+
+\paragraph{RAID 30} has N = 50 disks in its array, divided into 5 groups, each disk has the bandwidth of 20 MB/s. For each small write, this configuration has to write the data and write the parity bytes for each group, therefore the bandwidth of RAID 30 is speed up by 5 times due to RAID 0 configuration, but decreased 10 times for each drive in RAID groups. (Compare to RAID 3)
+\begin{equation*}
+    \begin{aligned}
+        B_{RAID\_30} &= \frac{B_{single\ disk} \times M }{10} \\
+        & = \frac{20 \times 50}{10} \\
+        & = 100\ MB/s 
+    \end{aligned}
+\end{equation*}
+
+\paragraph{RAID 50} has N = 50 disks in its array, divided into 5 groups, each disk has the bandwidth of 20 MB/s. For each small write, this configuration has the performance decreased by 4, but gained 5 times due to RAID 0 configuration. (Compare to RAID 5)
+\begin{equation*}
+    \begin{aligned}
+        B_{RAID\_50} &= \frac{B_{single\ disk} \times M }{4} \\
+        & = \frac{20 \times 50}{4} \\
+        & = 250\ MB/s 
+    \end{aligned}
+\end{equation*}
+
+\paragraph{RAID 60} has N = 50 disks in its array, divided into 5 groups, each disk has the bandwidth of 20 MB/s. For each small write, this configuration has the performance decreased by 6, but gained 5 times due to RAID 0 configuration. (Compare to RAID 6)
+\begin{equation*}
+    \begin{aligned}
+        B_{RAID\_60} &= \frac{B_{single\ disk} \times M}{6} \\
+        & = \frac{20 \times 50}{6} \\
+        & = 167\ MB/s 
+    \end{aligned}
+\end{equation*}
+
+
+\end{document}
+

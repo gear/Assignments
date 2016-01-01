@@ -1,0 +1,160 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle} {
+\begin{center}
+\vspace{2ex}
+{\LARGE \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{ADE:Assignment 5}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Advanced Data Engineering: Assignment 5}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W831 Tue. Period 5-6 \\ \hfill Due date: 2015/11/24}
+
+\maketitle
+
+\vfill
+
+\section*{Problem}
+
+Assuming:
+\begin{itemize}
+    \setlength{\itemsep}{0cm}
+    \setlength{\parskip}{0cm}
+    \item Average seek time of the disk is 2ms.
+    \item Rotation Speed of the disk is 12,000 rpm.
+    \item Data transfer bandwidth is 20 MB/s = 20,971,520 Bytes/s.
+    \item A page size 4KB (4096 Bytes).
+    \item Effective storage capacity (B) is 4000 Bytes.
+    \item \emph{k} = 20 Bytes, \emph{t} = 100 Bytes, \emph{p} = 4 Bytes, \emph{u} = 0.6
+\end{itemize}
+\section*{Question 1}
+
+\textit{Calculate disk page access time for the disk.} 
+
+\noindent
+\textbf{Answer:} \\ 
+Assuming there is no controller overhead, and the disk is idle at the time of calculation (no queuing delay), also the transfer bandwidth is the actual data throughput. We have the following formula for the page access time:
+\begin{equation*}
+    \begin{aligned}
+        T_{Page\ access} &= T_{seek\ time} + T_{rotational\ latency} + T_{data\ transfer} \\
+        & = 2 + \frac{60 \times 1000}{12,000 \times 2} + \frac{4096 \times 1000}{20,971,520} \ (ms) \\
+        & = 2 + 2.5 + 0.195 \ (ms) \\
+        & \approx 4.7 \ (ms)
+    \end{aligned}
+\end{equation*}
+
+\vfill
+\pagebreak
+
+\section*{Question 2}
+
+\textit{Derive the maximum number of tuples for a B-Tree storing TIDs, of which height is 2 and 3.} 
+
+\noindent
+\textbf{Answer:} \\
+From the information given in the question, I derive the average number of entries in an index node $\boldsymbol{F}^{\boldsymbol{*}}$ and the average number of entries in a leaf node $\boldsymbol{C}^{\boldsymbol{*}}$. In this case, $\boldsymbol{F}^{\boldsymbol{*}}$ and $\boldsymbol{C}^{\boldsymbol{*}}$ have the same value since B-Tree stores TIDs.
+\begin{equation*}
+    \begin{aligned}
+        F^{*} = C^{*} &= \left \lfloor {\frac{B}{k + p} \times u } \right \rfloor \\
+        & = \left \lfloor {\frac{4000}{20 + 4} \times 0.6} \right \rfloor \ (entries) \\
+        & = \left \lfloor {99.6} \right \rfloor = 99 \ (entries) \\
+    \end{aligned}
+\end{equation*}
+
+\paragraph{Tree height is 2 (H = 2)} Using the formula in the lecture note, I derive the maximum number of tuples in the database: 
+\begin{equation*}
+    \begin{aligned}
+        N_{H=2} &=  C^{*} \times F^{*}^{(H-1)}   \\
+        & = 99 \times 99^{2-1} \ (entries) \\ 
+        & = 9,801 \ (entries) \\
+    \end{aligned}
+\end{equation*}
+
+\paragraph{Tree height is 3 (H = 3)} The maximum number of tuples in the database: 
+\begin{equation*}
+    \begin{aligned}
+        N_{H=3} &=  C^{*} \times F^{*}^{(H-1)}   \\
+        & = 99 \times 99^{3-1} \ (entries) \\ 
+        & = 970,299 \ (entries) \\
+    \end{aligned}
+\end{equation*}
+
+\section*{Question 3}
+\textit{Calculate access time to derive a TID of a tuple by the B-Tree stored into the disk for 500,000 tuples.} 
+
+\noindent
+\textbf{Answer:} \\ 
+The given number of tuples is $N=500,000$. Therefore, the height of tree needed in this case is:
+\begin{equation*}
+    \begin{aligned}
+        H &= 1 + \left \lceil {\log_{F^{*}}\left( \left \lceil {\frac{N}{C^{*}}} \right \rceil \right) } \right \rceil \\
+        & = 1 + \left \lceil {\log_{99}\left( \left \lceil {\frac{500,000}{99}} \right \rceil \right) } \right \rceil \\
+        & = 3 \\
+    \end{aligned}
+\end{equation*}
+
+Since we store every node in a disk page, so a key search only need to access 1 node per 1 level of the tree. In this case, for a key search, we need 3 disk reads. In this calculation, I do not take into account the time it needs for key-searching within a disk page. I also assume that every disk page read takes average page read time (calculated in question 1), although normally individual records are grouped together in a disk block, which reduces page read time in sequential read.
+The access time to derive a TID of a tuple is:
+\begin{equation*}
+    \begin{aligned}
+        T_{TID} &= T_{Page\ access} \times H \\
+        & = 4.7 \times 3 \ (ms) \\
+        & = 14.1 \ (ms)
+    \end{aligned}
+\end{equation*}
+
+\end{document}

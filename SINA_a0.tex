@@ -1,0 +1,126 @@
+%%% Template originaly created by Karol Kozioł (mail@karol-koziol.net) and modified for ShareLaTeX use
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{SINA: Problem 0}
+\cfoot{Page \thepage}
+\rfoot{Hoang NT}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Social and Information Network Analysis: Problem 0}
+
+\author{NGUYEN T. Hoang}
+
+\date{2015-10-20} 
+
+\maketitle
+
+
+\section*{Problem 0.1}
+
+This data was derived from comments on recipes on the Allrecipes website. An edge exists between ingredient \emph{e} and ingredient \emph{j}, if \emph{j} was recommended as a substitute for i in at least 5\% of the comments recommending substitutions, e.g. ``Great recipe, but I used Brussels sprouts instead of broccoli\ldots''\\
+
+\noindent
+The network and the name for each nodes are contained in 2 files: \textbf{ingredient\_key.txt} and \textbf{ingredient\_substitutes.txt}. \\ 
+
+\section*{Questions and Answer}
+\begin{enumerate}
+    \item Find the size of the largest SCC. What percentage of the nodes is in the largest SCC? The largest strongly connected component is calculated in Snap.py with function \texttt{GetMxScc}.
+\end{enumerate}
+
+\noindent
+\textbf{Answer:} The largest SCC of ingredient network has 244 nodes and it is 43\% of all nodes in the network.
+
+\begin{lstlisting}[label={list:first},caption=Load the network from file name and return the size of the largest SCC]
+import snap
+
+IG = snap.LoadEdgeList(snap.PNGraph, "ingredient_substitutes.txt", 0, 1)
+maxScc = snap.GetMxScc(IG)
+snap.PrintInfo(maxScc)
+# Return 244 nodes for the larges SCC.
+# There is total of 562 nodes in the network.
+\end{lstlisting}
+
+\begin{enumerate}
+    \item Find the ingredient most distant (via an undirected path within the WCC) from \emph{cocoa powder}. What is the distance? You could use the Snap.py function \texttt{GetNodesAtHop} to find nodes at a given distance.
+\end{enumerate}
+
+\end{document}

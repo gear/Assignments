@@ -1,0 +1,188 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+\tikzset{
+ >=stealth',
+ help lines/.style={dashed, thick},
+ axis/.style={<->},
+ important line/.style={thick},
+ connection/.style={thick, dotted},
+}
+
+\usepackage{CJKutf8}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle} {
+\begin{center}
+\vspace{2ex}
+{\LARGE \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{ADE:Assignment 7}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+
+%\renewcommand*\thelstnumber{\arabic{lstnumber}:}
+
+%\DeclareCaptionFormat{mylst}{\hrule#1#2#3}
+%\captionsetup[lstlisting]{format=mylst, labelfont=bf, singlelinecheck=off, labelsep=space}
+
+\begin{document}
+
+\title{Advanced Data Engineering: Assignment 7}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W831 Tue. Period 5-6 \\ \hfill Due date: 2015/12/08}
+
+\maketitle
+\vspace{-4.5em}
+\hspace{5.3em} (\begin{CJK}{UTF8}{min}ホアン\end{CJK})
+\vfill
+\section*{Problem}
+\begin{itemize}
+	\item Consider conditions for making disk-I/O costs of the GRACE hash join and Hybrid hash join superior to those of simple hash join, respectively (GRACE vs. Simple, Hybrid vs. Simple).	
+	\item QUIZ: Consider an SQL sentence to derive the result given in the lecture note.
+\end{itemize}
+
+
+\vspace{3em}
+\section*{Answer}
+\noindent
+Based on the cost estimation model and the \emph{Comparision of Hash Join Algorithms} table, we have the following notations:
+\begin{equation}
+	\mbox{Let: } \alpha = \frac{|M|}{|R|} \mbox{. I will make conditions based on } \alpha.
+\end{equation}
+The cost estimation of Simple Hash Join is re-written using $\alpha$ as follow:
+\begin{itemize}
+	\item Number of disk I/O: $$SH_{I/Os} = \frac{|R|}{|M|} \times (|R| + |S|) = \frac{1}{\alpha} \times (|R| + |S|)$$
+	\item The cost of hashing:  $$SH_{Hash\_Cost} = \frac{|R| + |M|}{2|M|}(\{R\} + \{S\}) = \frac{\alpha + 1}{2\alpha} (\{R\} + \{S\}) $$
+\end{itemize}
+\vfill
+\pagebreak
+
+
+
+
+\section{GRACE Hash Join}
+
+The cost estimation of GRACE Hash Join given in the lecture note is:
+\begin{itemize}
+	\item Number of disk I/O required: $$GH_{I/Os} = 3 \times (|R| + |S|)$$
+	\item The cost of hashing: $$GH_{Hash\_Cost} = 2 \times (\{R\} + \{S\})$$
+\end{itemize}
+
+\noindent
+\textbf{Disk I/O ratio} between GRACE Hash Join and Simple Hash Join is: $$ \mu_{GRACE-Simple} = \frac{GH_{I/Os}}{SH_{I/Os}} = 3 \times \alpha $$
+\noindent
+As we can see here, the disk I/O ratio between GRACE Hash Join and Simple Hash Join is directly proportional to our parameter $\alpha$. Intuitively this means that if we have a small memory and a large relation table (small $\alpha$), then the number of disk I/O performs by GRACE Hash Join will be much smaller than that of Simple Hash Join. We have:
+\begin{itemize}
+	\item $\alpha \leq \frac{1}{3}$ : GRACE Hash Join has equal or worse disk I/O cost than Simple Hash Join (larger number of Disk I/O). In this case, at least a third of the relational table can fit into memory.
+	\item $\alpha < \frac{1}{3}$ : GRACE Hash Join has better disk I/O cost than Simple Hash Join (smaller number of Disk I/O). In this case, the size of the relational table is at least 3 times bigger than the memory.
+	\item $\alpha \ll \frac{1}{3}$ : GRACE Hash Join is superior in term of I/O cost compare to Simple Hash Join. This is the practical case, where we have limitted amount of memory, but the size of the relational table is very big.
+\end{itemize}
+
+
+
+
+\section{Hybrid Hash Join}
+
+The cost estimation of Hybrid Hash Join given in the lecture note is rewritten as follow:
+\begin{itemize}
+	\item Number of disk I/O required: $$HH_{I/Os} = (3-2\frac{|M|}{|R|}) \times (|R| + |S|) = (3-2\alpha) \times (|R| + |S|) $$
+	\item The cost of hashing: $$HH_{Hash\_Cost} = 2 \times (\{R\} + \{S\})$$
+\end{itemize}
+
+\noindent
+\textbf{Disk I/O ratio} between Hybrid Hash Join and Simple Hash Join is: $$ \mu_{Hybrid-Simple} = \frac{HH_{I/Os}}{SH_{I/Os}} = 3\alpha - 2\alpha^{2} $$
+\noindent
+This model is designed for practical settings, therefore we assume that $0 < \alpha < \frac{3}{2}$. The Disk I/O cost estimation of Hybrid Hash Join is stated as follow: 
+\begin{itemize}
+	\item $0 < \alpha < \frac{1}{2}$ : Hybrid Hash Join has better disk I/O cost than Simple Hash Join (smaller number of Disk I/O). 
+	\item $\frac{1}{2} \leq \alpha \leq 1$ : Hybrid Hash Join has equal or worse disk I/O cost than Simple Hash Join. The worst case is when $\alpha = 3/4$.
+	\item $1 < \alpha < \frac{3}{2}$ : Hybrid Hash Join has better disk I/O cost than Simple Hash Join.
+\end{itemize}
+
+
+\section{QUIZ: SQL sentence}
+
+The SQL sentence to derive each saleman in R and his/her sale count of some product ID in the product table S is:
+
+\begin{lstlisting}[label={list:first},SQL sentence to derive Saleman and number of sale]
+SELECT Salesman, COUNT(*) FROM R 
+WHERE ProductID IN (
+	SELECT ProductID FROM S)
+GROUP BY Salesman;
+\end{lstlisting}
+
+
+\end{document}

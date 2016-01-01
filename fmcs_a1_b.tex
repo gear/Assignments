@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+% code listing settings
+\usepackage{listings}
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\newcommand*{\quoteTitle}[1]{{#1}\ignorespaces}%
+\newenvironment{Quote}[1]{
+    \medskip\par\noindent\quoteTitle{#1}
+    \par\noindent
+    \begin{quote}
+    }{
+    \end{quote}
+    \par\noindent\ignorespacesafterend
+}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+\title{Fundamentals of MCS: CS Assignment 1 }
+
+\author{Afzal Naveed - 15M54074}
+
+\date{\today}
+
+\maketitle
+
+\section*{Q1.1. Equivalent classes}
+\noindent
+
+\paragraph{}A language $L$ is regular if and only if $\Sigma^{*}$ is divisible to a finite number of equivalent classes by $\approx_L$. Assume that we have a regular language $L$, which is recognized by some Deterministic Finite Automaton M. Since the number of states in M is finite, we has a finite set of states of M. Suppose a string input $l \in \Sigma^{*}$, decompose this string in to u and v: $l = uv$. Call $S_u$ as the state of the DFA after input $u$, we have:
+$$ \forall u, w \in \Sigma^{*} \mbox{ that makes M ends up in state } S_u : \partial_{u}L = \partial_{v}L = \{v\} : M \mbox{ accepts } uv \mbox{ and } wv $$ 
+because both $u$ and $w$ makes M ends up in same state, due to the determinism, there are no finite length string that can distinguish $u$ and $w$. Therefore, if we create sets of strings that makes the automaton ends up in each state, we will have a finite set of equivalent relation.
+\paragraph{}On the other hand, suppose we have a language $L$ that has a finite set of equivalent classes. We can construct a DFA by creating each state for each equivalent classes. In each state, there always is one and only one next state transition for a given input (because \emph{any} string $\in \Sigma^{*}$ belongs to a class). The start state is the class of empty string and the end states is class such that:
+$$ \partial_uL = \partial_vL = {\epsilon} $$
+Therefore, we can construct a DFA recognizes language $L$, given a finite set of equivalent classes of $\Sigma^{*}$. Hence, we have the statement: ``A language $L$ is regular if and only if $\Sigma^{*}$ is divisible to a finite number of equivalent classes by $\approx_L$.
+
+\section*{Q2.2. NP $\subseteq$ EXP}
+\noindent
+By definition, the EXPTIME class contains all \emph{solvable} problems using a deterministic Turing machine, which runs in exponential time.
+$$ \mbox{EXP} = \bigcup_{k \in N} \mbox{DTIME} (2^{n^k}) $$
+The NP class is defined by the term of non-deterministic Turing machine:
+$$ \mbox{NP} = \bigcup_{k \in N} \mbox{NTIME} (n^k) $$
+An alternative definition of the NP class is stated as follow:
+$$ \mbox{Problem } L \mbox{ is in NP if } \exists \mbox{ a Turing Machine M s.t.\ for any } x \in \{0,1\}^{*}$$
+$$ \ \ \ \ \ \ x \in L \Leftrightarrow \exists u \in \{0,1\}^{p(|x|)} \mbox{ s.t } M(x,u) = 1$$
+where M is a polynomial-time Turing Machine and $p(|x|)$ is a polynomial. $u$ is called a certificate for $x$. This means that a NP class problem is a problem that we can verify the correctness of an answer for the problem given some certificate in polynomial time. 
+\paragraph{}Suppose we have a problem $L \in$ NP, we know that there is a polynomial-time Turing Machine s.t.
+\begin{itemize}
+    \item If $x \notin L \mbox{, then } \forall u : M(x,u) = 0$. The Turing Machine rejects all input.
+    \item If $x \in L \mbox{, then } \exists u : M(x,u) = 1$. The Turing Machine accepts some input.
+\end{itemize}
+For such problem, one simple approach is using brute-force search through all possible $u$ for some input $x$. Since our Turing Machine in this case is polynomial, the time it needs to verify each $u$ is $O(n^k)$. The total number of $u$ in this case is: 
+$$ |\{u\}| = O(2^{p(|x|)}) $$
+Therfore, the time it takes for the Turing Machine to search for all $u$ with some given input x is: 
+$$ O(2^{p\{|x|\}}) \times O(n^k) = O(2^{n^k}) \subseteq \mbox{DTIME}(2^{n^k}) = \mbox{EXP} $$
+Hence, \textbf{NP $\boldsymbol{\subseteq}$ EXP.} 
+\paragraph{}A NP problem that does not seem to belong Time($2^{l^2})$ is some problem that takes $p(|x|) = l^k, k \geq 3$ steps to verify one instance of cerificate. Such problem does not seem to be bounded by Time($2^{l^2})$, but by some higher order time complexity. One example is k-D tensor fractorization. Suppose a tensor M is given and we want to find all pair of tensors that has product equals M. This computational task does not seem to belong Time($2^{l^2})$).
+
+\end{document}

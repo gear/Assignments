@@ -1,0 +1,281 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+\tikzset{
+ >=stealth',
+ help lines/.style={dashed, thick},
+ axis/.style={<->},
+ important line/.style={thick},
+ connection/.style={thick, dotted},
+}
+
+\usepackage{CJKutf8}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle} {
+\begin{center}
+\vspace{2ex}
+{\LARGE \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{ADE:Assignment 9}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+
+%\renewcommand*\thelstnumber{\arabic{lstnumber}:}
+
+%\DeclareCaptionFormat{mylst}{\hrule#1#2#3}
+%\captionsetup[lstlisting]{format=mylst, labelfont=bf, singlelinecheck=off, labelsep=space}
+
+\begin{document}
+
+\title{Advanced Data Engineering: Assignment 9}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W831 Tue. Period 5-6 \\ \hfill Due date: 2015/12/22}
+
+\maketitle
+\vspace{-4.5em}
+\hspace{5.3em} (\begin{CJK}{UTF8}{min}ホアン\end{CJK})
+\vspace{8em}
+\section*{Problem}
+\begin{itemize}
+	\item Roughly estimate the execution time for parallel block 2way merge sort using 8 and 16 processors.
+	\item Roughly estimate the execution time for parallel block bitonic sort using 8 and 16 processors.
+\begin{itemize}
+	\setlength{\parskip}{0cm}
+	\setlength{\itemsep}{0cm}
+	\item Cardinality of a relation R: 100,000.
+	\item Total length of a tuple: 100B.
+	\item Disk transfer bandwidth: 10MB/s.
+	\item Network bandwidth: 10MB/s.
+	\item \emph{Ignore CPU costs, disk access latency, and network setup time.}
+\end{itemize}
+
+\end{itemize}
+
+\section*{Question 1: Parallel block 2way merge sort}
+\setcounter{section}{1}
+
+\textit{Roughly estimate the execution time using 8 processors.} 
+
+\vspace{1.5em}
+\noindent
+\textbf{Answer:} 
+\noindent
+Time for sorting fraction of data set in a processor is assumed equal with the number of read and write of disk.
+\begin{equation*}
+	\begin{aligned}
+		T_{8\_sort} & = \frac{1/N \times \{R\} \times 2}{\mbox{Disk Rate}}
+		 = \frac{1/8 \times 100,000 \times 100 \times 2}{10,000,000} \\
+		& = 0.2\ second
+	\end{aligned}
+\end{equation*}
+
+\noindent
+Since the number of tuples is much larger than the number of PEs. We have the time for transfering data throughout the network:
+\begin{equation*}
+	\begin{aligned}
+		T_{8\_transfer} & = \frac{(1-1/N) \times \{R\}}{\mbox{Transfer Rate}}
+		 = \frac{7/8 \times 100,000 \times 100}{10,000,000} \\
+		& = 0.875\ second
+	\end{aligned}
+\end{equation*}
+Time for disk write and read. Assuming no pipeline effect:
+\begin{equation*}
+	\begin{aligned}
+		 T_{8\_disk} & = \frac{6 \times (1 - 1/N) \times |R|}{\mbox{Disk Rate}}
+					  = \frac{6 \times (1 - 1/8) \times 100,000 \times 100}{10,000,000} \\
+					 & = 5.25\ second
+	\end{aligned}
+\end{equation*}
+Total time to sort for 8 processors is: $6.325\ second$.
+
+\vspace{1.5em}
+
+\textit{Roughly estimate the execution time using 16 processors.} \\
+
+\noindent
+\textbf{Answer:} 
+\noindent
+Time for sorting fraction of data set in a processor is assumed equal with the number of read and write of disk.
+
+\begin{equation*}
+	\begin{aligned}
+		T_{16\_sort} & = \frac{1/N \times \{R\} \times 2}{\mbox{Disk Rate}}
+		 = \frac{1/16 \times 100,000 \times 100 \times 2}{10,000,000} \\
+		& = 0.1\ second
+	\end{aligned}
+\end{equation*}
+\noindent
+Since the number of tuples is much larger than the number of PEs. We have the time for transfering data throughout the network:
+\begin{equation*}
+	\begin{aligned}
+		T_{16\_transfer} & = \frac{(1-1/N) \times \{R\}}{\mbox{Transfer Rate}}
+		 = \frac{15/16 \times 100,000 \times 100}{10,000,000} \\
+		& = 0.9375\ second
+	\end{aligned}
+\end{equation*}
+Time for disk write and read. Assuming no pipeline effect:
+\begin{equation*}
+	\begin{aligned}
+		 T_{16\_disk} & = \frac{6 \times (1 - 1/N) \times |R|}{\mbox{Disk Rate}}
+					  = \frac{6 \times (1 - 1/16) \times 100,000 \times 100}{10,000,000} \\
+					 & = 5.625\ second
+	\end{aligned}
+\end{equation*}
+Total time to sort for 16 processors is: $6.66\ second$. The reason for decreasing of sorting speed between 8 processors and 16 processor is that the network bandwidth and the disk bandwidth have same data rate. In 16 processors scheme, the time of data transfer in the network dominates other time.
+
+
+
+
+
+
+
+
+
+
+
+
+\section*{Question 2: Parallel block bitonic sort}
+\setcounter{section}{1}
+
+\textit{Roughly estimate the execution time using 8 processors.} 
+
+\vspace{1.5em}
+\noindent
+\textbf{Answer:} 
+\noindent
+Time for sorting fraction of data set in a processor is assumed equal with the number of read and write of disk.
+\begin{equation*}
+	\begin{aligned}
+		T_{8\_sort} & = \frac{1/N \times \{R\} \times 2}{\mbox{Disk Rate}}
+		 = \frac{1/8 \times 100,000 \times 100 \times 2}{10,000,000} \\
+		& = 0.2\ second
+	\end{aligned}
+\end{equation*}
+\noindent
+Since the number of tuples is much larger than the number of PEs. We have the time for transfering data throughout the network:
+\begin{equation*}
+	\begin{aligned}
+		T_{8\_transfer} & = \frac{n \times (n+1) \times \{R\}}{2 \times \mbox{Transfer Rate}}
+		 = \frac{3 \times 4 \times 100,000 \times 100}{2 \times 8 \times 10,000,000} \\
+		& = 0.75\ second
+	\end{aligned}
+\end{equation*}
+Time for disk write and read. Assuming no pipeline effect:
+\begin{equation*}
+	\begin{aligned}
+		 T_{8\_disk} & = \frac{|R| / N \times n \times (n + 1)}{\mbox{Disk Rate}}
+					  = \frac{100,000 / 8 \times 100 \times 3 \times 4}{10,000,000} \\
+					 & = 1.5\ second
+	\end{aligned}
+\end{equation*}
+Total time to sort for 8 processors is: $2.45\ second$. \\
+
+\textit{Roughly estimate the execution time using 16 processors.} \\
+
+\noindent
+\textbf{Answer:} 
+\noindent
+Time for sorting fraction of data set in a processor is assumed equal with the number of read and write of disk.
+
+\begin{equation*}
+	\begin{aligned}
+		T_{16\_sort} & = \frac{1/N \times \{R\} \times 2}{\mbox{Disk Rate}}
+		 = \frac{1/16 \times 100,000 \times 100 \times 2}{10,000,000} \\
+		& = 0.1\ second
+	\end{aligned}
+\end{equation*}
+
+Since the number of tuples is much larger than the number of PEs. We have the time for transfering data throughout the network:
+\begin{equation*}
+	\begin{aligned}
+		T_{16\_transfer} & = \frac{n \times (n+1) \times \{R\}}{2 \times \mbox{Transfer Rate}}
+		 = \frac{4 \times 5 \times 100,000 \times 100}{2 \times 16 \times 10,000,000} \\
+		& = 0.625\ second
+	\end{aligned}
+\end{equation*}
+Time for disk write and read. Assuming no pipeline effect:
+\begin{equation*}
+	\begin{aligned}
+		 T_{16\_disk} & = \frac{|R| / N \times n \times (n + 1)}{\mbox{Disk Rate}}
+					  = \frac{100,000 / 16 \times 100 \times 4 \times 5}{10,000,000} \\
+					 & = 1.25\ second
+	\end{aligned}
+\end{equation*}
+Total time to sort for 16 processors is: $1.975\ second$. \\
+
+
+\end{document}

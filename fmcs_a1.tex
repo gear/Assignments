@@ -1,0 +1,284 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle} {
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{FMCS:CS - Part 1}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\newcommand*{\quoteTitle}[1]{{#1}\ignorespaces}%
+\newenvironment{Quote}[1]{
+    \medskip\par\noindent\quoteTitle{#1}
+    \par\noindent
+    \begin{quote}
+    }{
+    \end{quote}
+    \par\noindent\ignorespacesafterend
+}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+\bibliographystyle{acm}
+\title{Fundamentals of MCS: CS - Part 1}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W832 Mon. Period 7-8 \\ \hfill Due date: 2015/11/30}
+
+\maketitle
+
+\vfill
+\section*{Problem}
+\noindent
+For this Part I of Fall 2015 Fundamentals of Mathematical and Computing Sciences: Computer Science class, I choose 2 problems: Q1.1 and Q3.1 to submit for grading.
+
+\paragraph{Q1.1.} Prove that a language $L$ is regular if and only if $\Sigma^{*}$ is divided into a finite number of equivalence classes by $\approx_{L}$. Then explain with some example why the number of equivalence classes cannot be finite for non-regular languages; estimate the number of equivalence classes in terms of the string length. (You may use any one of the first three definitions of regular language; but maybe the definition by DFA would be much easier.)
+
+\paragraph{Q.3.1.} It is not so difficult to prove Theorem 1, so why don't you prove it (without reading the referenced paper)! You can go back to the definition and consider the probability that one fixed hypothesis \emph{h} is not an $\epsilon$-approximation of a given target $f_{*}$ on $m$ example of $S$. (What is the randomness here for discussing the probability?) Then we can use the union bound to estimate the probability that this situation occurs on some hypothesis of $\mathcal{H}_{n,m}$.
+\begin{theorem}
+    (PAC learning is achieved by ``Occam Razor'') \\
+    For any concept class $\mathcal{C}$, consider any algorithm $L$ that yields a hypothesis consistent with a given sample. Let $\mathcal{H}_{n,m}$ be a class of hypotheses (i.e., Boolean functions) that algorithm $L$ may yield on some sameple of size $m$ on some target concept in $\mathcal{C}$ of size $n$. (Note that $m$ is determined by algorithm $L$ from $\epsilon, \delta, n$). \\
+    Let $M(n,m)$ denote the number of hypotheses of $\mathcal{H}_{n,m}$. For any learning parameters $\epsilon, \delta$, and for any $n$, if we can design the algorithm so that
+    \begin{equation*}
+        m \geq \frac{1}{\epsilon}\ln{\frac{1}{\delta}} + \frac{\ln{M(n,m)}}{\epsilon}
+    \end{equation*}
+holds, then $L$ can be used as a PAC-learning algorithm for $\mathcal{C}$.
+\end{theorem}
+\vfill
+\pagebreak
+\section*{Answer:}
+
+\subsection*{Q1.1 - Regular language definition with $\approx_{L}$.} 
+
+\noindent
+My proof contains two parts: 
+\begin{enumerate}
+    \item A language $L$ is regular $\Rightarrow$ $\Sigma^{*}$ can be divided into a finite number of equivalence classes with $\approx_{L}$, and
+    \item A language $L$ that has $\Sigma^{*}$ can be divided into a finite number of equivalence classes $\Rightarrow$ $L$ is regular.
+\end{enumerate}
+
+\begin{Quote}{A regular language is defined as follow:}
+    \setlength{\parskip}{0em}
+    A language is called \emph{\textbf{regular language}} if some finite automaton recognizes it.~\cite{sip} 
+\end{Quote}
+
+\noindent 
+Also, with some deterministic finite automaton $M=(Q,\Sigma,\delta,q_{0},F)$, I define notations for string collection $R_{i}$ and state transition function based on string input $\delta^{*}$ mentioned in~\cite{lec2} as follow:
+\begin{itemize}
+        \setlength{\parskip}{0em}
+    \item $R_{i}$ is a set of input strings, which makes the automaton $M$ transits from $q_{0}$ to a same state $q_{i}$ in $Q$. 
+        \begin{equation} \label{eq:r}
+        R_{i} = \{ u\ |\ u \in \Sigma^{*}\mbox{ and }\delta^{*}(q_{0}, u) = q_{i} \in Q \} 
+    \end{equation}
+    \item $\delta^{*}: Q \times \Sigma^{*} \rightarrow Q$ is an extended transition function that takes a string and a state as inputs. The output of this function is the state of the automaton $M$ after taking the string of input. For any $q \in Q$: 
+$$\begin{cases}
+    \delta^{*}(q,\varepsilon) = \delta(q,\varepsilon) &  \\
+    \delta^{*}(q,e\cdot w) = \delta^{*}(\delta(q,e),w), & \forall e \in \Sigma \mbox{ and } w \in \Sigma^{*}
+\end{cases}$$   
+\end{itemize}
+\vspace{1em}
+
+\textbf{1.} For the first part of the proof, I consider $L$, a regular language, and I will prove that there is a way to divide $\Sigma^{*}$ into a finite set by the equivalent relation $\approx_{L}$. Since $L$ is regular, there exists a deterministic automaton $M=(Q,\Sigma,\delta,q_{0},F)$ accepts $L$. For each state in $Q$ of the automaton $M$, consider a set of strings $R_{i}$ as defined above. Since the number of state in $M$ is $|Q|$, and it is a finite number, hence we have a finite number of $R_{i}$.\\[1em]
+By definition in \cite{lec2}, the $u$-derivative of $L$ is stated as follow:
+$$\partial_{u}L = \{v : u\cdot v \in L\}$$
+\noindent
+Intuitively, an $u$-derivative of $L$ is the set of all substring of strings that start with $u$ in $L$. Using the extended transition function, we have another representation of this deriviation:
+$$\partial_{u}L = \{w : \delta^{*}(q_{0},u\cdot w) \in F\}$$
+\noindent
+For all set $R_{i}$, and for any $u, v \in R_{i}$:
+\begin{equation} \label{eq:delta}
+    \begin{aligned}
+        \partial_{u}L & = \{w : \delta^{*}(\delta^{*}(q_{0},u), w) \in F\} \\
+        \partial_{v}L & = \{z : \delta^{*}(\delta^{*}(q_{0},v), z) \in F\}
+    \end{aligned}
+\end{equation}
+\noindent
+By the definition of $R_{i}$, we denote $\delta^{*}(q_{0},u) = \delta^{*}(q_{0},v) = q_{i}$, formula~\eqref{eq:delta} can be rewritten as follow:
+\begin{equation*}
+    \begin{aligned}
+        \partial_{u}L & = \{w : \delta^{*}(q_{i}, w) \in F\} \\
+        \partial_{v}L & = \{z : \delta^{*}(q_{i}, z) \in F\}
+    \end{aligned}
+    \mbox{   , for all } u, v \in R_{i}.
+\end{equation*}
+\noindent
+Because of the determinism of the automaton $M$ and its state transition function, we have:
+\begin{equation*}
+        \begin{cases}
+            \{w : \delta^{*}(q_{i}, w) \in F\} \\
+            \{z : \delta^{*}(q_{i}, z) \in F\}
+        \end{cases} 
+        \Leftrightarrow\ \  \{w : \delta^{*}(q_{i}, w) \in F\} \equiv \{z : \delta^{*}(q_{i}, z) \in F\}
+\end{equation*}
+Therefore:
+\begin{equation} \label{eq:equi}
+    \begin{aligned}
+        \partial_{u}L & = \partial_{v}L \\
+        \mbox{hence,\ \ \ \ \ } u & \approx_{L} v\mbox{\ \ , } \forall u, v \in R_{i}
+    \end{aligned}
+\end{equation}
+\noindent
+From formula \eqref{eq:equi}, we see that dividing $\Sigma^{*}$ into a finite set $\{R_{i} : i = (0\ldots|Q|-1)\}$ is equivalent with dividing the language into a finite set by the equivalent relation $\approx_{L}$.
+
+\vspace{1em}
+\textbf{2.} In the second part of this proof, I consider there is a language $L$, and $\Sigma^{*}$ can be divided into a finite set $R$ by the equivalent relation $\approx_{L}$. I will construct a deterministic finite automaton for recognizing the given language $L$. For all $R_{i}$ in the finite set $R$:
+\begin{equation*}
+    u, v \in R_{i} \Leftrightarrow \partial_{u}L = \partial_{v}L
+\end{equation*}
+\noindent
+Also:
+\begin{equation*}
+    u \in \Sigma^{*} \Leftrightarrow \exists R_{k} \in R : u \in R_{k}
+\end{equation*}
+I construct the deterministic finite automaton $M=(Q,\Sigma,\delta,q_{0},F)$ by defining each element of the 5-tuples. For each class $R_{i}$ divided by the equivalent relation, I define a state $q_{i}$ corresponds with it. The alphabet $\Sigma$ is the symbol set of the given language $L$. $q_{0}$ is the state corresponds with $R_{0}$, containing an empty string $\varepsilon$. F is the set of all strings that have deriviation over $L$ equals empty string $\varepsilon$. Formally, we have:
+\begin{enumerate}
+    \item $Q = \{q_{i} : \mbox{Each } q_{i} \mbox{ corresponds with a class } R_{i}\}$.
+    \item $q_{0}$ is the start state corresponds with the class of empty string $R_{0} = \{\varepsilon\}$.  
+    \item $\forall e \in \Sigma,\mbox{ we have: } \delta(q_{i}, e) = q_{j} : \partial_{u \in R_{j}}L = \partial_{u\cdot e,\ u \in R_{i}}L$. Because there always exists a state $q_{j}$ correspondings to $R_{j}$ that contains the string $u\cdot e$.
+    \item $F = \{q_{f} \mbox{ corresponds to } R_{f} : \forall u \in R_{f},\ \partial_{u}L = \varepsilon\}$
+\end{enumerate}
+
+In conclusion, I have proved that: \textbf{1.} If the language $L$ is regular, we can divide $\Sigma^{*}$ into a finite set by the equivalent relation $\approx_{L}$, and \textbf{2.} If the language $L$ has $\Sigma^{*}$ can be divided into a finite set by the equivalent relation $\approx_{L}$, we can construct a deterministic finite automaton $M$ that recognizes $L$. Therefore:
+\begin{equation*}
+    L \mbox{ is a \textbf{regular language} } \Leftrightarrow \ \parbox[c]{7cm}{$\Sigma^{*}$ can be divided into a finite number of equivalent classes by $\approx_{L}$} \ \ \ \ \parbox[c]{1cm}{ (Q.E.D.)}
+\end{equation*}
+
+Consider a non-regular language from~\cite{sip}: $E=\{0^{i}1^{j}\ , i > j\}$. $E$ is a language which was proven to be non-regular in~\cite{sip} using the Pumping lemma. Here, I will show that the number of equivalent class divided by $\approx_{L}$ is infinite. The string in $E$ has 2 parts of leading 0's and trailing 1's. The number of leading 0's is $i$ and that of trailing 1's is $j$. Suppose we have a non empty string $u_{i,j}$, which has i \textless\ j (Number of leading 0's larger than
+number of leading 1's). The derivative of such string is:
+\begin{equation} \label{eq:inf}
+    \begin{aligned}
+        \partial_{u_{i,j}}E & = \{\mbox{Set of all-1 strings of length less than i-j}\} \\
+        & = \left \{ \ \bigcup\limits_{k=0}^{i-j-1}1^{k} \right \}    
+    \end{aligned}
+\end{equation}
+\noindent
+Equation~\eqref{eq:inf} shows that the size $|\partial_{u_{i,j}}E|$ depends on the choice of the pair (i, j). The number of set of all-1 strings is the number of values that (i-j) has. Therefore, the number of equivalent classes divided by $\approx_{L}$ is infinite. Another example considers the language $L = \{ \{0,1\}^{*} \}$. Language $L$ was also proven to be non-regular in \cite{sip}. Any string $u \in \{0,1\}^{*}$ can be followed by any string in $\{0,1\}^{*}$, and the
+concatenated string is also in $L$. Therefore, the number of equivalent classes is infinite.
+\begin{equation}
+    \partial_{u}L = \{0,1\}^{*} \mbox{ }, \forall u \in \{0,1\}^{*} 
+\end{equation}
+Generally, if a language is non-regular, it is impossible to define a DFA or NFA that recognizes the language. The automaton can recognize a non-regular language will have an infinite number of states, and the for any string pair of length $k$, there is no finite length string to distinguish them. Hence, the language is not divisible to a finite number of equivalent classes. 
+
+\subsection*{Q3.1. Proof of \emph{``Occam Razor''} PAC-Learning}
+\noindent
+Consider the condition for an algorithm $A$ to be called a \emph{PAC-learning algorithm} for a given concept class $\mathcal{C}$: \cite{lec3}
+\begin{equation} \label{pac}
+    \begin{aligned}
+        & \forall \epsilon,\delta, 0 < \epsilon,\delta < 1, \forall n \geq 1, \\
+        & \exists m \geq 0 \mbox{ which is determined by } A \mbox{ from } \epsilon,\delta,n \\
+        & \forall D_{*} (\mbox{distribution over }\{+1,-1\}^{n}), \forall f_{*} \in \mathcal{C} \\
+        & \Pr_{S:D^m_*} \left [ 
+            \begin{tabular}{c}
+                $A$ given $S$ yields some h satisfying \\ 
+                $ \Pr_{\boldsymbol{x}:D_*}[f_{*}(\boldsymbol{x}) \neq h(\boldsymbol{x})] \leq \epsilon $ 
+            \end{tabular}
+        \right ] \geq 1 - \delta.     
+    \end{aligned}
+\end{equation}
+
+Suppose we have a hypothesis $h_{bad}$ satisfies \textbf{Theorem 1} given to us consistenly by algorithm $L$, but $h_{bad}$ is not an $\epsilon$-estimation of a given target concept $f_*$. 
+\begin{equation*}
+    \Pr_{\boldsymbol{x}:D_*} [f_*(\boldsymbol{x}) \neq h_{bad}(\boldsymbol{x})] \leq \epsilon
+\end{equation*}
+I denote event $\mathcal{X}$ is the event where $h_{bad}$ gives consistent output with the target concept $f_*$, the probability of X with a random sample in $D_*$ is:
+\begin{equation*}
+    \Pr[\mathcal{X}] = \Pr_{\boldsymbol{x}:D_*} [f_*(\boldsymbol{x}) = h_{bad}(\boldsymbol{x})] \geq 1 - \epsilon
+\end{equation*}
+Given $m$ random samples from distribution $D_*$, the worst case can happen is $\mathcal{X}$ holds for all $m$ samples. Therefore, the probability of this case is at most:
+\begin{equation*}
+    \Pr[\mathcal{X}^m] = (1 - \epsilon)^m
+\end{equation*}
+According to \textbf{Theorem 1}, the number of hypotheses of class $\mathcal{H}_{n,m}$ is $M(n,m)$. I denote $\mathcal{Y}$ as the event that the algorithm $L$ gives us $h_{bad}$ over all hypothesis $h_i \in \mathcal{H}_{n,m}$. The union bound gives us the probability for event $\mathcal{Y}$:
+\begin{equation} \label{eq:upper}
+    \begin{aligned}
+        \Pr[\mathcal{Y}] & = \Pr \left [\ \bigcup_{h:\mathcal{H}_{n,m}}\mathcal{X}^m_h\ \right ]
+        \leq \sum_{h:\mathcal{H}_{n,m}} \Pr[\mathcal{X}^{m}_h] \\
+        & \leq M(n,m) \times (1-\epsilon)^m
+    \end{aligned}
+\end{equation}
+\noindent
+Inequality \eqref{eq:upper} means that the chance for our algorithm $L$ consistently gives hypotheses that are not $\epsilon$-estimation of a given target concept $f_*$ is bounded by $M(n,m) \times (1-\epsilon)^m$. For this reason, we would like to bound this quantity by a confident parameter $\delta$, and then solve the inequality for the sameple size $m$.
+\begin{equation*}
+    \begin{aligned}
+        & M(n,m) \times (1-\epsilon)^m && \leq \ \ \ \delta \\
+        \Leftrightarrow \ \ &\ \ \ \ \ \ \ \ \ (1-\epsilon)^m && \leq \ \ \ \frac{\delta}{M(n,m)}\\
+        \Leftrightarrow \ \ &\ \ \ \ \ \ \ \ln(1-\epsilon)^m && \leq \ \ \ \ln\frac{\delta}{M(n,m)}\\
+        \Leftrightarrow \ \ &\ \ \ \ \ m \times \ln(1-\epsilon) && \leq \ \ \ \ln \delta - \ln M(n,m) \ \ \ (\boldsymbol{\ast})
+    \end{aligned}
+\end{equation*}
+Here, I will prove that the inequality $\ln(1-\epsilon) + \epsilon \leq 0$ holds true for $\epsilon \in (0,1)$. Consider the function $g(x) = \ln(1-x) + x \mbox{ , for } x \in (0,1)$, take the derivative of this function we have:
+\begin{equation} \label{eq:ln}
+    \begin{aligned}
+        \frac{d(g(x))}{dx} & = \frac{d}{dx} (\ln(1-x) + x)\\[0.8em] & = \frac{x}{x-1} \ \leq \ 0 \ \ \forall x \in (0,1) \\
+    \end{aligned}
+\end{equation}
+We also have:
+\begin{equation} \label{eq:st}
+    g(0) = \ln(1-0) + 0 = 0
+\end{equation}
+\eqref{eq:ln} and \eqref{eq:st} show that $g(x)$ is a decreasing function over $(0,1)$ and $g(0) = 0$. Therefore, $g(x) \leq 0$ for $x \in (0,1)$. Hence, we have: $\ln(1-\epsilon) \leq -\epsilon $. Replace this fact into the inequality ($\boldsymbol{\ast}$) we have:
+\begin{equation*}
+    \begin{aligned}
+       & m \times (-\epsilon) &&\leq \ \ m \times \ln(1-\epsilon) \ \leq \ \ln \delta - \ln M(n,m) \\
+       \Leftrightarrow \ \ \ & m \times (-\epsilon)&& \leq \ \ \ln \delta - \ln M(n,m) \\
+       \Leftrightarrow \ \ \ & \ \ \ \ m && \geq \ \ - \frac{\ln \delta}{\epsilon} + \frac{\ln M(n,m)}{\epsilon} \\
+       \Leftrightarrow \ \ \ & \ \ \ \ m && \geq \ \ \frac{1}{\epsilon}\ln\frac{1}{\delta} + \frac{\ln M(n,m)}{\epsilon} \ \ \ (\boldsymbol{\ast\ast})
+    \end{aligned}
+\end{equation*}
+$(\boldsymbol{\ast\ast})$ shows that if we want to bound the worst case scenarios by some $\delta$, we need a number of sample $m$ greater or equal some value. For this value of $m$, the algorithm $L$ will give us a $\epsilon$-estimation hypothesis with probability $1-\delta$ over some sameple distribution $D_*^m$. Hence, $L$ can be used as a PAC-learning algorithm for some concept class $\mathcal{C}\Rightarrow Q.E.D. $
+
+Inconclusion, I have proved by construction that starting from assumptions made by \textbf{Theorem 1}, we can derive the requirement of $m$ for algorithm $L$ to be a PAC-learning algorithm.
+
+\bibliography{fmcs_a1}
+
+\end{document}
