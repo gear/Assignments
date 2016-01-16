@@ -1,4 +1,4 @@
-(* fmcs_a2_q2.v Author: Hoang NT
+(* fmcs_a2_q3.v Author: Hoang NT
  * 
  * This is the problem statement for the
  * first question of Assignment 3: Coq Prog.
@@ -8,7 +8,8 @@
  *)
 
 (* begin hide *)
-Require Import List.
+
+Require Export List.
 Inductive binop : Set := Plus | Times.
 Inductive exp : Set :=
   | Const : nat -> exp
@@ -44,6 +45,12 @@ Fixpoint progDenote (p : prog) (s : stack) : option stack :=
                | Some s' => progDenote p' s'
                end
   end.
+Fixpoint compile (e : exp) : prog :=
+  match e with
+  | Const n => iConst n :: nil
+  | Binop b e1 e2 => (compile e2) ++ (compile e1) ++ (iBinop b :: nil)
+  end.
+
 (* end hide *)
 
 (** %\paragraph{Q3.1.}% We would like to port the compiler to another stack machine whose behavior is slightly different from the original one. Although the representation of its structure remains the same ([Definition prog := list instr] and [Definition stack := list nat]), the new stack machine's interpretation of instructions is slightly different: *)
@@ -58,4 +65,6 @@ Definition instrDenote' (i : instr) (s : stack) : option stack :=
   end.
 
 (** The instrDenote' function assumes that the second operand at the stack top while instrDenote assumes the first one at the top. Given this modified instrDenote' function, try to modifiy the implementation of the compiler so that it suits the new definition and prove its correctness. *)
+
+(** %\paragraph{Q3.2.}% Extend your implementation of %\textbf{Q3.1}% to add Minus operator to binop and adjust definitions of denotations, the compiler, appropriately and complete the proof.*)
 
