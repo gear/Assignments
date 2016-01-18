@@ -1,12 +1,3 @@
-(* fmcs_a2_ans3.v Author: Hoang NT
- * 
- * This is the solution for the
- * questions of Assignment 3: Coq Programming.
- *
- * This file can be access at:
- *   https://github.com/gear/Assignments/
- *)
-
 (* begin hide *)
 
 Require Export fmcs_a2_q3.
@@ -30,7 +21,7 @@ Fixpoint progDenote' (p : prog) (s : stack) : option stack :=
 Fixpoint compile' (e : exp) : prog :=
   match e with
   | Const n => iConst n :: nil
-  | Binop b e1 e2 => (compile e1) ++ (compile e2) ++ (iBinop b :: nil)
+  | Binop b e1 e2 => (compile' e1) ++ (compile' e2) ++ (iBinop b :: nil)
   end.
 
 (** Before going to the proof, I would like to test out the new Stack Machine with few examples of program evaluation and compiler evaluation:*)
@@ -56,36 +47,47 @@ Theorem compile'_correct : forall e, progDenote' (compile' e) nil = Some (expDen
 Abort.
 (* end hide *)
 
-(** To prove this theorem, as in %\cite{cpdt}%, I will use the standard trick of %\emph{strengthening the induction hypothesis}%. By proving the fact that, given %\emph{any}% expression, program list state, and stack state, the modified compiler will correctly compile the program to run with progDenote'.*)
+(** %\noindent% To prove this theorem, as in {cpdt}, I will use the standard trick of %\emph{strengthening the induction hypothesis}%. By proving the fact that, given %\emph{any}% expression, program list state, and stack state, the modified compiler will correctly compile the program to run with [progDenote'].*)
+
 
 Lemma compile'_correct' : forall e p s,
   progDenote' (compile' e ++ p) s = progDenote' p (expDenote e :: s).
-(* [[
+(**
+[[
 1 subgoal
 
   ============================
    forall (e : exp) (p : list instr) (s : stack),
    progDenote' (compile' e ++ p) s = progDenote' p (expDenote e :: s)  
-]] *)
+]]
 
-(**  Firstly I use [intros] tactic to handle the "[forall]" condition. We have: *)
-
-intros.
-
-(** [[
-1 subgoal
-  e : exp
-  p : list instr
-  s : stack
-  ============================
-   progDenote' (compile' e ++ p) s = progDenote' p (expDenote e :: s)
-]] *)
-
-(** Using induction on [e], we will have 2 subgoals corresponding to 2 cases of [e]: [Const n] and [Binop b e1 e2].*)
+*)
+(** %\vspace{0.5em}% *)
+(** %\noindent% A typical strategy for handling "[forall]" is to use [intros] tactic. However, if we use [intros] now, before performing [induction] on expression e, we will have some problem with Coq cannot recognize some pattern later. Therefore, the tactic [induction] will be used to break down expression e into basic cases first, then I will apply [intros] tactic for each case. *)
+(** %\vspace{0.5em}% *)
 
 induction e.
+(** 
+[[
+2 subgoals
+  n : nat
+  ============================
+   forall (p : list instr) (s : stack),
+   progDenote' (compile' (Const n) ++ p) s = 
+   progDenote' p (expDenote (Const n) :: s)
+subgoal 2 is:
+ forall (p : list instr) (s : stack),
+ progDenote' (compile' (Binop b e1 e2) ++ p) s = 
+ progDenote' p (expDenote (Binop b e1 e2) :: s)
+]] 
 
-(** [[
+*)
+
+(** Assuming we are given some arbitary stack and program: %\vspace{0.5em}% *)
+
+intros.
+(**
+[[
 2 subgoals
   n : nat
   p : list instr
@@ -93,9 +95,332 @@ induction e.
   ============================
    progDenote' (compile' (Const n) ++ p) s =
    progDenote' p (expDenote (Const n) :: s)
-
 subgoal 2 is:
+ forall (p : list instr) (s : stack),
  progDenote' (compile' (Binop b e1 e2) ++ p) s =
  progDenote' p (expDenote (Binop b e1 e2) :: s)
-]] *)
-Abort.
+]]
+
+*)
+
+(** %\noindent% The first subgoal can be proved by simplify the function [compile'] and [expDenote]. The tactic named [simpl] and [reflexivity] does exactly what we want. *)
+(** %\vspace{0.5em}% *)
+simpl.
+
+(**
+[[
+2 subgoals
+
+ n : nat
+ p : list instr
+ s : stack
+ ============================
+  progDenote' p (n :: s) = progDenote' p (n :: s)
+
+subgoal 2 is
+ forall (p : list instr) (s : stack),
+ progDenote' (compile' (Binop b e1 e2) ++ p) s =
+ progDenote' p (expDenote (Binop b e1 e2) :: s)
+]]
+
+*)
+
+(** %\noindent% By using simple [reflexivity] tactic, I have proved the first subgoal. *)
+(** %\vspace{0.5em}% *)
+
+reflexivity.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ ============================
+  forall (p : list instr) (s : stack),
+  progDenote' (compile' (Binop b e1 e2) ++ p) s =
+  progDenote' p (expDenote (Binop b e1 e2) :: s)
+]]
+
+*)
+
+(** %\noindent% Here we have [IHe1] and [IHe2] as two inductive hypothesis. By making the same assumption to handle with "[forall]", we have: *)
+(** %\vspace{0.5em}% *)
+
+intros.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' (compile' (Binop b e1 e2) ++ p) s =
+  progDenote' p (expDenote (Binop b e1 e2) :: s)
+]]
+
+*)
+
+(** %\noindent% The tactic [simpl] will evaluate the [compile'] and [expDenote] functions: *)
+(** %\vspace{0.5em}% *)
+
+simpl.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' ((compile' e1 ++ compile' e2 ++ iBinop b :: nil) ++ p) s =
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s)
+]]
+
+*)
+
+(** %\noindent% To make the LHS of our target goal similar to the first inductive hypothesis [IHe1], I will apply the reverse association rule for [list] concatenation. *)
+(** %\vspace{0.5em}% *)
+
+Check app_assoc_reverse.
+
+(**
+[[
+app_assoc_reverse
+     : forall (A : Type) (l m n : list A), (l ++ m) ++ n = l ++ m ++ n
+]]
+
+*)
+
+rewrite app_assoc_reverse.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' (compile' e1 ++ (compile' e2 ++ iBinop b :: nil) ++ p) s =
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s)
+]]
+
+*)
+
+(** %\noindent% Now we can apply the inductive hypotheses to "push" [e1] and [e2] of the LHS to the LHS stack. *)
+(** %\vspace{0.5em}% *)
+
+rewrite IHe1.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' ((compile' e2 ++ iBinop b :: nil) ++ p) (expDenote e1 :: s) =
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s)
+]]
+
+*)
+
+rewrite app_assoc_reverse.
+
+rewrite IHe2.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' ((iBinop b :: nil) ++ p) (expDenote e2 :: expDenote e1 :: s) =
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s)
+]]
+
+*)
+
+(** %\noindent% At this step, we can use the [simpl] tactic again since it is trivial to evaluate the LHS's [progDenote'] with [iBinop p :: nil]. *)
+(** %\vspace{0.5em}% *)
+
+simpl.
+
+(**
+[[
+1 subgoal
+
+ b : binop
+ e1 : exp
+ e2 : exp
+ IHe1 : progDenote' (compile' e1 ++ p) s = progDenote' p (expDenote e1 :: s)
+ IHe2 : progDenote' (compile' e2 ++ p) s = progDenote' p (expDenote e2 :: s)
+ p : list instr
+ s : stack
+ ============================
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s) =
+  progDenote' p (binopDenote b (expDenote e1) (expDenote e2) :: s)
+]]
+
+*)
+
+(** %\noindent% I comple the proof of this lemma by [reflexivity] and save it with [Qed]. *)
+(** %\vspace{0.5em}% *)
+
+reflexivity.
+Qed.
+
+(**
+[[
+ introduction e.
+
+ intros.
+ simpl.
+ reflexivity.
+
+ intros.
+ simpl.
+ rewrite app_assoc_reverse.
+ rewrite IHe1.
+ rewrite app_assoc_reverse.
+ rewrite IHe2.
+ simpl.
+ reflexivity.
+
+compile'_correct' is defined
+]]
+
+*)
+
+(** %\noindent% Now we can go back to prove the main theorem: *)
+(** %\vspace{0.5em}% *)
+
+Theorem compile'_correct : forall e, progDenote' (compile' e) nil = Some (expDenote e :: nil).
+
+(** %\noindent% Just like with the lemma [compile'_correct'], I will firstly introduce the expression [e] and then append [nil] to e so that the LHS has the form of [compile'_correct']. *)
+(** %\vspace{0.5em}% *)
+
+intros.
+rewrite (app_nil_end (compile' e)).
+
+(**
+[[
+1 subgoal
+  e : exp
+  ============================
+   progDenote' (compile' e ++ nil) nil = Some (expDenote e :: nil)
+]]
+
+*)
+
+(** %\noindent% The theorem is proved by applying lemma [compile'_correct'] and [reflexivility. *)
+(** %\vspace{0.5em}% *)
+
+rewrite compile'_correct'.
+
+(**
+[[
+1 subgoal
+  e : exp
+  ============================
+   progDenote' nil (expDenote e :: nil) = Some (expDenote e :: nil)
+]]
+
+*)
+
+reflexivity.
+Qed.
+
+(**
+[[
+ intros.
+ rewrite (app_nil_end (compile' e)).
+ rewrite compile'_correct'.
+ reflexivity.
+compile'_correct is defined
+]]
+*)
+
+(** %\subsection*{Q3.2 - Extended Stack Machine.}% *)
+
+(** %\noindent% *)
+(** The new Stack Machine is defined in module ext as follow: (I keep the definition of [stack] since it is not necessary to re-define it.*)
+
+Module ext.
+
+Require Import List.
+
+Inductive binop : Set := Plus | Times | Minus.
+Definition binopDenote (b:binop) : nat -> nat -> nat :=
+  match b with
+  | Plus => plus
+  | Times => mult
+  | Minus => minus
+  end.
+Inductive exp : Set :=
+  | Const : nat -> exp
+  | Binop : binop -> exp -> exp -> exp.
+Fixpoint expDenote (e:exp) : nat :=
+  match e with
+  | Const n => n
+  | Binop b e1 e2 => (binopDenote b) (expDenote e1) (expDenote e2)
+  end.
+Inductive instr : Set :=
+  | iConst : nat -> instr
+  | iBinop : binop -> instr.
+Definition prog := list instr.
+Definition  instrDenote (i : instr) (s : stack) : option stack :=
+  match i with
+  | iConst n => Some (n :: s)
+  | iBinop b => match s with
+                | arg2 :: arg1 :: s' => Some ((binopDenote b) arg1 arg2 :: s')
+                | _ => None
+                end
+  end.
+Fixpoint progDenote (p : prog) (s : stack) : option stack :=
+  match p with
+  | nil => Some s
+  | i :: p' => match instrDenote i s with
+               | None => None
+               | Some s' => progDenote p' s'
+               end
+  end.
+Fixpoint compile (e : exp) : prog :=
+  match e with
+  | Const n => iConst n :: nil
+  | Binop b e1 e2 => (compile e2) ++ (compile e1) ++ (iBinop b :: nil)
+  end.
+
+End ext.
+
+

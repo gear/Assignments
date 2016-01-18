@@ -1,12 +1,10 @@
-\coqlibrary{fmcs a2 ans3}{Library }{fmcs\_a2\_ans3}
 
 \begin{coqdoccode}
-\coqdocemptyline
 \coqdocemptyline
 \end{coqdoccode}
 \subsection*{Q3.1 - Modified Stack Machine.} 
 
- \noindent  Since we are given new \coqdocvar{instrDenote'} function, I am going to change the \coqdocvar{compile} and \coqdocvar{progDenote} function into \coqdocvar{compile'} and \coqdocvar{progDenote'} function that accept the new definition of \coqdocvar{instrDenote'}. The new functions are defined as follow:\begin{coqdoccode}
+ \noindent  Since we are given new \coqdocdefinition{instrDenote'} function, I am going to change the \coqref{fmcs a2 ans3.ext.compile}{\coqdocdefinition{compile}} and \coqref{fmcs a2 ans3.ext.progDenote}{\coqdocdefinition{progDenote}} function into \coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} and \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} function that accept the new definition of \coqdocdefinition{instrDenote'}. The new functions are defined as follow:\begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdockw{Fixpoint} \coqdef{fmcs a2 ans3.progDenote'}{progDenote'}{\coqdocdefinition{progDenote'}} (\coqdocvar{p} : \coqdocdefinition{prog}) (\coqdocvar{s} : \coqdocdefinition{stack}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} :=\coqdoceol
@@ -32,7 +30,7 @@
 \coqdocindent{1.00em}
 \ensuremath{|} \coqdocconstructor{Const} \coqdocvar{n} \ensuremath{\Rightarrow} \coqdocconstructor{iConst} \coqdocvar{n} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}\coqdoceol
 \coqdocindent{1.00em}
-\ensuremath{|} \coqdocconstructor{Binop} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2} \ensuremath{\Rightarrow} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqdocdefinition{compile} \coqdocvar{e1}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqdocdefinition{compile} \coqdocvar{e2}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqdocconstructor{iBinop} \coqdocvar{b} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}}\coqdoceol
+\ensuremath{|} \coqdocconstructor{Binop} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2} \ensuremath{\Rightarrow} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqdocconstructor{iBinop} \coqdocvar{b} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}}\coqdoceol
 \coqdocindent{1.00em}
 \coqdockw{end}.\coqdoceol
 \coqdocemptyline
@@ -42,12 +40,12 @@ Before going to the proof, I would like to test out the new Stack Machine with f
 \coqdocnoindent
 \coqdockw{Eval} \coqdoctac{simpl} \coqdoctac{in} \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqdocconstructor{Const} 3)) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}.\coqdoceol
 \end{coqdoccode}
-= \coqdocvar{Some} (3 :: \coqdocvar{nil}) : \coqdocvar{option} \coqdocvar{stack} \begin{coqdoccode}
+= \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (3 :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} \begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdockw{Eval} \coqdoctac{simpl} \coqdoctac{in} \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqdocconstructor{Binop} \coqdocconstructor{Plus} (\coqdocconstructor{Const} 3) (\coqdocconstructor{Const} 4))) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}.\coqdoceol
 \end{coqdoccode}
-= \coqdocvar{Some} (7 :: \coqdocvar{nil}) : \coqdocvar{option} \coqdocvar{stack} \begin{coqdoccode}
+= \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (7 :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} \begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdockw{Eval} \coqdoctac{simpl} \coqdoctac{in} \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqdocconstructor{Binop} \coqdocconstructor{Times} \coqdoceol
@@ -56,12 +54,12 @@ Before going to the proof, I would like to test out the new Stack Machine with f
 \coqdocindent{6.50em}
 (\coqdocconstructor{Binop} \coqdocconstructor{Plus} (\coqdocconstructor{Const} 5) (\coqdocconstructor{Const} 6)))) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}.\coqdoceol
 \end{coqdoccode}
-= \coqdocvar{Some} (77 :: \coqdocvar{nil}) : \coqdocvar{option} \coqdocvar{stack} \begin{coqdoccode}
+= \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (77 :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} \begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdockw{Eval} \coqdoctac{simpl} \coqdoctac{in} \coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqdocconstructor{Binop} \coqdocconstructor{Times} (\coqdocconstructor{Binop} \coqdocconstructor{Plus} (\coqdocconstructor{Const} 2) (\coqdocconstructor{Const} 3)) (\coqdocconstructor{Const} 7)).\coqdoceol
 \end{coqdoccode}
-= \coqdocvar{iConst} 3 :: \coqdocvar{iConst} 2 :: \coqdocvar{iBinopPlus} :: \coqdocvar{iConst} 7 :: \coqdocvar{iBinop} \coqdocvar{Times} :: \coqdocvar{nil} : \coqdocvar{prog} 
+= \coqref{fmcs a2 ans3.ext.iConst}{\coqdocconstructor{iConst}} 3 :: \coqref{fmcs a2 ans3.ext.iConst}{\coqdocconstructor{iConst}} 2 :: \coqdocvar{iBinopPlus} :: \coqref{fmcs a2 ans3.ext.iConst}{\coqdocconstructor{iConst}} 7 :: \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqref{fmcs a2 ans3.ext.Times}{\coqdocconstructor{Times}} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} : \coqref{fmcs a2 ans3.ext.prog}{\coqdocdefinition{prog}} 
 
  Our modified compiler should work with \emph{all} input, therefore we have the compiple'\_correct theorem as follow: \begin{coqdoccode}
 \coqdocemptyline
@@ -69,15 +67,173 @@ Before going to the proof, I would like to test out the new Stack Machine with f
 \coqdockw{Theorem} \coqdef{fmcs a2 ans3.compile' correct}{compile'\_correct}{\coqdoclemma{compile'\_correct}} : \coqdockw{\ensuremath{\forall}} \coqdocvar{e}, \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e}) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} \coqexternalref{:type scope:x '=' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic}{\coqdocnotation{=}} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (\coqdocdefinition{expDenote} \coqdocvariable{e} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}).\coqdoceol
 \coqdocemptyline
 \end{coqdoccode}
-To prove this theorem, as in \cite{cpdt}, I will use the standard trick of \emph{strengthening the induction hypothesis}. By proving the fact that, given \emph{any} expression, program list state, and stack state, the modified compiler will correctly compile the program to run with progDenote'.\begin{coqdoccode}
+\noindent To prove this theorem, as in \{cpdt\}, I will use the standard trick of \emph{strengthening the induction hypothesis}. By proving the fact that, given \emph{any} expression, program list state, and stack state, the modified compiler will correctly compile the program to run with \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}}.\begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdockw{Lemma} \coqdef{fmcs a2 ans3.compile' correct'}{compile'\_correct'}{\coqdoclemma{compile'\_correct'}} : \coqdockw{\ensuremath{\forall}} \coqdocvar{e} \coqdocvar{p} \coqdocvar{s},\coqdoceol
 \coqdocindent{1.00em}
 \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqdocvariable{p}) \coqdocvariable{s} \coqexternalref{:type scope:x '=' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic}{\coqdocnotation{=}} \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqdocdefinition{expDenote} \coqdocvariable{e} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvariable{s}).\coqdoceol
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{1.00em}
+============================\coqdoceol
+\coqdocindent{1.50em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{e} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}) (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvariable{e} :: \coqdocvariable{s})  
+
+\coqdocemptyline
+
+
+ \vspace{0.5em}  \noindent A typical strategy for handling ``\coqdockw{\ensuremath{\forall}}'' is to use \coqdoctac{intros} tactic. However, if we use \coqdoctac{intros} now, before performing \coqdoctac{induction} on expression e, we will have some problem with Coq cannot recognize some pattern later. Therefore, the tactic \coqdoctac{induction} will be used to break down expression e into basic cases first, then I will apply \coqdoctac{intros} tactic for each case.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{induction} \coqdocvar{e}.\coqdoceol
+\end{coqdoccode}
+
+
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+2 \coqdockw{subgoals}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvar{n} : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}}\coqdoceol
+\coqdocindent{1.00em}
+============================\coqdoceol
+\coqdocindent{1.50em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n}) ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n}) :: \coqdocvariable{s})\coqdoceol
+\coqdocnoindent
+\coqdockw{subgoal} 2 \coqdocvar{is}:\coqdoceol
+\coqdocindent{0.50em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ Assuming we are given some arbitary stack and program: \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{intros}.\coqdoceol
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+2 \coqdockw{subgoals}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvar{n} : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{1.00em}
+============================\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n}) :: \coqdocvariable{s})\coqdoceol
+\coqdocnoindent
+\coqdockw{subgoal} 2 \coqdocvar{is}:\coqdoceol
+\coqdocindent{0.50em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent The first subgoal can be proved by simplify the function \coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} and \coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}}. The tactic named \coqdoctac{simpl} and \coqdoctac{reflexivity} does exactly what we want.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocnoindent
+\coqdoctac{simpl}.\coqdoceol
 \coqdocemptyline
 \end{coqdoccode}
- Firstly I use \coqdoctac{intros} tactic to handle the ``\coqdockw{\ensuremath{\forall}}'' condition. We have: \begin{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+2 \coqdockw{subgoals}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{n} : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqdocvar{n} :: \coqdocvariable{s}) = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqdocvar{n} :: \coqdocvariable{s})\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocnoindent
+\coqdockw{subgoal} 2 \coqdocvar{is}\coqdoceol
+\coqdocindent{0.50em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{0.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent By using simple \coqdoctac{reflexivity} tactic, I have proved the first subgoal.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{reflexivity}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} (\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvariable{s} : \coqdocdefinition{stack}),\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent Here we have \coqdocvar{IHe1} and \coqdocvar{IHe2} as two inductive hypothesis. By making the same assumption to handle with ``\coqdockw{\ensuremath{\forall}}'', we have:  \vspace{0.5em} \begin{coqdoccode}
 \coqdocemptyline
 \coqdocnoindent
 \coqdoctac{intros}.\coqdoceol
@@ -87,56 +243,455 @@ To prove this theorem, as in \cite{cpdt}, I will use the standard trick of \emph
 \coqdocemptyline
 \coqdocnoindent
 1 \coqdockw{subgoal}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{e} : \coqdocvar{exp}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{p} : \coqdocvar{list} \coqdocvar{instr}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{s} : \coqdocvar{stack}\coqdoceol
-\coqdocindent{1.00em}
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
 ============================\coqdoceol
-\coqdocindent{1.50em}
-\coqdocvar{progDenote'} (\coqdocvar{compile'} \coqdocvar{e} ++ \coqdocvar{p}) \coqdocvar{s} = \coqdocvar{progDenote'} \coqdocvar{p} (\coqdocvar{expDenote} \coqdocvar{e} :: \coqdocvar{s})\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvariable{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent The tactic \coqdoctac{simpl} will evaluate the \coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} and \coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} functions:  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
 \coqdocnoindent
-]] *)\coqdoceol
-\coqdocnoindent
-\coqdoceol
-\coqdocnoindent
-\end{coqdoccode}
-Using induction on \coqdocvar{e}, we will have 2 subgoals corresponding to 2 cases of \coqdocvar{e}: \coqdocvar{Const} \coqdocvar{n} and \coqdocvar{Binop} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2}.\begin{coqdoccode}
-\coqdocnoindent
-\coqdoceol
-\coqdocnoindent
-\coqdoctac{induction} \coqdocvar{e}.\coqdoceol
-\coqdocnoindent
-\coqdoceol
-\coqdocnoindent
+\coqdoctac{simpl}.\coqdoceol
+\coqdocemptyline
 \end{coqdoccode}
 \coqdoceol
 \coqdocemptyline
 \coqdocnoindent
-2 \coqdockw{subgoals}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{n} : \coqdocvar{nat}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{p} : \coqdocvar{list} \coqdocvar{instr}\coqdoceol
-\coqdocindent{1.00em}
-\coqdocvar{s} : \coqdocvar{stack}\coqdoceol
-\coqdocindent{1.00em}
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
 ============================\coqdoceol
-\coqdocindent{1.50em}
-\coqdocvar{progDenote'} (\coqdocvar{compile'} (\coqdocvar{Const} \coqdocvar{n}) ++ \coqdocvar{p}) \coqdocvar{s} =\coqdoceol
-\coqdocindent{1.50em}
-\coqdocvar{progDenote'} \coqdocvar{p} (\coqdocvar{expDenote} (\coqdocvar{Const} \coqdocvar{n}) :: \coqdocvar{s})\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} ((\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvariable{b} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent To make the LHS of our target goal similar to the first inductive hypothesis \coqdocvar{IHe1}, I will apply the reverse association rule for \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} concatenation.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Check} \coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}\coqdoceol
+\coqdocindent{2.50em}
+: \coqdockw{\ensuremath{\forall}} (\coqdocvar{A} : \coqdockw{Type}) (\coqdocvar{l} \coqdocvar{m} \coqdocvar{n} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqdocvar{A}), (\coqdocvar{l} ++ \coqdocvar{m}) ++ \coqdocvar{n} = \coqdocvar{l} ++ \coqdocvar{m} ++ \coqdocvar{n}
+
+\coqdocemptyline
+
+
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{rewrite} \coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvariable{b} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) ++ \coqdocvariable{p}) \coqdocvariable{s} =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent Now we can apply the inductive hypotheses to ``push'' \coqdocvar{e1} and \coqdocvar{e2} of the LHS to the LHS stack.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{rewrite} \coqdocvar{IHe1}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} ((\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvariable{b} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) ++ \coqdocvariable{p}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s}) =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{rewrite} \coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{rewrite} \coqdocvar{IHe2}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} ((\coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvariable{b} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) ++ \coqdocvariable{p}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s}) =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent At this step, we can use the \coqdoctac{simpl} tactic again since it is trivial to evaluate the LHS's \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} with \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvariable{p} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{simpl}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{b} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e1} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{e2} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe1} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e1} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvar{IHe2} : \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e2} ++ \coqdocvariable{p}) \coqdocvariable{s} = \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2} :: \coqdocvariable{s})\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{p} : \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{0.50em}
+\coqdocvariable{s} : \coqdocdefinition{stack}\coqdoceol
+\coqdocindent{0.50em}
+============================\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s}) =\coqdoceol
+\coqdocindent{1.00em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqdocvariable{p} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvariable{b} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2}) :: \coqdocvariable{s})
+
+\coqdocemptyline
+
+
+
+
+ \noindent I comple the proof of this lemma by \coqdoctac{reflexivity} and save it with \coqdockw{Qed}.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{reflexivity}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Qed}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocindent{0.50em}
+\coqdocvar{introduction} \coqdocvariable{e}.\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{intros}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{simpl}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{reflexivity}.\coqdoceol
+\coqdocnoindent
+\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{intros}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{simpl}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} \coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} \coqdocvar{IHe1}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} \coqexternalref{app assoc reverse}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_assoc\_reverse}}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} \coqdocvar{IHe2}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{simpl}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{reflexivity}.\coqdoceol
 \coqdocnoindent
 \coqdoceol
 \coqdocnoindent
-\coqdockw{subgoal} 2 \coqdocvar{is}:\coqdoceol
-\coqdocindent{0.50em}
-\coqdocvar{progDenote'} (\coqdocvar{compile'} (\coqdocvar{Binop} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2}) ++ \coqdocvar{p}) \coqdocvar{s} =\coqdoceol
-\coqdocindent{0.50em}
-\coqdocvar{progDenote'} \coqdocvar{p} (\coqdocvar{expDenote} (\coqdocvar{Binop} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2}) :: \coqdocvar{s})\coqdoceol
+\coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}} \coqdocvar{is} \coqdocvar{defined}
+
+\coqdocemptyline
+
+
+
+
+ \noindent Now we can go back to prove the main theorem:  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
 \coqdocnoindent
-]] *)\coqdoceol
+\coqdockw{Theorem} \coqdef{fmcs a2 ans3.compile' correct}{compile'\_correct}{\coqdoclemma{compile'\_correct}} : \coqdockw{\ensuremath{\forall}} \coqdocvar{e}, \coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e}) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} \coqexternalref{:type scope:x '=' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Logic}{\coqdocnotation{=}} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (\coqdocdefinition{expDenote} \coqdocvariable{e} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\noindent Just like with the lemma \coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}}, I will firstly introduce the expression \coqdocvariable{e} and then append \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} to e so that the LHS has the form of \coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}}.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
 \coqdocnoindent
-\coqdockw{Abort}.\coqdoceol
+\coqdoctac{intros}.\coqdoceol
+\coqdocnoindent
+\coqdoctac{rewrite} (\coqexternalref{app nil end}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_nil\_end}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvar{e})).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvariable{e} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{1.00em}
+============================\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e} ++ \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} = \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvariable{e} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}})
+
+\coqdocemptyline
+
+
+
+
+ \noindent The theorem is proved by applying lemma \coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}} and \coqdocvar{reflexivility}.  \vspace{0.5em} \begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{rewrite} \coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+1 \coqdockw{subgoal}\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvariable{e} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{1.00em}
+============================\coqdoceol
+\coqdocindent{1.50em}
+\coqref{fmcs a2 ans3.progDenote'}{\coqdocdefinition{progDenote'}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvariable{e} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) = \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (\coqref{fmcs a2 ans3.ext.expDenote}{\coqdocdefinition{expDenote}} \coqdocvariable{e} :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}})
+
+\coqdocemptyline
+
+
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdoctac{reflexivity}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Qed}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\coqdoceol
+\coqdocemptyline
+\coqdocindent{0.50em}
+\coqdoctac{intros}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} (\coqexternalref{app nil end}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclemma{app\_nil\_end}} (\coqref{fmcs a2 ans3.compile'}{\coqdocdefinition{compile'}} \coqdocvariable{e})).\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{rewrite} \coqref{fmcs a2 ans3.compile' correct'}{\coqdoclemma{compile'\_correct'}}.\coqdoceol
+\coqdocindent{0.50em}
+\coqdoctac{reflexivity}.\coqdoceol
+\coqdocnoindent
+\coqref{fmcs a2 ans3.compile' correct}{\coqdoclemma{compile'\_correct}} \coqdocvar{is} \coqdocvar{defined}
+
+\coqdocemptyline
+
+
+ \subsection*{Q3.2 - Extended Stack Machine.} 
+
+ \noindent  The new Stack Machine is defined in module ext as follow: (I keep the definition of \coqdocdefinition{stack} since it is not necessary to re-define it.\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Module} \coqdef{fmcs a2 ans3.ext}{ext}{\coqdocmodule{ext}}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqexternalref{}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Lists.List}{\coqdoclibrary{List}}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{fmcs a2 ans3.ext.binop}{binop}{\coqdocinductive{binop}} : \coqdockw{Set} := \coqdef{fmcs a2 ans3.ext.Plus}{Plus}{\coqdocconstructor{Plus}} \ensuremath{|} \coqdef{fmcs a2 ans3.ext.Times}{Times}{\coqdocconstructor{Times}} \ensuremath{|} \coqdef{fmcs a2 ans3.ext.Minus}{Minus}{\coqdocconstructor{Minus}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Definition} \coqdef{fmcs a2 ans3.ext.binopDenote}{binopDenote}{\coqdocdefinition{binopDenote}} (\coqdocvar{b}:\coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}}) : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} \ensuremath{\rightarrow} \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} \ensuremath{\rightarrow} \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvariable{b} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Plus}{\coqdocconstructor{Plus}} \ensuremath{\Rightarrow} \coqexternalref{plus}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano}{\coqdocdefinition{plus}}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Times}{\coqdocconstructor{Times}} \ensuremath{\Rightarrow} \coqexternalref{mult}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano}{\coqdocdefinition{mult}}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Minus}{\coqdocconstructor{Minus}} \ensuremath{\Rightarrow} \coqexternalref{minus}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Peano}{\coqdocdefinition{minus}}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{fmcs a2 ans3.ext.exp}{exp}{\coqdocinductive{exp}} : \coqdockw{Set} :=\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdef{fmcs a2 ans3.ext.Const}{Const}{\coqdocconstructor{Const}} : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.exp}{\coqdocinductive{exp}}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdef{fmcs a2 ans3.ext.Binop}{Binop}{\coqdocconstructor{Binop}} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.exp}{\coqdocinductive{exp}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.exp}{\coqdocinductive{exp}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.exp}{\coqdocinductive{exp}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Fixpoint} \coqdef{fmcs a2 ans3.ext.expDenote}{expDenote}{\coqdocdefinition{expDenote}} (\coqdocvar{e}:\coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}) : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvariable{e} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n} \ensuremath{\Rightarrow} \coqdocvar{n}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2} \ensuremath{\Rightarrow} (\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvar{b}) (\coqref{fmcs a2 ans3.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e1}) (\coqref{fmcs a2 ans3.expDenote}{\coqdocdefinition{expDenote}} \coqdocvar{e2})\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Inductive} \coqdef{fmcs a2 ans3.ext.instr}{instr}{\coqdocinductive{instr}} : \coqdockw{Set} :=\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdef{fmcs a2 ans3.ext.iConst}{iConst}{\coqdocconstructor{iConst}} : \coqexternalref{nat}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{nat}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.instr}{\coqdocinductive{instr}}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdef{fmcs a2 ans3.ext.iBinop}{iBinop}{\coqdocconstructor{iBinop}} : \coqref{fmcs a2 ans3.ext.binop}{\coqdocinductive{binop}} \ensuremath{\rightarrow} \coqref{fmcs a2 ans3.instr}{\coqdocinductive{instr}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Definition} \coqdef{fmcs a2 ans3.ext.prog}{prog}{\coqdocdefinition{prog}} := \coqexternalref{list}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{list}} \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Definition}  \coqdef{fmcs a2 ans3.ext.instrDenote}{instrDenote}{\coqdocdefinition{instrDenote}} (\coqdocvar{i} : \coqref{fmcs a2 ans3.ext.instr}{\coqdocinductive{instr}}) (\coqdocvar{s} : \coqdocdefinition{stack}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvariable{i} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.iConst}{\coqdocconstructor{iConst}} \coqdocvar{n} \ensuremath{\Rightarrow} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (\coqdocvar{n} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvariable{s})\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvar{b} \ensuremath{\Rightarrow} \coqdockw{match} \coqdocvariable{s} \coqdockw{with}\coqdoceol
+\coqdocindent{8.00em}
+\ensuremath{|} \coqdocvar{arg2} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvar{arg1} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvar{s'} \ensuremath{\Rightarrow} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} ((\coqref{fmcs a2 ans3.ext.binopDenote}{\coqdocdefinition{binopDenote}} \coqdocvar{b}) \coqdocvar{arg1} \coqdocvar{arg2} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvar{s'})\coqdoceol
+\coqdocindent{8.00em}
+\ensuremath{|} \coqdocvar{\_} \ensuremath{\Rightarrow} \coqexternalref{None}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{None}}\coqdoceol
+\coqdocindent{8.00em}
+\coqdockw{end}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Fixpoint} \coqdef{fmcs a2 ans3.ext.progDenote}{progDenote}{\coqdocdefinition{progDenote}} (\coqdocvar{p} : \coqref{fmcs a2 ans3.ext.prog}{\coqdocdefinition{prog}}) (\coqdocvar{s} : \coqdocdefinition{stack}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvariable{p} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}} \ensuremath{\Rightarrow} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} \coqdocvariable{s}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdocvar{i} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqdocvar{p'} \ensuremath{\Rightarrow} \coqdockw{match} \coqref{fmcs a2 ans3.ext.instrDenote}{\coqdocdefinition{instrDenote}} \coqdocvar{i} \coqdocvariable{s} \coqdockw{with}\coqdoceol
+\coqdocindent{7.50em}
+\ensuremath{|} \coqexternalref{None}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{None}} \ensuremath{\Rightarrow} \coqexternalref{None}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{None}}\coqdoceol
+\coqdocindent{7.50em}
+\ensuremath{|} \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} \coqdocvar{s'} \ensuremath{\Rightarrow} \coqref{fmcs a2 ans3.progDenote}{\coqdocdefinition{progDenote}} \coqdocvar{p'} \coqdocvar{s'}\coqdoceol
+\coqdocindent{7.50em}
+\coqdockw{end}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Fixpoint} \coqdef{fmcs a2 ans3.ext.compile}{compile}{\coqdocdefinition{compile}} (\coqdocvar{e} : \coqref{fmcs a2 ans3.ext.exp}{\coqdocinductive{exp}}) : \coqref{fmcs a2 ans3.ext.prog}{\coqdocdefinition{prog}} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvariable{e} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{Const}} \coqdocvar{n} \ensuremath{\Rightarrow} \coqref{fmcs a2 ans3.ext.iConst}{\coqdocconstructor{iConst}} \coqdocvar{n} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{Binop}} \coqdocvar{b} \coqdocvar{e1} \coqdocvar{e2} \ensuremath{\Rightarrow} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqref{fmcs a2 ans3.compile}{\coqdocdefinition{compile}} \coqdocvar{e2}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqref{fmcs a2 ans3.compile}{\coqdocdefinition{compile}} \coqdocvar{e1}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{++}} \coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{(}}\coqref{fmcs a2 ans3.ext.iBinop}{\coqdocconstructor{iBinop}} \coqdocvar{b} \coqexternalref{:list scope:x '::' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{::}} \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}\coqexternalref{:list scope:x '++' x}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocnotation{)}}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{End} \coqref{fmcs a2 ans3.ext}{\coqdocmodule{ext}}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
