@@ -667,7 +667,9 @@
 \coqdocnoindent
 \coqdockw{Eval} \coqdoctac{simpl} \coqdoctac{in} \coqref{fmcs a2 ans3.ext.compile}{\coqdocdefinition{ext.compile}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{ext.Binop}} \coqref{fmcs a2 ans3.ext.Times}{\coqdocconstructor{ext.Times}} (\coqref{fmcs a2 ans3.ext.Binop}{\coqdocconstructor{ext.Binop}} \coqref{fmcs a2 ans3.ext.Minus}{\coqdocconstructor{ext.Minus}} (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{ext.Const}} 2) (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{ext.Const}} 3)) (\coqref{fmcs a2 ans3.ext.Const}{\coqdocconstructor{ext.Const}} 7)).\coqdoceol
 \end{coqdoccode}
-= \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (14 :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack}  \vspace{1em}  \noindent  The theorem for this extended machine's correctness is proven in a similar way to \textbf{Q3.1}. I will prove an auxilary lemma \coqref{fmcs a2 ans3.ext compile correct'}{\coqdoclemma{ext\_compile\_correct'}}, and use it to prove the theorem \coqref{fmcs a2 ans3.ext compile correct}{\coqdoclemma{ext\_compile\_correct}}. 
+= \coqexternalref{Some}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{Some}} (14 :: \coqexternalref{nil}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocconstructor{nil}}) : \coqexternalref{option}{http://coq.inria.fr/distrib/8.4pl5/stdlib/Coq.Init.Datatypes}{\coqdocinductive{option}} \coqdocdefinition{stack} 
+
+ \vspace{1em}  \noindent  The theorem for this extended machine's correctness is proven in a similar way to \textbf{Q3.1}. I will prove an auxilary lemma \coqref{fmcs a2 ans3.ext compile correct'}{\coqdoclemma{ext\_compile\_correct'}}, and use it to prove the \coqref{fmcs a2 ans3.ext compile correct}{\coqdoclemma{ext\_compile\_correct}} theorem. 
 
  \vspace{0.5em} \begin{coqdoccode}
 \coqdocnoindent
@@ -737,8 +739,5 @@
 \coqref{fmcs a2 ans3.ext compile correct}{\coqdoclemma{ext\_compile\_correct}} \coqdocvar{is} \coqdocvar{defined}
 
 \coqdocemptyline
-
-
- \noindent  I have completed the proof for the extended Stack Machine's correctness. \begin{coqdoccode}
-\coqdocemptyline
+\begin{coqdoccode}
 \end{coqdoccode}

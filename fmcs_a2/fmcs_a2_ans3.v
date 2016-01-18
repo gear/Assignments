@@ -418,9 +418,10 @@ Eval simpl in ext.progDenote (ext.compile (ext.Binop ext.Times
 
 Eval simpl in ext.compile (ext.Binop ext.Times (ext.Binop ext.Minus (ext.Const 2) (ext.Const 3)) (ext.Const 7)).
 (** [= Some (14 :: nil) : option stack] *)
+
 (** %\vspace{1em}% *)
 (** %\noindent% *)
-(** The theorem for this extended machine's correctness is proven in a similar way to %\textbf{Q3.1}%. I will prove an auxilary lemma [ext_compile_correct'], and use it to prove the theorem [ext_compile_correct]. *)
+(** The theorem for this extended machine's correctness is proven in a similar way to %\textbf{Q3.1}%. I will prove an auxilary lemma [ext_compile_correct'], and use it to prove the [ext_compile_correct] theorem. *)
 
 (** %\vspace{0.5em}% *)
 Theorem ext_compile_correct : forall (e : ext.exp),
@@ -461,7 +462,3 @@ Qed.
 ext_compile_correct is defined
 ]]
 *)
-
-(** %\noindent% *)
-(** I have completed the proof for the extended Stack Machine's correctness. *)
-
