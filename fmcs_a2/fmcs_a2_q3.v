@@ -68,3 +68,4 @@ Definition instrDenote' (i : instr) (s : stack) : option stack :=
 
 (** %\paragraph{Q3.2.}% Extend your implementation of %\textbf{Q3.1}% to add Minus operator to binop and adjust definitions of denotations, the compiler, appropriately and complete the proof.*)
 
+(** %\noindent% The solution is avaiable at: https://github.com/gear/Assignments/blob/master/fmcs_a2.pdf%)

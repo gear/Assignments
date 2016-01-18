@@ -8,6 +8,7 @@ Require Export fmcs_a2_q3.
 
 (** %\noindent% *)
 (** Since we are given new [instrDenote'] function, I am going to change the [compile] and [progDenote] function into [compile'] and [progDenote'] function that accept the new definition of [instrDenote']. The new functions are defined as follow:*)
+(** %\vspace{0.5em}% *)
 
 Fixpoint progDenote' (p : prog) (s : stack) : option stack :=
   match p with
@@ -23,8 +24,10 @@ Fixpoint compile' (e : exp) : prog :=
   | Const n => iConst n :: nil
   | Binop b e1 e2 => (compile' e1) ++ (compile' e2) ++ (iBinop b :: nil)
   end.
+(** %\vspace{1em}% *)
 
-(** Before going to the proof, I would like to test out the new Stack Machine with few examples of program evaluation and compiler evaluation:*)
+(** %\noindent% Before going to the proof, I would like to test out the new Stack Machine with few examples of program evaluation and compiler evaluation:*)
+(** %\vspace{0.5em}% *)
 
 Eval simpl in progDenote' (compile' (Const 3)) nil.
 (** [= Some (3 :: nil) : option stack] *)
@@ -38,21 +41,25 @@ Eval simpl in progDenote' (compile' (Binop Times
 (** [= Some (77 :: nil) : option stack] *)
 
 Eval simpl in compile' (Binop Times (Binop Plus (Const 2) (Const 3)) (Const 7)).
-(** [= iConst 3 :: iConst 2 :: iBinopPlus :: iConst 7 :: iBinop Times :: nil : prog] *)
+(** [= iConst 3 :: iConst 2 :: iBinop Plus :: iConst 7 :: iBinop Times :: nil : prog] *)
+(** %\vspace{1em}% *)
 
-(** Our modified compiler should work with %\emph{all}% input, therefore we have the compiple'_correct theorem as follow: *)
+(** %\noindent% Our modified compiler should work with %\emph{all}% input, therefore we have the [compiple'_correct] theorem as follow: *)
 
-Theorem compile'_correct : forall e, progDenote' (compile' e) nil = Some (expDenote e :: nil).
+(** %\vspace{0.5em}% *)
+Theorem compile'_correct : forall e, 
+  progDenote' (compile' e) nil = Some (expDenote e :: nil).
+(** %\vspace{0.5em}% *)
 (* begin hide *)
 Abort.
 (* end hide *)
 
-(** %\noindent% To prove this theorem, as in {cpdt}, I will use the standard trick of %\emph{strengthening the induction hypothesis}%. By proving the fact that, given %\emph{any}% expression, program list state, and stack state, the modified compiler will correctly compile the program to run with [progDenote'].*)
-
+(** %\noindent% To prove this theorem, as in CPDT book, I will use the standard trick of %\emph{strengthening the induction hypothesis}%. By proving the fact that, given %\emph{any}% expression, program list state, and stack state, the modified compiler will correctly compile the program to run with [progDenote'].*)
+(** %\vspace{0.5em}% *)
 
 Lemma compile'_correct' : forall e p s,
   progDenote' (compile' e ++ p) s = progDenote' p (expDenote e :: s).
-(**
+(** %\vspace{-1em}% 
 [[
 1 subgoal
 
@@ -67,7 +74,7 @@ Lemma compile'_correct' : forall e p s,
 (** %\vspace{0.5em}% *)
 
 induction e.
-(** 
+(** %\vspace{-1em}% 
 [[
 2 subgoals
   n : nat
@@ -83,34 +90,31 @@ subgoal 2 is:
 
 *)
 
-(** Assuming we are given some arbitary stack and program: %\vspace{0.5em}% *)
-
 intros.
-(**
+(** %\vspace{-1em}% 
 [[
 2 subgoals
   n : nat
   p : list instr
   s : stack
   ============================
-   progDenote' (compile' (Const n) ++ p) s =
+   progDenote' (compile' (Const n) ++ p) s = 
    progDenote' p (expDenote (Const n) :: s)
 subgoal 2 is:
  forall (p : list instr) (s : stack),
- progDenote' (compile' (Binop b e1 e2) ++ p) s =
+ progDenote' (compile' (Binop b e1 e2) ++ p) s = 
  progDenote' p (expDenote (Binop b e1 e2) :: s)
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% The first subgoal can be proved by simplify the function [compile'] and [expDenote]. The tactic named [simpl] and [reflexivity] does exactly what we want. *)
 (** %\vspace{0.5em}% *)
-simpl.
 
-(**
+simpl.
+(** %\vspace{-1em}% 
 [[
 2 subgoals
-
  n : nat
  p : list instr
  s : stack
@@ -124,16 +128,15 @@ subgoal 2 is
 ]]
 
 *)
-
+(** %\vspace{0.5em}% *)
 (** %\noindent% By using simple [reflexivity] tactic, I have proved the first subgoal. *)
 (** %\vspace{0.5em}% *)
 
 reflexivity.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -152,10 +155,9 @@ reflexivity.
 
 intros.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -169,16 +171,15 @@ intros.
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% The tactic [simpl] will evaluate the [compile'] and [expDenote] functions: *)
 (** %\vspace{0.5em}% *)
 
 simpl.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -192,13 +193,13 @@ simpl.
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% To make the LHS of our target goal similar to the first inductive hypothesis [IHe1], I will apply the reverse association rule for [list] concatenation. *)
 (** %\vspace{0.5em}% *)
 
 Check app_assoc_reverse.
 
-(**
+(** %\vspace{-1.5em}%
 [[
 app_assoc_reverse
      : forall (A : Type) (l m n : list A), (l ++ m) ++ n = l ++ m ++ n
@@ -208,10 +209,9 @@ app_assoc_reverse
 
 rewrite app_assoc_reverse.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -225,16 +225,15 @@ rewrite app_assoc_reverse.
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% Now we can apply the inductive hypotheses to "push" [e1] and [e2] of the LHS to the LHS stack. *)
 (** %\vspace{0.5em}% *)
 
 rewrite IHe1.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -253,10 +252,9 @@ rewrite app_assoc_reverse.
 
 rewrite IHe2.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -271,15 +269,15 @@ rewrite IHe2.
 
 *)
 
+(** %\vspace{1em}% *)
 (** %\noindent% At this step, we can use the [simpl] tactic again since it is trivial to evaluate the LHS's [progDenote'] with [iBinop p :: nil]. *)
 (** %\vspace{0.5em}% *)
 
 simpl.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
-
  b : binop
  e1 : exp
  e2 : exp
@@ -293,30 +291,15 @@ simpl.
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% I comple the proof of this lemma by [reflexivity] and save it with [Qed]. *)
 (** %\vspace{0.5em}% *)
 
 reflexivity.
 Qed.
 
-(**
+(** %\vspace{-2em}%
 [[
- introduction e.
-
- intros.
- simpl.
- reflexivity.
-
- intros.
- simpl.
- rewrite app_assoc_reverse.
- rewrite IHe1.
- rewrite app_assoc_reverse.
- rewrite IHe2.
- simpl.
- reflexivity.
-
 compile'_correct' is defined
 ]]
 
@@ -326,7 +309,7 @@ compile'_correct' is defined
 (** %\vspace{0.5em}% *)
 
 Theorem compile'_correct : forall e, progDenote' (compile' e) nil = Some (expDenote e :: nil).
-
+(** %\vspace{0.5em}% *)
 (** %\noindent% Just like with the lemma [compile'_correct'], I will firstly introduce the expression [e] and then append [nil] to e so that the LHS has the form of [compile'_correct']. *)
 (** %\vspace{0.5em}% *)
 
@@ -342,13 +325,13 @@ rewrite (app_nil_end (compile' e)).
 ]]
 
 *)
-
+(** %\vspace{1em}% *)
 (** %\noindent% The theorem is proved by applying lemma [compile'_correct'] and [reflexivility. *)
 (** %\vspace{0.5em}% *)
 
 rewrite compile'_correct'.
 
-(**
+(** %\vspace{-1em}%
 [[
 1 subgoal
   e : exp
@@ -361,12 +344,8 @@ rewrite compile'_correct'.
 reflexivity.
 Qed.
 
-(**
+(** %\vspace{-2em}%
 [[
- intros.
- rewrite (app_nil_end (compile' e)).
- rewrite compile'_correct'.
- reflexivity.
 compile'_correct is defined
 ]]
 *)
@@ -374,7 +353,7 @@ compile'_correct is defined
 (** %\subsection*{Q3.2 - Extended Stack Machine.}% *)
 
 (** %\noindent% *)
-(** The new Stack Machine is defined in module ext as follow: (I keep the definition of [stack] since it is not necessary to re-define it.*)
+(** The new Stack Machine is defined in module ext as follow: (I keep the definition of [stack] since it is not necessary to re-define it).*)
 
 Module ext.
 
@@ -418,9 +397,71 @@ Fixpoint progDenote (p : prog) (s : stack) : option stack :=
 Fixpoint compile (e : exp) : prog :=
   match e with
   | Const n => iConst n :: nil
-  | Binop b e1 e2 => (compile e2) ++ (compile e1) ++ (iBinop b :: nil)
+  | Binop b e1 e2 => (compile e1) ++ (compile e2) ++ (iBinop b :: nil)
   end.
 
 End ext.
 
+(** %\vspace{1em}% *)
+(** %\noindent% Some example with the new extended stack machine: *)
+
+Eval simpl in ext.progDenote (ext.compile (ext.Const 3)) nil.
+(** [= Some (3 :: nil) : option stack] *)
+
+Eval simpl in ext.progDenote (ext.compile (ext.Binop ext.Minus (ext.Const 42) (ext.Const 24))) nil.
+(** [= Some (18 :: nil) : option stack] *)
+
+Eval simpl in ext.progDenote (ext.compile (ext.Binop ext.Times 
+             (ext.Binop ext.Plus (ext.Const 3) (ext.Const 4)) 
+             (ext.Binop ext.Minus (ext.Const 8) (ext.Const 6)))) nil.
+(** [= Some (14 :: nil) : option stack] *)
+
+Eval simpl in ext.compile (ext.Binop ext.Times (ext.Binop ext.Minus (ext.Const 2) (ext.Const 3)) (ext.Const 7)).
+(** [= Some (14 :: nil) : option stack] *)
+(** %\vspace{1em}% *)
+(** %\noindent% *)
+(** The theorem for this extended machine's correctness is proven in a similar way to %\textbf{Q3.1}%. I will prove an auxilary lemma [ext_compile_correct'], and use it to prove the theorem [ext_compile_correct]. *)
+
+(** %\vspace{0.5em}% *)
+Theorem ext_compile_correct : forall (e : ext.exp),
+  ext.progDenote (ext.compile e) nil = Some (ext.expDenote e :: nil).
+
+Lemma ext_compile_correct' : forall (e : ext.exp) (p : ext.prog) (s : stack),
+  ext.progDenote (ext.compile e ++ p) s = ext.progDenote p (ext.expDenote e :: s).
+
+induction e.
+intros.
+simpl.
+reflexivity.
+
+intros.
+simpl.
+rewrite app_assoc_reverse.
+rewrite IHe1.
+rewrite app_assoc_reverse.
+rewrite IHe2.
+simpl.
+reflexivity.
+Qed.
+
+(** %\vspace{-2em}%
+[[
+ext_compile_correct' is defined
+]]
+*)
+
+intros.
+rewrite (app_nil_end (ext.compile e)).
+rewrite ext_compile_correct'.
+reflexivity.
+Qed.
+
+(** %\vspace{-2em}%
+[[
+ext_compile_correct is defined
+]]
+*)
+
+(** %\noindent% *)
+(** I have completed the proof for the extended Stack Machine's correctness. *)
 
