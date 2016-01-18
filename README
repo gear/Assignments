@@ -1,0 +1,9 @@
+## Tokyo Tech FMCS Part II Assignment.
+
+This is assignment 3 of Part II in the graduate course Fundamental of Mathematics : Computer Science at Tokyo Institute of Technology. This part is taught by Associate Professor Ken Wakita of Mathematical and Computing Sciences Department. The problem statement can be accessed here: https://www.evernote.com/shard/s2/nl/54745655/687d3f27-bd2c-4fdd-abad-4ab6715ec186.
+
+There are 2 coq scripts: fmcs_a2_q3.v and fmcs_a2_ans3.v
+
+### fmcs_a2_q3.v contains problem statements and basic code for the Stack Machine.
+### fmcs_a2_ans3.v contains problem solution and proof for the new compiler as well as the extended Stack Machine.
+
