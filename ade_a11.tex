@@ -119,53 +119,55 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 	\item Consider approaches to make $\beta$ smaller.
 \end{itemize}
 \end{itemize}
-\vspace{4em}
-\section*{Question 1: Condition of $\alpha$ for $N_p = 100$}
+\section*{Question 1: Condition of $\alpha$ for $N_p = 100$.}
 \setcounter{section}{1}
 
-\textit{Roughly estimate the execution time using 8 processors and the assumtions above.} 
+\textit{Given $N_p = 100$ and $\beta$ \% skew remains. Estimate $\alpha$ for the Fine Bucket Method to be effective.} 
 
 \vspace{1.5em}
 \noindent
 \textbf{Answer:} 
 \noindent
-Since we have enough memory for storing the data in each PE, the number of communication is reduced to the number of PEs, and also the network setup time is negligible ($50\mu s \times 8 = 0.4\ ms$) compare to communication time or disk I/O time. According to the given information about the database, we have the relation size in each PE:
-$$ \mathcal{X} = \frac{64 \mbox{MB}}{8} = 8 \mbox{MB} $$
-In each communication phrase, each PE sends:
-$$ \mathcal{Y} = \frac{\mathcal{X}}{8} = \frac{8 \mbox{MB}}{8} = 1 \mbox{MB} $$
-Transfer time in the network:
-$$ \mathcal{Z} = \frac{\mathcal{Y}}{10 \mbox{MB/s}} = \frac{1 \mbox{MB}}{10 \mbox{MB/s}} = 100 \mbox{ms} $$
-We have 8 phrases for the communication, therefore the cost for communication time is:
-$$ \mathcal{T}_{comm} = 8 \times 2 \times \mathcal{Z} = 1.6\mbox{s} $$
-We also have the disk I/O in each PE, assuming there is no skew:
-$$ \mathcal{W} = 3 \times \frac{|R| + |S|}{8} = 48 \mbox{MB} $$
-Disk I/O time:
-$$ \mathcal{T}_{disk} = \frac{\mathcal{W}}{8 \mbox{MB}} = 6 \mbox{s} $$
-Total cost for Parallel Grace Hash Join with 8 PEs is:
-$$ \mathcal{T} = \mathcal{T}_{comm} + \mathcal{T}_{disk} = 1.6 + 6 = 7.6 \mbox{s} $$
+As presented in the lecture note of lecture 11th, if $N_p \rightarrow \infty$, $\alpha$ \% for sequential execution time:
+$$ \mathcal{T}_{seq} = \frac{\alpha}{100} \times 3 \times (|R| + |S|) $$
+When we adopt the Fine Bucket with Spreading Bucket and have $\beta$ \% skew remains:
+$$ \mathcal{T}_{fb} = 5 \times \frac{|R| + |S|}{N_p} + \frac{\beta}{100} \times 3 \times (|R| + |S|) $$
+Therefore, Fine Bucket Method is effective when:
+\begin{equation*}
+	\begin{aligned}
+		\mathcal{T}_{seq} & > \mathcal{T}_{fb} \\
+		\frac{\alpha}{100} \times 3 \times (|R| + |S|) & > 5 \times \frac{|R| + |S|}{N_p} + \frac{\beta}{100} \times 3 \times (|R| + |S|) 
+	\end{aligned}
+\end{equation*}
+Replace $N_p = 100$ and divide both side to $(|R| + |S|)$, we have:
+\begin{equation*}
+	\begin{aligned}
+		\frac{3 \alpha}{100} & > \frac{5}{100} + \frac{3 \beta}{100} \\
+		\alpha & > 1.7 + \beta
+	\end{aligned}
+\end{equation*}
+In conclusion, $\alpha$ should be larger than $1.7 + \beta$ for the Fine Bucket Method to be effective.
 
-\section*{Question 2: Execution time for the join operation.}
+\section*{Question 2: $\beta$ reduction.}
 \setcounter{section}{1}
 
-\textit{Roughly estimate the execution time using 16 processors and the assumtions above.} 
+\textit{Consider approach to reduce $\beta$.} 
 
 \vspace{1.5em}
 \noindent
 \textbf{Answer:} 
 \noindent
-Since we have enough memory for storing the data in each PE, the number of communication is reduced to the number of PEs, and also the network setup time is negligible ($50\mu s \times 16 = 0.8\ ms$) compare to communication time or disk I/O time. According to the given information about the database, we have the relation size in each PE:
-$$ \mathcal{X} = \frac{64 \mbox{MB}}{16} = 4 \mbox{MB} $$
-In each communication phrase, each PE sends:
-$$ \mathcal{Y} = \frac{\mathcal{X}}{8} = \frac{4 \mbox{MB}}{16} = 250 \mbox{KB} $$
-Transfer time in the network:
-$$ \mathcal{Z} = \frac{\mathcal{Y}}{10 \mbox{MB/s}} = \frac{0.25 \mbox{MB}}{10 \mbox{MB/s}} = 25 \mbox{ms} $$
-We have 8 phrases for the communication, therefore the cost for communication time is:
-$$ \mathcal{T}_{comm} = 16 \times 2 \times \mathcal{Z} = 0.8\mbox{s} $$
-We also have the disk I/O in each PE, assuming there is no skew:
-$$ \mathcal{W} = 3 \times \frac{|R| + |S|}{16} = 24 \mbox{MB} $$
-Disk I/O time:
-$$ \mathcal{T}_{disk} = \frac{\mathcal{W}}{8 \mbox{MB}} = 3 \mbox{s} $$
-Total cost for Parallel Grace Hash Join with 8 PEs is:
-$$ \mathcal{T} = \mathcal{T}_{comm} + \mathcal{T}_{disk} = 0.8 + 3 = 3.8 \mbox{s} $$
+$\beta$ can be considered as \emph{remaining skew} after the Fine Bucket Method was applied to our Parallel Database Maganement System. By considering each step in the Fine Bucket Method, I propose some reasons for $\beta$ to exist.
+\begin{enumerate}
+	\item The distribution for each sub-bucket (task group) is skewed. In the Spreading Bucket Method, if there is no scheduling mechanism, each sub-bucket of a bucket in the PEs will have different size, causing the bucket distribution estimation in each PE inaccurate, hence large $\beta$.
+	\item LPT First Scheduling can be the main cause for $\beta$. This method can cause unpredictable bucket size in a PE because it heuristically allocate sub-bucket to PEs in each iteration.
+	\item A small number of PEs and small number of buckets can also cause a problem since it is difficult to distribute buckets evenly when there are too few PEs.
+\end{enumerate}
+In order to solve the problems stated above, I consider these following approaches:
+\begin{enumerate}
+	\item The distribution for each sub-bucket (task group) is skewed. For this problem, I think we can take advantage of the interconnection network. The interconnection network routers themself can process bucket ID for each data tuple sent to network. In this scheme, PEs do not have to process address of each bucket sent, they just send the packet to the interconneciton network and let the network handle the balancing itself. The advantage of this approach is that it makes no change to each PE's algorithm and also save some processing time from PEs. On the other hand, this approach requires modified network routers and protocol, which can be expensive to develop and maintain.
+	\item \textbf{LPT First Scheduling can be the main cause for $\beta$}. For this problem, I do not have a concrete idea to solve it. However, I think if there is a master PE that keeps track of the size of each task group, sort the task group, and distribute the task group in a periodic way to each PE, the $\beta$ skew might be reduced with a trade off of extra processing power.
+	\item We can increase the number of PEs and number of sub-buckets. In such scheme, $\beta$ will surely be reduced because it easier to distribute buckets. However, a quantitative measurement should be considered for number of PEs correspond with number of buckets (sub-buckets). Also, this approach is expensive since it requires more PEs.
+\end{enumerate}
 
 \end{document}

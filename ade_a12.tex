@@ -1,0 +1,184 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+%\usepackage{tgheros}
+%\usepackage[defaultmono]{droidmono}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+\tikzset{
+ >=stealth',
+ help lines/.style={dashed, thick},
+ axis/.style={<->},
+ important line/.style={thick},
+ connection/.style={thick, dotted},
+}
+
+\usepackage{CJKutf8}
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+% my own titles
+\makeatletter
+\renewcommand{\maketitle} {
+\begin{center}
+\vspace{2ex}
+{\LARGE \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{ADE:Assignment 12}
+\cfoot{Page \thepage}
+\rfoot{15M54097}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+
+%\renewcommand*\thelstnumber{\arabic{lstnumber}:}
+
+%\DeclareCaptionFormat{mylst}{\hrule#1#2#3}
+%\captionsetup[lstlisting]{format=mylst, labelfont=bf, singlelinecheck=off, labelsep=space}
+
+\begin{document}
+
+\title{Advanced Data Engineering: Assign. 12}
+
+\author{NGUYEN T. Hoang - SID: 15M54097}
+
+\date{Fall 2015, W831 Tue. Period 5-6 \\ \hfill Due date: 2016/01/19}
+
+\maketitle
+\vspace{-4.5em}
+\hspace{5.3em} (\begin{CJK}{UTF8}{min}ホアン\end{CJK})
+\vspace{4em}
+\section*{Problem}
+\begin{itemize}
+	\item Roughly estimate the execution time for the 4 distributed algorithms with the following assumptions:
+\begin{itemize}
+	\setlength{\parskip}{0cm}
+	\setlength{\itemsep}{0cm}
+	\item Cardinality of the relation {R} = 1,000,000; {S} = 500,000.
+	\item Total length of a tuple: $st_R = 1,000B$; $st_S = 2,000B$.
+	\item Disk transfer bandwidth: $B_{disk} = 10MB/s$.
+	\item Network bandwidth: $B_{net} = 5MB/s$.
+	\item Selectivity: $\alpha = 10 \%$, $\beta = 10 \%$, $\gamma = 10 \%$,  
+	\item Hash Bit Vector: Use 1 bit for each tuple.
+\end{itemize}
+\end{itemize}
+\section*{Question: Cost estimation for distributed algorithms.}
+\setcounter{section}{1}
+
+\textit{Estimate cost for Na\"{\i}ve, Semi-Join, 2-Way Semi-Join and Hashed Bit Vector distributed join algorithms.} 
+
+\vspace{1.5em}
+\noindent
+\textbf{Answer:} 
+\noindent
+\paragraph{Na\"{\i}ve} According to the lecture note, the cost estimation for na\"{\i}ve algorithm is:
+$$ \mathcal{C}_{\mbox{Na\"{\i}ve}} \approx \ \mathcal{C}_D(5S + 3R) + \mathcal{C}_C(S)$$
+Since the data size of the relations are same, I assume relation S is sent. Replace given information about data, we have:
+\begin{equation*}
+	\begin{aligned}
+		\mathcal{C}_{\mbox{Na\"{\i}ve}} \approx & \ \mathcal{C}_D(5S + 3R) + \mathcal{C}_C(S) \\
+		= & \ \frac{5 \times \{S\} \times st_S + 3 \times \{R\} \times st_R}{B_{disk}} + \frac{\{S\} \times st_S}{B_{net}} \\
+		= & \ \frac{5 \times 500,000 \times 2,000 + 3 \times 1,000,000 \times 1,000}{10,000,000} + \frac{500,000 \times 2,000}{5,000,000} \\
+		= & \ 800 + 1000 = 1800\mbox{ seconds} = 30\mbox{ minutes}.
+	\end{aligned}
+\end{equation*}
+\pagebreak
+
+\paragraph{Semi-Join} According to the lecture note, the cost estimation for semi-join algorithm when we assume that projection can be overlapped on I/O is:
+$$ \mathcal{C}_{\mbox{SJ}} \approx \ \mathcal{C}_D(4S + 5 \alpha S + 3R + 5 \beta R) + \mathcal{C}_C(\alpha S + \beta R)$$
+Replace given information about data, we have:
+\begin{equation*}
+	\begin{aligned}
+		\mathcal{C}_{\mbox{SJ}} \approx & \ \mathcal{C}_D(4S + 5 \alpha S + 3R + 5 \beta R) + \mathcal{C}_C(\alpha S + \beta R) \\
+		= & \ \frac{(4 + 5\alpha) \times 500,000 \times 2,000 + (3 + 5 \beta) \times 1,000,000 \times 1,000}{10,000,000}  \\
+		& + \frac{\alpha \times 500,000 \times 2,000 + \beta \times 1,000,000 \times 1,000}{5,000,000} \\
+		= & \ 800 + 40 = 840\mbox{ seconds} = 14\mbox{ minutes}.
+	\end{aligned}
+\end{equation*}
+
+\paragraph{2-Way Semi-Join} According to the lecture note, the cost estimation for 2-way semi-join algorithm is:
+$$ \mathcal{C}_{\mbox{2WSI}} \approx \ \mathcal{C}_D(4R + 5 \beta R + 3 \alpha S + 2 \beta \gamma R + 2 \alpha \gamma S) + \mathcal{C}_C(\alpha \gamma S + \beta R)$$
+Replace given information about data, we have:
+\begin{equation*}
+	\begin{aligned}
+		\mathcal{C}_{\mbox{2WSI}} \approx & \ \mathcal{C}_D(4R + 5 \beta R + 3 \alpha S + 2 \beta \gamma R + 2 \alpha \gamma S) + \mathcal{C}_C(\alpha \gamma S + \beta R) \\
+		= & \ \frac{(2 \alpha \gamma + 3 \alpha) \times 500,000 \times 2,000 + (4 + 5 \beta + 2 \beta \gamma) \times 1,000,000 \times 1,000}{10,000,000}  \\
+		& + \frac{\alpha \gamma \times 500,000 \times 2,000 + \beta \times 1,000,000 \times 1,000}{5,000,000} \\
+		= & \ 484 + 22 = 506\mbox{ seconds} = 8.4\mbox{ minutes}.
+	\end{aligned}
+\end{equation*}
+
+\paragraph{Hashed Bit Vector} According to the lecture note, the cost estimation for hashed bit vector algorithm:
+$$ \mathcal{C}_{\mbox{HB}} \approx \ \mathcal{C}_D(2S + 5 \alpha S + 4R + 4 \beta R) + \mathcal{C}_C( H_x + H_y + \alpha S)$$
+Replace given information about data, we have:
+\begin{equation*}
+	\begin{aligned}
+		\mathcal{C}_{\mbox{HB}} \approx & \ \mathcal{C}_D(2S + 5 \alpha S + 4R + 4 \beta R) + \mathcal{C}_C( H_x + H_y + \alpha S) \\
+		= & \ \frac{(2 + 5\alpha) \times 500,000 \times 2,000 + (4 + 4 \beta) \times 1,000,000 \times 1,000}{10,000,000}  \\
+		& + \frac{\alpha \times 500,000 \times 2,000 + 1,000,000 + 500,000}{5,000,000} \\
+		= & \ 690 + 20.3 = 710.3\mbox{ seconds} = 11.8\mbox{ minutes}.
+	\end{aligned}
+\end{equation*}
+
+\end{document}
