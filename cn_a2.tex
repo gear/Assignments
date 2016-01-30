@@ -119,14 +119,15 @@ Given a network as in Figure~\ref{fig:net}. Complete these following tasks:
         \item There is no epidemic.
     \end{enumerate}
 \end{enumerate}
-
+\vspace{1.5em}
 \noindent
-The source code for this assignment can be found at \cite{mgit}.
+\emph{The source code for this assignment can be found at:} \\
+\texttt{https://github.com/gear/CN\_A2\_SNAP}
 \pagebreak
 \section*{Answer}
 
 \noindent
-In this assignment, I will use SNAP.PY \cite{snap}, a network analysis developed by Stanford University, as a computational tool. All illustrations (figures, graphs \ldots) are drawn using Adobe Illustrator CC 2015.
+In this assignment, I will use SNAP.PY, a network analysis developed by Stanford University, as a computational tool. All illustrations (figures, graphs \ldots) are drawn using Adobe Illustrator CC 2015.
 
 \paragraph{Question 1:} Compute eigenvector centrality and betweenness centrality of each vertex.
 
@@ -338,43 +339,41 @@ Comparing result between Figure~\ref{fig:bisec} and Figure~\ref{fig:modul}, we c
 
 \paragraph{Question 3:} Explain quantitatively why ``\emph{your friends have more friends than you do}'' in the configuration model.
 \noindent
-\emph{Proof: } Suppose we are given a vector $k = \{k_0, k_1, ..., k_{n-1}\}$ contains the degree of all vertices in the configuration model with $n$ vertices and $m$ edges. Without changing the generality of the statement, we assume that $k_i > 0 \forall k_i = \in k$ and $n > 0$. In this context, the word ``friend'' of a vertex $i$ means the adjacency vertices of vertex $i$. Also, $k_i$ is the number of friend that vertex $i$ has. Denote $F_i$ as the number of friends that some vertex $i$ has, and $FF_i$ as the number of friends that friends of vertex $i$ has. Quantitatively, the average number of friend that an arbitary vertex $i$ has is:
+\emph{Proof: } Suppose we are given a vector $k = \{k_0, k_1, ..., k_{n-1}\}$ contains the degree of all vertices in the configuration model with $n$ vertices and $m$ edges. Without changing the generality of the statement, we assume that $k_i > 0 \ \forall \ k_i \ \in k$ and $n > 0$. In this context, the word ``friend'' of a vertex $i$ implies the adjacency vertices of vertex $i$. Also, $k_i$ is the number of friend that vertex $i$ has. Denote $F_i$ as the number of friends that some vertex $i$ has, and $FF_i$ as the number of friends that friends of vertex $i$ has. Quantitatively, the average number of friend that an arbitary vertex $i$ has is:
 $$ \mathds{E}(F_i) = \frac{1}{n} \sum_{i=0}^{n-1} k_i = \frac{2m}{n} $$
 Therefore, in this configuration model, the average friend that ``you'' have is $2m/n$. On the other hand, the probability that there is a connection between vertex $i$ and vertex $j$ ($i$ and $j$ are friends) is:
 $$ p(i \leftrightarrow j) = \frac{k_ik_j}{2m - 1} \approx \frac{k_ik_j}{2m} $$
 The average number of friends that a friend of vertex $i$ has is:
 \begin{equation*}
   \begin{aligned}
-\mathds{E}(FF_i) & = \frac{1}{k_i} \sum_{j = 0}^{n-1} p(i \leftrightarrow j) \times k_j \\
-& = \frac{1}{k_i} \times k_i \sum_{j = 0}^{n-1} \frac{k_j}{2m} \times k_j \\
+\mathds{E}(FF_i) & = \frac{1}{k_i} \sum_{j = 0}^{n-1} p(i \leftrightarrow j) \times k_j
+ \ = \ \frac{1}{k_i} \times k_i \sum_{j = 0}^{n-1} \frac{k_j}{2m} \times k_j \\
 & = \frac{1}{2m} \sum_{j = 0}^{n-1} k_j^2 \\
   \end{aligned}
 \end{equation*}
 Consider the different $\mathcal{D}$ between $\mathds{E}(F_i)$ and $\mathds{E}(FF_i)$. Note that $2m = \sum_{j} k_j$:
 \begin{equation*}
   \begin{aligned}
-    \mathcal{D} & = \mathds{E}(FF_i) - \mathds{E}(F_i) \\
-    & = \frac{\displaystyle\sum_{j = 0}^{n-1} k_j^2}{2m} - \frac{k_ik_j}{2m} \\
-    & = \frac{n \displaystyle\sum_{j = 0}^{n-1} k_j^2 - 2 \left(\sum_{j = 0}^{n-1} k_j \right)^2 }{2mn} \\
+    \mathcal{D} & = \mathds{E}(FF_i) - \mathds{E}(F_i)
+    \ = \ \frac{\displaystyle\sum_{j = 0}^{n-1} k_j^2}{2m} - \frac{2m}{n}
+     \ = \ \frac{n \displaystyle\sum_{j = 0}^{n-1} k_j^2 - 2 \left(\sum_{j = 0}^{n-1} k_j \right)^2 }{2mn} \\
   \end{aligned}
 \end{equation*}
 Expand the square term $2(...)^2$, we have the following result:
 $$\mathcal{D} = \frac{(n-1) \displaystyle\sum_{j = 0}^{n-1} k_j^2 - 2 \sum_{i < j} k_ik_j}{2mn}$$
 Using the Cauchy-Schwarz inequality, we have:
 $$ k_i^2 + k_j^2 \geq 2k_ik_j $$
-Therefore, using the general from of Cauchy-Schwarz we have:
+Therefore, using Cauchy-Schwarz for $n(n-1)/2$ pairs of $k_i, k_j$ we have:
 $$ (n-1) \sum_{j = 0}^{n-1} k_j^2 \geq 2 \sum_{i < j} k_ik_j $$
 Hence,
 $$\mathcal{D} = \frac{(n-1) \displaystyle\sum_{j = 0}^{n-1} k_j^2 - 2 \sum_{i < j} k_ik_j}{2mn} \geq 0$$
-In conclusion, the different between average number of a friend's friend and your friend is $\mathcal{D} \geq 0$, therefore the statement ``\emph{(on average) your friends have more friends than you do}'' holds true. QED.
+In conclusion, the different between average number of a friend's friend and your friend is $\mathcal{D} \geq 0$, therefore the statement ``\emph{(on average) your friends have more friends than you do}'' holds true. The equal sign happens when everyone has exactly 1 friend. \ \ \ \ \ \ \ \ \ \textbf{\texttt{QED}}.
 
 \paragraph{Question 4:} Example of parameter $\beta$ and $\gamma$ of SIR model.
 \noindent
-In the SIR epidepic model, $\beta$ is the infection rate and $\gamma$ is recover (or death) rate. The model is represented as a system of diffirential equation:
-$$ \frac{ds}{dt} = -\beta s x, $$
-$$ \frac{dx}{dt} = \beta s x - \gamma x, $$
-$$ \frac{dr}{dt} = \gamma x $$
-where $s, x, r$ are fraction of population that are \emph{subceptible}, \emph{recovered}, and \emph{infectionous} respectively. Since the solution of these diffirential equation is not analytical, numerical method is applied to analize this SIR model. In real-life application, the parameter $\beta$ and $\gamma$ is determined empirically by trying to fit known data with some trial value of $\beta$ and $\gamma$. The result for each value ($s, x, r$) in this exercise is stored in an array, which is indexed my time step. According to \cite{net}, the epidemic happens when $\beta > \gamma$, which means the disease spreads faster than human recovery. I plotted the time graph for 4 cases:
+In the SIR epidemic model, $\beta$ is the infection rate and $\gamma$ is recover (or death) rate. The model is represented as a system of diffirential equation:
+$$ \frac{ds}{dt} = -\beta s x; \ \ \frac{dx}{dt} = \beta s x - \gamma x; \ \ \frac{dr}{dt} = \gamma x $$
+where ($s, x, r$) are fraction of population that are \emph{subceptible}, \emph{recovered}, and \emph{infectionous} respectively. Since the solution of these diffirential equation is not analytical, numerical method is applied to analize this SIR model. In real-life application, the parameter $\beta$ and $\gamma$ is determined empirically by trying to fit known data with some trial value of $\beta$ and $\gamma$. The result for each value ($s, x, r$) in this exercise is stored in an array, which is indexed my time step. According to \cite{net}, the epidemic happens when $\beta > \gamma$, which means the disease spreads faster than human recovery. I plotted the time graph for 4 cases:
 
 \begin{figure*}[h!]
   \centering
