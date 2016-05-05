@@ -35,11 +35,11 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \lstset{%
     backgroundcolor=\color{backcolour},
-    basicstyle=\ttfamily\scriptsize,
+    basicstyle=\ttfamily\small,
     breaklines=true,
     captionpos=t,
     numbers=left,
-    numberstyle=\tiny,
+    numberstyle=\small,
     numbersep=5pt,
     frame=tb,
     commentstyle=\color{PineGreen},
@@ -117,36 +117,42 @@ $$ p_{exact} = \frac{x}{4} - 4 \sum_{n=odd}^{\infty} \frac{1}{(nx)^2\sinh{2n\pi}
 \section*{Answer}
 
 \noindent
-In this assignment, I will use SNAP.PY, a network analysis developed by Stanford University, as a computational tool. All illustrations (figures, graphs \ldots) are drawn using Adobe Illustrator CC 2015.
+Using the given code for FDM and exact solution in the lectures, I extract the boundary points from the solution of FDM and compare with the exact solution.
 
-\paragraph{Question 1:} Compute eigenvector centrality and betweenness centrality of each vertex.
+\paragraph{Extracting boundary points} In this assignment, I rewrite \texttt{step09.py} of FDM as a function named \texttt{fdm} (file: \texttt{assign1.py}). The parameters of this function is:
+\begin{itemize}
+  \setlength{\parskip}{0em}
+  \item \texttt{nx}: x-axis resolution.
+  \item \texttt{ny}: y-axis resolution.
+  \item \texttt{nit}: number of time step.
+  \item \texttt{draw}: (boolean) plot the data.
+\end{itemize}
 
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{cn_a2_net}
-    \caption{\emph{Simple network and its corresponding adjacency matrix.}}
-    \label{fig:net}
-\end{figure}
+\texttt{fmd}'s output is a nx-by-ny numpy array with the final values of the solution of 2D Laplace's equation for the given number of time step \texttt{nit}. Function \texttt{get\_border} is used to generate a 1-D array border from the 2D output. To match it with the exact result output of the function \texttt{exact}, the extracting order is given as follow:
 
-\noindent
-\emph{Eigenvector centrality} is given by the formula:
-$$ x_i^{(t)}= \underset{j \neq i}{\Sigma} A_{ij} \times x_i^{(t)} $$
-Rewrite in final matrix form:
-$$ A\boldsymbol{x} = k_1\boldsymbol{x} $$
-where $\boldsymbol{x}$ is a vector storing score of all nodes, and $k_1$ is the largest eigenvalue of the adjacency matrix $A$.
-
-\begin{lstlisting}[language=Python, caption={Eigenvector centrality computation with SNAP.PY}, label={lst:eig}]
- # Extracted from UnweightedUndirectedGraph class - File: cn_a2_p1.py
- ...
- import snap as sn
- self._graph = sn.LoadEdgeList(sn.PUNGraph, edge_list, 0, 1, ' ')
- ...
- # Compute eigenvector centrality and store to a hash table.
- def EigenvectorCentrality(self):
-     # Create a hash map: Int -> Float
-     NIdEigenH = sn.TIntFltH()
-     sn.GetEigenVector(self._graph, NIdEigenH)
-     return NIdEigenH
+\begin{lstlisting}[language=Python, caption={Get border solution from 2D FDM}, label={lst:border}]
+     # Extracted from assign1.py
+     ...
+     def get_border(a):
+       size = a.shape
+       length = size[0]
+       size = 2*(size[0] + size[1])
+       ret = np.zeros(size)
+       ret[0:length] = a[:,0]
+       ret[length:2*length] = a[length-1,:]
+       temp = a[:,length-1]
+       ret[2*length:3*length] = temp[::-1]
+       temp = a[0,:]
+       ret[3*length:] = temp[::-1]
+       return ret[::-1]
+     ...
 \end{lstlisting}
+
+\paragraph{Calculating error} The first problem I have with the given error function is the fact that it might contain zero division when $p_{exact}$ is zero. Besides, the second problem is this error term isn't normalized and hence can be difficult to plot. In here, I propose two solutions for these problems:
+\begin{itemize}
+  \item Zero division: Introduce a tolerance parameter of small value. If $p_{exact}$ is smaller than this value, we use this tolerance value instead of real value of $p_{exact}$. The function named \texttt{error} in \texttt{assign1.py} implements this solution.
+  \item Normalization: Each term inside the square root of the given error function is a square of the relative error of a data point. It is sufficient to divide each of these terms to the total number of data point in the sense that each error contributes a small portion to the overall error. In addition to the division, we can also introduces a different way to compute relative error. Instead of dividing to $p_{exact}$, we can divide the difference to $(p_{approx} + p_{exact})$. The function named \texttt{error\_rel} implements the new relative error and the normalization scheme.
+\end{itemize}
 
 \pagebreak
 
