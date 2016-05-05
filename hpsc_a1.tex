@@ -107,7 +107,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 Measure the convergence rate of FDM \texttt{step09.py}, given the error function:
 $$ \mbox{error} = \sqrt{\sum_{i,j=1}^{nx,ny}\frac{(p_{exact} - p_{approx})^2}{p_{exact}^2}} $$
 The exact solution is available from BEM \texttt{step02.py}:
-$$ p_{exact} = \frac{x}{4} - 4 \sum_{n=odd}^{\infty} \frac{1}{(nx)^2\sinh{2n\pi}} $$
+$$ p_{exact} = \frac{x}{4} - 4 \sum_{n=odd}^{\infty} \frac{1}{(nx)^2\sinh{2n\pi}}\sinh{n\pi x}\cos{n\pi y} $$
 
 \vspace{1.5em}
 \noindent
