@@ -148,11 +148,19 @@ Using the given code for FDM and exact solution in the lectures, I extract the b
      ...
 \end{lstlisting}
 
-\paragraph{Calculating error} The first problem I have with the given error function is the fact that it might contain zero division when $p_{exact}$ is zero. Besides, the second problem is this error term isn't normalized and hence can be difficult to plot. In here, I propose two solutions for these problems:
+\paragraph{Calculating error} The first problem I have with the given error function is the fact that it might contain zero division when $p_{exact}$ is zero. Besides, the second problem is about error term normalization and hence can be difficult to comprehence the result. The solutions for these problems:
 \begin{itemize}
   \item Zero division: Introduce a tolerance parameter of small value. If $p_{exact}$ is smaller than this value, we use this tolerance value instead of real value of $p_{exact}$. The function named \texttt{error} in \texttt{assign1.py} implements this solution.
-  \item Normalization: Each term inside the square root of the given error function is a square of the relative error of a data point. It is sufficient to divide each of these terms to the total number of data point in the sense that each error contributes a small portion to the overall error. In addition to the division, we can also introduces a different way to compute relative error. Instead of dividing to $p_{exact}$, we can divide the difference to $(p_{approx} + p_{exact})$. The function named \texttt{error\_rel} implements the new relative error and the normalization scheme.
+  \item Normalization: Each term inside the square root of the given error function is a square of the relative error of a data point. It is sufficient to divide each of these terms to the total number of data point in the sense that each error contributes a small portion to the overall error. In addition to the division, we can also introduce a different way to compute relative error. Instead of dividing to $p_{exact}$, we can divide the difference to $(p_{approx} + p_{exact})$. With this scheme, we do not have to use the extra tolerance variable. The function named \texttt{error\_rel} implements the new relative error and the normalization scheme. The error functions are re-defined as follow:
+\begin{equation*}
+  \begin{aligned}
+    \mbox{error} & = \sqrt{\frac{1}{n}\sum_{i,j=1}^{nx,ny}\frac{(p_{exact} - p_{approx})^2}{p_{exact}^2}} \\
+    \mbox{error\_rel} & = \sqrt{\frac{1}{n}\sum_{i,j=1}^{nx,ny}\frac{(p_{exact} - p_{approx})^2}{(p_{exact} + p_{approx})^2}} \\
+  \end{aligned}
+\end{equation*}
 \end{itemize}
+
+\paragraph{Plotting error} In this assignment, I choose to compute 128 boundary points for the exact solution, therefore the FDM solution has the shape of (32,32). To observe the convergence rate, a 100-elements array storing FDM solutions by number of iteration ranging from 0 to 990 with step of 10 is generated.
 
 \pagebreak
 
