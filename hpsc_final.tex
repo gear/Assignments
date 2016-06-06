@@ -69,7 +69,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \lhead{}
 \chead{}
 \rhead{}
-\lfoot{HPSC \textbar \ Assignment 2}
+\lfoot{HPSC \textbar \ Final Assignment}
 \cfoot{}
 \rfoot{15M54097 - Page \thepage}
 \renewcommand{\headrulewidth}{0pt}
@@ -93,18 +93,18 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \begin{document}
 \bibliographystyle{acm}
-\title{HPSC - Assignment 2}
+\title{HPSC - Final Assignment}
 
 \author{NGUYEN T. Hoang - SID: 15M54097}
 
-\date{Spring 2016, W831 Mon-Thu. Period 1-2 \\ \hfill Due date: 2016/05/30}
+\date{Spring 2016, W831 Mon-Thu. Period 1-2 \\ \hfill Due date: 2016/06/06}
 
 \maketitle
 
 \vspace{8em}
 \section*{Problem}
 \noindent
-Measure the convergence rate of Laplace Problem. Laplace equation is given by:
+Solve the Laplace equation using multigrid.
 $$\frac{\partial^2p}{\partial x^2} + \frac{\partial^2p}{\partial y^2} = 0,$$
 in a $x=[0,2]$, $y=[0,1]$ domains with boundary conditions:
 \begin{equation*}
@@ -114,46 +114,57 @@ in a $x=[0,2]$, $y=[0,1]$ domains with boundary conditions:
         \partial p / \partial y = 0 \ & at\ y=0,1.
     \end{aligned}
 \end{equation*}
-$$ \mbox{error} = \sqrt{\sum_{i,j=1}^{nx,ny}\frac{(p_{exact} - p_{approx})^2}{p_{exact}^2}} $$
-The exact solution is available from BEM \texttt{step02.py}:
-$$ p_{exact} = \frac{x}{4} - 4 \sum_{n=odd}^{\infty} \frac{1}{(nx)^2\sinh{2n\pi}}\sinh{n\pi x}\cos{n\pi y} $$
-Compute:
-\begin{enumerate}
-    \item Plot the log scale error against the number of iterations.
-    \item Change $nx, ny$.
-    \item Change order of the finite difference scheme. 
-\end{enumerate}
 
-\vspace{5em}
+Modify the code in \texttt{demo.py} so that it runs with the sparse matrix from \texttt{step1.py}.
+
+\vspace{10em}
 \noindent
 \emph{The source code and jupyter notebook for this assignment can be found at:} \\
 \texttt{https://github.com/gear/HPSC/tree/master/hw}
+File name: \texttt{assign2\_worksheet.ipynb}
 \pagebreak
 \section*{Answer}
 
 \noindent
-Using the given code for FDM and exact solution in the lectures, I extract the boundary points from the solution of FDM and compare with the exact solution.
+Using the given code in \texttt{step1.py}, I have the matrix $A$, vector $b$. This procedure is rewritten in \texttt{assign2\_worksheet.ipynb} as \texttt{laplace\_eq}.
 
-\paragraph{1. Plot the log scale error.} Choose default values of $nx=ny=32$. We have the following log-scale error result:
+\begin{lstlisting}[language=Python, caption={Solving Laplace equation using pyamg}, label={lst:border}]
+     # Extracted from assign2\_worksheet.ipynb
+     def amg_solver(A, b, cg=False, name='amg', tol=1e-10):
+       mls = rootnode_solver(A)
+       print mls
+       # Solve Ax = b
+       residuals = []
+       if cg:
+           x = mls.solve(b, tol=tol, accel='cg', residuals=residuals)
+       else :
+           x = mls.solve(b, tol=tol, accel=None, residuals=residuals)
+       # Compute relative residuals
+       residuals  = numpy.array(residuals)/residuals[0]  
+       # Plot convergence history
+       import pylab
+       pylab.figure()
+       pylab.title('Convergence History (%s)' % name)
+       pylab.xlabel('Iteration')
+       pylab.ylabel('Relative Residual')
+       pylab.semilogy(residuals,  label='Residual',  linestyle='None', marker='.')
+       pylab.legend()
+       pylab.show()
+\end{lstlisting}
+\pagebreak
+The result plots:
 \begin{figure*}[h!]
   \centering
-    \includegraphics[width=\textwidth]{hpsc_a2_error_log.png}
-    \caption{Error convergence. Torlerant =$10^{-6}$.}
+  \begin{subfigure}[b]{0.8\textwidth}
+    \includegraphics[width=\textwidth]{hpsc_final_nocg.png}
+    \caption{Convergence of AMG without CG method.}
+  \end{subfigure}
+~
+\begin{subfigure}[b]{0.8\textwidth}
+    \includegraphics[width=\textwidth]{hpsc_final_cg.png}
+    \caption{Convergence of AMG with CG method.}
+  \end{subfigure}
+  \caption{Convergence of AMG.}
 \end{figure*}
-
-\paragraph{2. Change $nx,ny$.} For simplicity, here we have log-scale error result of $nx=ny=n$ against error rate of 250 iterations. 
-\begin{figure*}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{hpsc_a2_error_log_n.png}
-    \caption{Error convergence for spatial resolution. iter=250.}
-\end{figure*}
-
-\paragraph{3. Change to higher order finite diference scheme.} The higher order Taylor expansion of the second order devivative terms in Laplace equation can be written in discretized form as:
-\begin{equation*}
-    \begin{aligned}
-        \frac{\partial^2 p}{\partial x^2} & = \frac{-p_{j,i+2} + 16p_{j,i+1} - 30p_{j,i} + 16p_{j,i-1} - p_{j,i-2}}{12(\Delta x)^2} + \mathcal{O}(\Delta x)^4 \\
-        \frac{\partial^2 p}{\partial y^2} & = \frac{-p_{j+2,i} + 16p_{j+1,i} - 30p_{j,i} + 16p_{j-1,i} - p_{j-2,i}}{12(\Delta y)^2} + \mathcal{O}(\Delta y)^4 \\
-    \end{aligned}
-\end{equation*}
 
 \end{document}
