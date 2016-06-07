@@ -120,16 +120,17 @@ Modify the code in \texttt{demo.py} so that it runs with the sparse matrix from 
 \vspace{10em}
 \noindent
 \emph{The source code and jupyter notebook for this assignment can be found at:} \\
-\texttt{https://github.com/gear/HPSC/tree/master/hw}
-File name: \texttt{assign2\_worksheet.ipynb}
+\texttt{https://github.com/gear/HPSC/tree/master/hw} \\
+\noindent
+File name: \texttt{assign\_final\_worksheet.ipynb}
 \pagebreak
 \section*{Answer}
 
 \noindent
-Using the given code in \texttt{step1.py}, I have the matrix $A$, vector $b$. This procedure is rewritten in \texttt{assign2\_worksheet.ipynb} as \texttt{laplace\_eq}.
+Using the given code in \texttt{step1.py}, I have the matrix $A$, vector $b$. This procedure is rewritten in \texttt{assign\_final\_worksheet.ipynb} as \texttt{laplace\_eq}.
 
 \begin{lstlisting}[language=Python, caption={Solving Laplace equation using pyamg}, label={lst:border}]
-     # Extracted from assign2\_worksheet.ipynb
+     # Extracted from assign\_final\_worksheet.ipynb
      def amg_solver(A, b, cg=False, name='amg', tol=1e-10):
        mls = rootnode_solver(A)
        print mls
