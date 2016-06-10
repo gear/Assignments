@@ -44,7 +44,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \lhead{}
 \chead{}
 \rhead{}
-\lfoot{FMCS:CS - Part 1}
+\lfoot{DAGS - Part I}
 \cfoot{Page \thepage}
 \rfoot{15M54097}
 \renewcommand{\headrulewidth}{0pt}
@@ -65,220 +65,114 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
     \par\noindent\ignorespacesafterend
 }
 
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+ 
 
 \begin{document}
 \bibliographystyle{acm}
-\title{Fundamentals of MCS: CS - Part 1}
+\title{DAGS - Part I Final Report}
 
 \author{NGUYEN T. Hoang - SID: 15M54097}
 
-\date{Fall 2015, W832 Mon. Period 7-8 \\ \hfill Due date: 2015/11/30}
+\date{Spring 2016, W832 Tue-Fri Period 5-6 \\ \hfill Due date: 2015/06/09}
 
 \maketitle
 
-\vfill
+\vspace{10em}
 \section*{Problem}
 \noindent
-For this Part I of Fall 2015 Fundamentals of Mathematical and Computing Sciences: Computer Science class, I choose 2 problems: Q1.1 and Q3.1 to submit for grading.
+Graph has always been an important model for real world interactions. With development of the internet, nowaday researchers refer to a large interconnected model with information flow (interactions) as a complex network. Inspired by the hyperbolic space and Albert Eistein's work on relativity, many researches have hinted that there is a hyperbolic structure underlies these complex networks. In this final report, I will summary some of the recent developments in hyperbolic geometry
+of complex networks, focusing on navigability and $\delta$-hyperbolicity.
 
-\paragraph{Q1.1.} Prove that a language $L$ is regular if and only if $\Sigma^{*}$ is divided into a finite number of equivalence classes by $\approx_{L}$. Then explain with some example why the number of equivalence classes cannot be finite for non-regular languages; estimate the number of equivalence classes in terms of the string length. (You may use any one of the first three definitions of regular language; but maybe the definition by DFA would be much easier.)
-
-\paragraph{Q.3.1.} It is not so difficult to prove Theorem 1, so why don't you prove it (without reading the referenced paper)! You can go back to the definition and consider the probability that one fixed hypothesis \emph{h} is not an $\epsilon$-approximation of a given target $f_{*}$ on $m$ example of $S$. (What is the randomness here for discussing the probability?) Then we can use the union bound to estimate the probability that this situation occurs on some hypothesis of $\mathcal{H}_{n,m}$.
-\begin{theorem}
-    (PAC learning is achieved by ``Occam Razor'') \\
-    For any concept class $\mathcal{C}$, consider any algorithm $L$ that yields a hypothesis consistent with a given sample. Let $\mathcal{H}_{n,m}$ be a class of hypotheses (i.e., Boolean functions) that algorithm $L$ may yield on some sameple of size $m$ on some target concept in $\mathcal{C}$ of size $n$. (Note that $m$ is determined by algorithm $L$ from $\epsilon, \delta, n$). \\
-    Let $M(n,m)$ denote the number of hypotheses of $\mathcal{H}_{n,m}$. For any learning parameters $\epsilon, \delta$, and for any $n$, if we can design the algorithm so that
-    \begin{equation*}
-        m \geq \frac{1}{\epsilon}\ln{\frac{1}{\delta}} + \frac{\ln{M(n,m)}}{\epsilon}
-    \end{equation*}
-holds, then $L$ can be used as a PAC-learning algorithm for $\mathcal{C}$.
-\end{theorem}
 \vfill
 \pagebreak
 \section*{Answer:}
 
-\subsection*{Q1.1 - Regular language definition with $\approx_{L}$.} 
+\section{Introduction}
+There are many computation or scientific problems that are simplifed after their hyperbolic structure is identified \cite{2} \cite{3}. The most famous example probably is the hyperbolid model used in special relativity. Nowaday, in the 21st century, along with the development of social networks and internet of things, raise a more than ever important task of finding a model for a complex network. Inspired from the success of hyperbolic space and many hypotheses about the hidden fractal
+geometry underlies our universe, complex network researchers have shifted their attention toward hyperbolic geometry.
+\paragraph{Complex Network.} Complex network is defined as a large graph with set of \emph{edges} and \emph{vertices}. Each vertex in a complex network can be heretogeneous object representing a physical model. Each edge encodes the pairwise interactions between vertices. Many important structures can be modeled as complex network: Social network, functional brain network, biological metabolic networks, genome networks, etc. Within these real-world networks, researchers have found
+that they share some common properties:
 
-\noindent
-My proof contains two parts: 
-\begin{enumerate}
-    \item A language $L$ is regular $\Rightarrow$ $\Sigma^{*}$ can be divided into a finite number of equivalence classes with $\approx_{L}$, and
-    \item A language $L$ that has $\Sigma^{*}$ can be divided into a finite number of equivalence classes $\Rightarrow$ $L$ is regular.
-\end{enumerate}
+\begin{itemize}
+    \item Small-world phenomenon: network diameter is extremely small comparing to its size.
+    \item Power law degree distribution: Degree distribution (number of connected edges to a vertex) in a network follows a power law.
+    \item Navigability: Using only local information, we can navigate from a node to any destination taking a relatively short path. \cite{1}
+    \item High clustering coefficient: Vertices often belongs to a densely connected community.
+\end{itemize}
 
-\begin{Quote}{A regular language is defined as follow:}
+A simple undirected graph is notated by $G = (V,E)$. This graph is naturally a discrete metric space $(V,d)$ with distance between vertices $d$. $(V,d)$ can be extended to a geodesic metric space withe very edge interpreted as a segment of length 1.
+
+\paragraph{$\delta$-hyperbolicity.} Hyperbolic geometry has negative curvature and a generalization in the context of metric space. 
+
+\begin{Quote}{Four-point condition - $\delta$-hyperbolic \cite{13}}
     \setlength{\parskip}{0em}
-    A language is called \emph{\textbf{regular language}} if some finite automaton recognizes it.~\cite{sip} 
+    In a metric psace $(X,d)$, given $u,v,w,x$ with $d(u,v) + d(w,x) \geq d(u,x) + d(w,v) \geq d(u,w) + d(v,x)$ in $X$, we note $\delta (u,v,w,x) = d(u,v) + d(w,x) - d(u,x) - d(w,v) $. $(X,d)$ is called $\delta$-hyperbolic if for any four points $u, v, w, x  \in X$, $\delta (u,v,w,x) \leq 2 \delta$. We note $\delta(X,d)$ the smallest possible value of such $\delta$, if ever exists.  \end{Quote}
+
+\begin{Quote}{Rips condition \cite{12}}
+    \setlength{\parskip}{0em}
+    In a geodesic metric space $(X,d)$, given $u, v, w$ in $X$, we note $\Delta (u, v, w) = [u,v] \cup [v,w] \cup [w,u]$ a geodesic triangle. $[u,v], [v,w], [w, u]$ are called sides of $\Delta(u, v, w)$. A geodesic triangle is called $\delta$-slim if any point on a side is within distance $\delta$ to the union of other two sides. $(X,d)$ is called Rips $\delta$-hyperbolic if every geodesic triangle is $\delta$-slim. We note $\delta_{Rips} (X,d)$ the smallest possible value of such
+    $\delta$, if ever exists.
 \end{Quote}
 
-\noindent 
-Also, with some deterministic finite automaton $M=(Q,\Sigma,\delta,q_{0},F)$, I define notations for string collection $R_{i}$ and state transition function based on string input $\delta^{*}$ mentioned in~\cite{lec2} as follow:
-\begin{itemize}
-        \setlength{\parskip}{0em}
-    \item $R_{i}$ is a set of input strings, which makes the automaton $M$ transits from $q_{0}$ to a same state $q_{i}$ in $Q$. 
-        \begin{equation} \label{eq:r}
-        R_{i} = \{ u\ |\ u \in \Sigma^{*}\mbox{ and }\delta^{*}(q_{0}, u) = q_{i} \in Q \} 
-    \end{equation}
-    \item $\delta^{*}: Q \times \Sigma^{*} \rightarrow Q$ is an extended transition function that takes a string and a state as inputs. The output of this function is the state of the automaton $M$ after taking the string of input. For any $q \in Q$: 
-$$\begin{cases}
-    \delta^{*}(q,\varepsilon) = \delta(q,\varepsilon) &  \\
-    \delta^{*}(q,e\cdot w) = \delta^{*}(\delta(q,e),w), & \forall e \in \Sigma \mbox{ and } w \in \Sigma^{*}
-\end{cases}$$   
-\end{itemize}
-\vspace{1em}
+On continuous metric spaces, $\delta$-hyperbolicity is a measure of negative curvature. On graphs, $\delta$-hyperbolicity is similar to a tree measure. Trees and block graphs are $0$-hyperbolic, while cycles $C_n$ are $O(n)$-hyperbolic \cite{23}. The benefits of embedding a graph into a hyperbolic space rather than an Euclidean space are proven theorecially and empirically in many researches. In summary, when $\delta(G)$ is bounded, problems such as graph diameter approximation, exact
+center computing, and distance approximating tree in graph become tractible \cite{6,7,11}. In addition, \cite{21} had shown that a complex network such as the Internet embeds better in to a hyperbolic space than in to an Euclidean space. Since $\delta$-hyperbolicity reflects hyperbolic geometry of graphs, there might be connection between this metric and the behavior of complex network \cite{1}.
 
-\textbf{1.} For the first part of the proof, I consider $L$, a regular language, and I will prove that there is a way to divide $\Sigma^{*}$ into a finite set by the equivalent relation $\approx_{L}$. Since $L$ is regular, there exists a deterministic automaton $M=(Q,\Sigma,\delta,q_{0},F)$ accepts $L$. For each state in $Q$ of the automaton $M$, consider a set of strings $R_{i}$ as defined above. Since the number of state in $M$ is $|Q|$, and it is a finite number, hence we have a finite number of $R_{i}$.\\[1em]
-By definition in \cite{lec2}, the $u$-derivative of $L$ is stated as follow:
-$$\partial_{u}L = \{v : u\cdot v \in L\}$$
-\noindent
-Intuitively, an $u$-derivative of $L$ is the set of all substring of strings that start with $u$ in $L$. Using the extended transition function, we have another representation of this deriviation:
-$$\partial_{u}L = \{w : \delta^{*}(q_{0},u\cdot w) \in F\}$$
-\noindent
-For all set $R_{i}$, and for any $u, v \in R_{i}$:
-\begin{equation} \label{eq:delta}
-    \begin{aligned}
-        \partial_{u}L & = \{w : \delta^{*}(\delta^{*}(q_{0},u), w) \in F\} \\
-        \partial_{v}L & = \{z : \delta^{*}(\delta^{*}(q_{0},v), z) \in F\}
-    \end{aligned}
-\end{equation}
-\noindent
-By the definition of $R_{i}$, we denote $\delta^{*}(q_{0},u) = \delta^{*}(q_{0},v) = q_{i}$, formula~\eqref{eq:delta} can be rewritten as follow:
-\begin{equation*}
-    \begin{aligned}
-        \partial_{u}L & = \{w : \delta^{*}(q_{i}, w) \in F\} \\
-        \partial_{v}L & = \{z : \delta^{*}(q_{i}, z) \in F\}
-    \end{aligned}
-    \mbox{   , for all } u, v \in R_{i}.
-\end{equation*}
-\noindent
-Because of the determinism of the automaton $M$ and its state transition function, we have:
-\begin{equation*}
-        \begin{cases}
-            \{w : \delta^{*}(q_{i}, w) \in F\} \\
-            \{z : \delta^{*}(q_{i}, z) \in F\}
-        \end{cases} 
-        \Leftrightarrow\ \  \{w : \delta^{*}(q_{i}, w) \in F\} \equiv \{z : \delta^{*}(q_{i}, z) \in F\}
-\end{equation*}
-Therefore:
-\begin{equation} \label{eq:equi}
-    \begin{aligned}
-        \partial_{u}L & = \partial_{v}L \\
-        \mbox{hence,\ \ \ \ \ } u & \approx_{L} v\mbox{\ \ , } \forall u, v \in R_{i}
-    \end{aligned}
-\end{equation}
-\noindent
-From formula \eqref{eq:equi}, we see that dividing $\Sigma^{*}$ into a finite set $\{R_{i} : i = (0\ldots|Q|-1)\}$ is equivalent with dividing the language into a finite set by the equivalent relation $\approx_{L}$.
+\section{Properties of $\delta$-hyperbolicity}
+In this sections, I present some proof regarding the properties of $\delta$=hyperbolicity in graph. The diameter of a graph $G$ gives an upper bound of $\delta(G)$ \cite{1}.
+\begin{lemma}
+    For any graph $G$, $\delta(G) \leq \mbox{diam}(G) / 2$.
+\end{lemma}
+\begin{proof}
+    There exists $u,v,w,x \in X$ with $d(u,v) + d(w,x) \geq d(u,x) + d(w,v) \geq d(u,w) + d(v,x)$ s.t. $2\delta(G) = d(u,v) + d(w,x) - d(u,x) - d(w,v)$.
+    Moreover, $2\delta(G) \leq d(u,v) + d(w,x) - (d(u,x) + d(x,v) + d(u,w) + d(w,x)) / 2 \leq 2\mbox{min}(d(u,v), d(w,x)) \leq 2\mbox{diam}(G)$.
+\end{proof}
 
-\vspace{1em}
-\textbf{2.} In the second part of this proof, I consider there is a language $L$, and $\Sigma^{*}$ can be divided into a finite set $R$ by the equivalent relation $\approx_{L}$. I will construct a deterministic finite automaton for recognizing the given language $L$. For all $R_{i}$ in the finite set $R$:
-\begin{equation*}
-    u, v \in R_{i} \Leftrightarrow \partial_{u}L = \partial_{v}L
-\end{equation*}
-\noindent
-Also:
-\begin{equation*}
-    u \in \Sigma^{*} \Leftrightarrow \exists R_{k} \in R : u \in R_{k}
-\end{equation*}
-I construct the deterministic finite automaton $M=(Q,\Sigma,\delta,q_{0},F)$ by defining each element of the 5-tuples. For each class $R_{i}$ divided by the equivalent relation, I define a state $q_{i}$ corresponds with it. The alphabet $\Sigma$ is the symbol set of the given language $L$. $q_{0}$ is the state corresponds with $R_{0}$, containing an empty string $\varepsilon$. F is the set of all strings that have deriviation over $L$ equals empty string $\varepsilon$. Formally, we have:
-\begin{enumerate}
-    \item $Q = \{q_{i} : \mbox{Each } q_{i} \mbox{ corresponds with a class } R_{i}\}$.
-    \item $q_{0}$ is the start state corresponds with the class of empty string $R_{0} = \{\varepsilon\}$.  
-    \item $\forall e \in \Sigma,\mbox{ we have: } \delta(q_{i}, e) = q_{j} : \partial_{u \in R_{j}}L = \partial_{u\cdot e,\ u \in R_{i}}L$. Because there always exists a state $q_{j}$ correspondings to $R_{j}$ that contains the string $u\cdot e$.
-    \item $F = \{q_{f} \mbox{ corresponds to } R_{f} : \forall u \in R_{f},\ \partial_{u}L = \varepsilon\}$
-\end{enumerate}
+\begin{Quote}{Glue sum of graphs}
+    \setlength{\parskip}{0em}
+    Let $G_1 = (V_1, E_1), G_2 = (V_2, E_2), \ldots, G_k = (V_k, E_k)$ be graphs such that, there is a metric space $(X,d)$ isometric to some $V_i' \subseteq V_i$ for all $G_i$. We note the glue sum $(G_1 \oplus \ldots \oplus G_k)|_X$ the graph formed by identifying all $V_i'$ with $X$ according to the isometries. Each $G_i$ í called a component of $G$.
+\end{Quote}
 
-In conclusion, I have proved that: \textbf{1.} If the language $L$ is regular, we can divide $\Sigma^{*}$ into a finite set by the equivalent relation $\approx_{L}$, and \textbf{2.} If the language $L$ has $\Sigma^{*}$ can be divided into a finite set by the equivalent relation $\approx_{L}$, we can construct a deterministic finite automaton $M$ that recognizes $L$. Therefore:
-\begin{equation*}
-    L \mbox{ is a \textbf{regular language} } \Leftrightarrow \ \parbox[c]{7cm}{$\Sigma^{*}$ can be divided into a finite number of equivalent classes by $\approx_{L}$} \ \ \ \ \parbox[c]{1cm}{ (Q.E.D.)}
-\end{equation*}
+\begin{lemma}
+    We define $\tilde{\delta}_{Rips}^{X}(G)$ be the maximum of $\delta_{Rips}(G \cup <u,v>)$ for any $u, v \in X$ where $<u,v>$ is a segment of length $d(u,v)$ attached between $u,v$.
+    Let $G = (G_1 \oplus \ldots \oplus G_k)|_X$, we have the following:
+    $$ \delta_{Rips}(G) \leq \max_{1 \leq i \leq k}(\tilde{\delta}_{Rips}^X) + \mbox{diam}(X) $$
+\end{lemma}
+Proof for this lemma is provided in \cite{1}.
 
-Consider a non-regular language from~\cite{sip}: $E=\{0^{i}1^{j}\ , i > j\}$. $E$ is a language which was proven to be non-regular in~\cite{sip} using the Pumping lemma. Here, I will show that the number of equivalent class divided by $\approx_{L}$ is infinite. The string in $E$ has 2 parts of leading 0's and trailing 1's. The number of leading 0's is $i$ and that of trailing 1's is $j$. Suppose we have a non empty string $u_{i,j}$, which has i \textless\ j (Number of leading 0's larger than
-number of leading 1's). The derivative of such string is:
-\begin{equation} \label{eq:inf}
-    \begin{aligned}
-        \partial_{u_{i,j}}E & = \{\mbox{Set of all-1 strings of length less than i-j}\} \\
-        & = \left \{ \ \bigcup\limits_{k=0}^{i-j-1}1^{k} \right \}    
-    \end{aligned}
-\end{equation}
-\noindent
-Equation~\eqref{eq:inf} shows that the size $|\partial_{u_{i,j}}E|$ depends on the choice of the pair (i, j). The number of set of all-1 strings is the number of values that (i-j) has. Therefore, the number of equivalent classes divided by $\approx_{L}$ is infinite. Another example considers the language $L = \{ \{0,1\}^{*} \}$. Language $L$ was also proven to be non-regular in \cite{sip}. Any string $u \in \{0,1\}^{*}$ can be followed by any string in $\{0,1\}^{*}$, and the
-concatenated string is also in $L$. Therefore, the number of equivalent classes is infinite.
-\begin{equation}
-    \partial_{u}L = \{0,1\}^{*} \mbox{ }, \forall u \in \{0,1\}^{*} 
-\end{equation}
-Generally, if a language is non-regular, it is impossible to define a DFA or NFA that recognizes the language. The automaton can recognize a non-regular language will have an infinite number of states, and the for any string pair of length $k$, there is no finite length string to distinguish them. Hence, the language is not divisible to a finite number of equivalent classes. 
+\begin{corollary}
+    If $G = (G_1 \oplus \ldots \oplus G_k)|_X$ with $X$ a singleton, we have:
+    $$\delta_{Rips}(G) \leq \max_{1 \leq i \leq k}(\delta_{Rips}(G_i)) $$
+\end{corollary}
 
-\subsection*{Q3.1. Proof of \emph{``Occam Razor''} PAC-Learning}
-\noindent
-Consider the condition for an algorithm $A$ to be called a \emph{PAC-learning algorithm} for a given concept class $\mathcal{C}$: \cite{lec3}
-\begin{equation} \label{pac}
-    \begin{aligned}
-        & \forall \epsilon,\delta, 0 < \epsilon,\delta < 1, \forall n \geq 1, \\
-        & \exists m \geq 0 \mbox{ which is determined by } A \mbox{ from } \epsilon,\delta,n \\
-        & \forall D_{*} (\mbox{distribution over }\{+1,-1\}^{n}), \forall f_{*} \in \mathcal{C} \\
-        & \Pr_{S:D^m_*} \left [ 
-            \begin{tabular}{c}
-                $A$ given $S$ yields some h satisfying \\ 
-                $ \Pr_{\boldsymbol{x}:D_*}[f_{*}(\boldsymbol{x}) \neq h(\boldsymbol{x})] \leq \epsilon $ 
-            \end{tabular}
-        \right ] \geq 1 - \delta.     
-    \end{aligned}
-\end{equation}
+\begin{proof}
+    We apply directly Lemma 2.2 by noticing that X is a singleton, so $\mbox{diam}(X) = 0$, and $\tilde{\delta}_{Rips}^X (G_i) = \delta_{Rips} (G_i)$.
+\end{proof}
 
-Suppose we have a hypothesis $h_{bad}$ satisfies \textbf{Theorem 1} given to us consistenly by algorithm $L$, but $h_{bad}$ is not an $\epsilon$-estimation of a given target concept $f_*$. 
-\begin{equation*}
-    \Pr_{\boldsymbol{x}:D_*} [f_*(\boldsymbol{x}) \neq h_{bad}(\boldsymbol{x})] \leq \epsilon
-\end{equation*}
-I denote event $\mathcal{X}$ is the event where $h_{bad}$ gives consistent output with the target concept $f_*$, the probability of X with a random sample in $D_*$ is:
-\begin{equation*}
-    \Pr[\mathcal{X}] = \Pr_{\boldsymbol{x}:D_*} [f_*(\boldsymbol{x}) = h_{bad}(\boldsymbol{x})] \geq 1 - \epsilon
-\end{equation*}
-Given $m$ random samples from distribution $D_*$, the worst case can happen is $\mathcal{X}$ holds for all $m$ samples. Therefore, the probability of this case is at most:
-\begin{equation*}
-    \Pr[\mathcal{X}^m] = (1 - \epsilon)^m
-\end{equation*}
-According to \textbf{Theorem 1}, the number of hypotheses of class $\mathcal{H}_{n,m}$ is $M(n,m)$. I denote $\mathcal{Y}$ as the event that the algorithm $L$ gives us $h_{bad}$ over all hypothesis $h_i \in \mathcal{H}_{n,m}$. The union bound gives us the probability for event $\mathcal{Y}$:
-\begin{equation} \label{eq:upper}
-    \begin{aligned}
-        \Pr[\mathcal{Y}] & = \Pr \left [\ \bigcup_{h:\mathcal{H}_{n,m}}\mathcal{X}^m_h\ \right ]
-        \leq \sum_{h:\mathcal{H}_{n,m}} \Pr[\mathcal{X}^{m}_h] \\
-        & \leq M(n,m) \times (1-\epsilon)^m
-    \end{aligned}
-\end{equation}
-\noindent
-Inequality \eqref{eq:upper} means that the chance for our algorithm $L$ consistently gives hypotheses that are not $\epsilon$-estimation of a given target concept $f_*$ is bounded by $M(n,m) \times (1-\epsilon)^m$. For this reason, we would like to bound this quantity by a confident parameter $\delta$, and then solve the inequality for the sameple size $m$.
-\begin{equation*}
-    \begin{aligned}
-        & M(n,m) \times (1-\epsilon)^m && \leq \ \ \ \delta \\
-        \Leftrightarrow \ \ &\ \ \ \ \ \ \ \ \ (1-\epsilon)^m && \leq \ \ \ \frac{\delta}{M(n,m)}\\
-        \Leftrightarrow \ \ &\ \ \ \ \ \ \ \ln(1-\epsilon)^m && \leq \ \ \ \ln\frac{\delta}{M(n,m)}\\
-        \Leftrightarrow \ \ &\ \ \ \ \ m \times \ln(1-\epsilon) && \leq \ \ \ \ln \delta - \ln M(n,m) \ \ \ (\boldsymbol{\ast})
-    \end{aligned}
-\end{equation*}
-Here, I will prove that the inequality $\ln(1-\epsilon) + \epsilon \leq 0$ holds true for $\epsilon \in (0,1)$. Consider the function $g(x) = \ln(1-x) + x \mbox{ , for } x \in (0,1)$, take the derivative of this function we have:
-\begin{equation} \label{eq:ln}
-    \begin{aligned}
-        \frac{d(g(x))}{dx} & = \frac{d}{dx} (\ln(1-x) + x)\\[0.8em] & = \frac{x}{x-1} \ \leq \ 0 \ \ \forall x \in (0,1) \\
-    \end{aligned}
-\end{equation}
-We also have:
-\begin{equation} \label{eq:st}
-    g(0) = \ln(1-0) + 0 = 0
-\end{equation}
-\eqref{eq:ln} and \eqref{eq:st} show that $g(x)$ is a decreasing function over $(0,1)$ and $g(0) = 0$. Therefore, $g(x) \leq 0$ for $x \in (0,1)$. Hence, we have: $\ln(1-\epsilon) \leq -\epsilon $. Replace this fact into the inequality ($\boldsymbol{\ast}$) we have:
-\begin{equation*}
-    \begin{aligned}
-       & m \times (-\epsilon) &&\leq \ \ m \times \ln(1-\epsilon) \ \leq \ \ln \delta - \ln M(n,m) \\
-       \Leftrightarrow \ \ \ & m \times (-\epsilon)&& \leq \ \ \ln \delta - \ln M(n,m) \\
-       \Leftrightarrow \ \ \ & \ \ \ \ m && \geq \ \ - \frac{\ln \delta}{\epsilon} + \frac{\ln M(n,m)}{\epsilon} \\
-       \Leftrightarrow \ \ \ & \ \ \ \ m && \geq \ \ \frac{1}{\epsilon}\ln\frac{1}{\delta} + \frac{\ln M(n,m)}{\epsilon} \ \ \ (\boldsymbol{\ast\ast})
-    \end{aligned}
-\end{equation*}
-$(\boldsymbol{\ast\ast})$ shows that if we want to bound the worst case scenarios by some $\delta$, we need a number of sample $m$ greater or equal some value. For this value of $m$, the algorithm $L$ will give us a $\epsilon$-estimation hypothesis with probability $1-\delta$ over some sameple distribution $D_*^m$. Hence, $L$ can be used as a PAC-learning algorithm for some concept class $\mathcal{C}\Rightarrow Q.E.D. $
+\section{$\delta$-hyperbolicity and navigability}
+In this section, I will partially summary the analysis made in \cite{1} for $\delta$-hyperbolicty measurement of different network models including Kleinberg's model and Fan Chung's power-law graph.
 
-Inconclusion, I have proved by construction that starting from assumptions made by \textbf{Theorem 1}, we can derive the requirement of $m$ for algorithm $L$ to be a PAC-learning algorithm.
+\subsection{Kleinberg's model}
+In this model, $n$ vertices form a square lattice on a plane, neighboring vertices are connected. Each vertex can have one long jump onto a random vertex chosen with probability proportional to $r^{-\alpha}$, where $r$ is the distance between these two nodes on the lattice and $\alpha$ is a parameter. In \cite{14}, Kleinberg proved that, when based on a two-dimensional lattice, with a greedy routing scheme using only local information, we can reach from one node to any other passing by
+$O(\log^2 n)$ edges only when $\alpha = 2$. When based on a $d$-dimensional lattice, this model has good navigability when $\alpha = d$. Denote $K(n,d,\alpha)$ as the graph of Kleinberg's model based on $d$-dimensional lattice with parameter $\alpha$.
 
-\bibliography{fmcs_a1}
+\begin{theorem}
+    For $d$ fixed, with high probability with respect to $n$,
+    $$\forall \epsilon > 0, \delta(K(n,d,d)) \geq (\log n)^{1/(1.5(d+1}+\epsilon)$$
+    $\delta(K(n,d,\alpha)) = \Omega(\log n)$ when $0 \leq \alpha d$.
+\end{theorem}
+
+In this model, the authors show that extremely good $delta$-hyperbolicity is not required for good navigability.
+
+\subsection{Fan Chung's power-law graph}
+In Fan Chung's model \cite{8}, given number of vertices $n$, expected average degree $d$, expected maximum degree $m$ and exponent $\beta$, the network is constructed such that it has power-law degree distribution. The fraction of verticies has degree $d$ is proportional to $d^{-\beta}$. A mathematical formulation for this model seems non-trivial. However, empirical result from \cite{1} shows that there is a slight correlation between $\delta$-hyperbolicity and the network
+diameter, although this correlation is not very strong.
+
+\section{Conclusion}
+Although the computation of $\delta$-hyperbolicity for a large network still requires a significant amount of computation power, but this metric shows potential to explain that underlying hyperbolic geometry is respoinsible for good navigation properties of some complex networks. The Kleinberg's model is a model with good navigability and the authors in \cite{1} have proved analytically an lower bound of $\delta(G)$ for this model. On the other hand, Fan Chung's power-law graph model
+remains a challenge. In conclusion, the pursue of identifying hyperbolic structure in complex network is a challenging active research area. In this reserach, the authors have investigated the $\delta$-hyperbolicity of some theoretical network models. Although the result is not very clear that $\delta$-hyperbolicity is a good measure of navigability, this research has contributed to the study of hyperbolic structure of complex network.
+\bibliography{dg_final}
 
 \end{document}
