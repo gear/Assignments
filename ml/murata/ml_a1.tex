@@ -44,7 +44,7 @@ None.
 
 \begin{exercises}
 
-\problem \textbf{Compute probabilities}
+\problem \textbf{Compute posterior distribution for the class}
 
 Use NaiveBayesSimple to find a Bayesian classifier (Laplace estimator = 1 
 is used in order to avoid frequency problems). Compute P(``yes'') and 
@@ -52,14 +52,82 @@ P(``no'') of the following instances.
 
 \begin{exerciseparts}
   \exercisepart Windy = True
+
   \ifsolution \solution{}
-    Given the evidence Windy = True, the probability of answer ``yes''
-    is:
-    $$$$  
+    Given the evidence Windy = True, with independence assumption
+    and Bayes rule, we have the probability of answer ``yes'' as:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{Windy = True}) & = 
+        \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})}
+      \end{aligned}
+    \end{equation*}
+    Because of the independence assumption between attributes, 
+    we have the prior for Windy = True as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{Windy = True}) 
+          = \ & \mbox{P}(\mbox{Windy = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})\ \ + \\
+            & \mbox{P}(\mbox{Windy = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.3636 \times 0.625 + 0.5714 \times 0.375 \\
+          = \ & 0.4415
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Windy = True:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{Windy = True}) 
+        = & \ \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})} \\
+        = & \ \frac{0.3636 \times 0.625}{0.4415} \\
+        = & \ \boldsymbol{0.5} \\
+        \mbox{P}(\mbox{``no''} | \mbox{Windy = True}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{Windy = True})  \\
+        = & \ \boldsymbol{0.5}
+      \end{aligned}
+    \end{equation*}
   \fi
+
   \exercisepart Humidity = High, Windy = True
+
   \ifsolution \solution{}
-    
+    Similar to question 1-(a), we have the join prior probability
+    for the case Humidity = High (abbr. H = High), Windy = True
+    (abbr. W = True) as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High, W = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})\ \ + \\
+            & \mbox{P}(\mbox{H = High, W = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''})
+      \end{aligned}
+    \end{equation*}
+    Apply the attribute independence assumption, we have the following
+    fractorization of the conditional join probability:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High}|\mbox{``yes''}) \times 
+                \mbox{P}(\mbox{W = True}|\mbox{``yes''}) \times \mbox{P}(\mbox{``yes''})\ \ + \\
+              & \mbox{P}(\mbox{H = High}|\mbox{``no''}) \times
+                \mbox{P}(\mbox{W = True}|\mbox{``no''}) \times \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.3636 \times 0.3636 \times 0.625 + 0.5714 \times 0.7142 \times 0.375 \\
+          = \ & 0.2357
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Windy = True and Humidity = High:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{W = True, H = High}) 
+        = & \ \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})} \\
+        = & \ \frac{0.3636 \times 0.625}{0.4415} \\
+        = & \ \boldsymbol{0.5} \\
+        \mbox{P}(\mbox{``no''} | \mbox{W = True, H = High}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{Windy = True})  \\
+        = & \ \boldsymbol{0.5}
+      \end{aligned}
+    \end{equation*}
   \fi 
 
   \exercisepart Temperature = Hot, Humidity = High, Windy = True
