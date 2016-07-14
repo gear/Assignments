@@ -118,21 +118,57 @@ P(``no'') of the following instances.
     We have the posterior distribution for the class given Windy = True and Humidity = High:
     \begin{equation*}
       \begin{aligned}
-        \mbox{P}(\mbox{``yes''} | \mbox{W = True, H = High}) 
-        = & \ \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
-        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})} \\
-        = & \ \frac{0.3636 \times 0.625}{0.4415} \\
-        = & \ \boldsymbol{0.5} \\
-        \mbox{P}(\mbox{``no''} | \mbox{W = True, H = High}) 
+        \mbox{P}(\mbox{``yes''} | \mbox{H = High, W = True}) 
+        = & \ \frac{\mbox{P}(\mbox{W = True, H = High} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{H = High, W = True})} \\
+        = & \ \frac{0.3636 \times 0.3636 \times 0.625}{0.2357} \\
+        = & \ \boldsymbol{0.35} \\
+        \mbox{P}(\mbox{``no''} | \mbox{H = High, W = True}) 
         = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{Windy = True})  \\
-        = & \ \boldsymbol{0.5}
+        = & \ \boldsymbol{0.65}
       \end{aligned}
     \end{equation*}
   \fi 
 
   \exercisepart Temperature = Hot, Humidity = High, Windy = True
+
   \ifsolution \solution{}
-    
+    Similar to question 1-(a,b), we have the join prior probability
+    for the case Temperature = Hot (abbr. T = Hot) Humidity = High 
+    (abbr. H = High), Windy = True (abbr. W = True) as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High, W = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})\ \ + \\
+            & \mbox{P}(\mbox{H = High, W = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''})
+      \end{aligned}
+    \end{equation*}
+    Apply the attribute independence assumption, we have the following
+    fractorization of the conditional join probability:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High}|\mbox{``yes''}) \times 
+                \mbox{P}(\mbox{W = True}|\mbox{``yes''}) \times \mbox{P}(\mbox{``yes''})\ \ + \\
+              & \mbox{P}(\mbox{H = High}|\mbox{``no''}) \times
+                \mbox{P}(\mbox{W = True}|\mbox{``no''}) \times \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.3636 \times 0.3636 \times 0.625 + 0.5714 \times 0.7142 \times 0.375 \\
+          = \ & 0.2357
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Windy = True and Humidity = High:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{H = High, W = True}) 
+        = & \ \frac{\mbox{P}(\mbox{W = True, H = High} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{H = High, W = True})} \\
+        = & \ \frac{0.3636 \times 0.3636 \times 0.625}{0.2357} \\
+        = & \ \boldsymbol{0.35} \\
+        \mbox{P}(\mbox{``no''} | \mbox{H = High, W = True}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{Windy = True})  \\
+        = & \ \boldsymbol{0.65}
+      \end{aligned}
+    \end{equation*}
   \fi
 \end{exerciseparts}
 
