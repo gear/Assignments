@@ -16,29 +16,20 @@
 
 % Fill these in!
 \newcommand{\theproblemsetnum}{1}
-\newcommand{\releasedate}{July 4, 2016}
+\newcommand{\releasedate}{July 4, 2016~~}
 \newcommand{\partaduedate}{Friday, July 15}
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tabT}{\hspace*{\tabUnit}}
 
 \begin{document}
 
-\handout{Exercise Set \theproblemsetnum}{\releasedate}
+\handout{Assignment \theproblemsetnum}{\releasedate}
 
 \newif\ifsolution
 \solutiontrue
 \newcommand{\solution}{\textbf{Solution:}}
 
-This exercise set is given in the lecture series by professor Katsumi Inoue.
-There are 5 exercises for each lecture:
-\begin{enumerate}
-  \setlength{\parskip}{0pt}
-  \item Lecture No.3 - Exercise 1-1 to 1-3.
-  \item Lecture No.4 - Exercise 2-1 to 2-3.
-  \item Lecture No.5 - Exercise 3-1 to 3-3.
-  \item Lecture No.6 - Exercise 4-1 to 4-3.
-  \item Lecture No.7 - Exercise 5-1 to 5-3.
-\end{enumerate}
+Analyze \texttt{weather.nominal.arff} using Weka \texttt{3.6.14}
 
 \setlength{\parindent}{0pt}
 
@@ -53,11 +44,29 @@ None.
 
 \begin{exercises}
 
-\problem
+\problem \textbf{Compute probabilities}
 
-Represent the statement ``It is not true that all P's are not Q's'' in
-first-order logic. Then, prove that this is logically equivalent to the
-statement ``Some P's are not Q's''.
+Use NaiveBayesSimple to find a Bayesian classifier (Laplace estimator = 1 
+is used in order to avoid frequency problems). Compute P(``yes'') and 
+P(``no'') of the following instances.
+
+\begin{exerciseparts}
+  \exercisepart Windy = True
+  \ifsolution \solution{}
+    Given the evidence Windy = True, the probability of answer ``yes''
+    is:
+    $$$$  
+  \fi
+  \exercisepart Humidity = High, Windy = True
+  \ifsolution \solution{}
+    
+  \fi 
+
+  \exercisepart Temperature = Hot, Humidity = High, Windy = True
+  \ifsolution \solution{}
+    
+  \fi
+\end{exerciseparts}
 
 \ifsolution \solution{}
 %%% Ex1 SOLUTION START %%%
@@ -73,7 +82,7 @@ pick the correct asymptotic runtime:
 
 \begin{exerciseparts}
 
-\problempart \points{5}
+\exercisepart \points{5}
 Select the correct asymptotic complexity
 of an algorithm with runtime $T(n, n)$
 where 
@@ -100,7 +109,7 @@ $$
 %%% PROBLEM 2(a) SOLUTION END %%%
 \fi
 
-\problempart \points{5}
+\exercisepart \points{5}
 Select the correct asymptotic complexity
 of an algorithm with runtime $T(n, n)$
 where 
