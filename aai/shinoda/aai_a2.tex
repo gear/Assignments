@@ -4,8 +4,9 @@
 %
 \documentclass[12pt,twoside]{article}
 
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 \usepackage{graphicx}
+\usepackage{dsfont}
 
 \input{macros}
 
@@ -34,7 +35,7 @@
   \setlength{\parskip}{0pt}
   \item Prove the second formula in Slide 25.
   \item Prove the second formula in Slide 36.
-  \item We think about an 1-dimension with mean $\mu$, variance $\sigma$. Prove that the distribution which maximize the entropy is a Gaussian distribution.
+  \item We think about an 1-dimension with mean $\mu$, variance $\sigma^2$. Prove that the distribution which maximize the entropy is a Gaussian distribution.
 \end{enumerate}
 
 \setlength{\parindent}{0pt}
@@ -50,376 +51,86 @@ None.
 
 \begin{exercises}
 
-\problem
+\problem \textbf{Prove the second formula in Slide 25}
 
 Consider the expectations of the variation with respect to the data
 set values, which comes from a Gaussian distribution with parameter
 $\mu$ and $\sigma^2$. Prove the following formula: 
 \hspace*{-1em}
-$$\sigma_{\scalebox{0.7}{ML}}^2 = \frac{1}{N} \sum_{n=1}^{N} (x_n - \mu_{\scalebox{0.7}{ML}})^2 $$
+$$\mathds{E}\lbrack\sigma_{\scalebox{0.7}{ML}}^2\rbrack = \left ( \frac{N-1}{N} \right ) \sigma^2 $$
 
 \ifsolution \solution{}
 %%% Ex1 SOLUTION START %%%
-Integrate through the datase
+\begin{equation}
+  \begin{aligned}
+    \mathds{E}\lbrack\sigma_{\scalebox{0.7}{ML}}^2\rbrack 
+      &= \mathds{E}\left\lbrack\frac{1}{N}\sum_{n=1}^{N} (x_n - \mu_{\scalebox{0.7}{ML}})^2\right\rbrack
+      = \mathds{E}\left\lbrack\frac{1}{N}\sum_{n=1}^{N}\left(x_n-\frac{1}{N}\sum_{n=1}^{N}x_n\right)^2\right\rbrack\\
+      &= \frac{1}{N}\sum_{n=1}^{N}\mathds{E}\left\lbrack\left(x_n-\frac{1}{N}\sum_{n=1}^{N}x_n\right)^2\right\rbrack\\ 
+      &= \frac{1}{N}\sum_{n=1}^{N}\mathds{E}\left\lbrack x_n^2 - \frac{2}{N}x_n\sum_{m=1}^{N}x_m+\frac{1}{N^2}\sum_{m=1}^{N}\sum_{k=1}^{N}x_m x_k\right\rbrack \\
+      &= \frac{1}{N}\sum_{n=1}^{N}\left(\mathds{E}\left\lbrack x_n^2\right\rbrack - \frac{2}{N}\mathds{E}\left\lbrack x_n\sum_{m=1}^{N}x_m\right\rbrack+\frac{1}{N^2}\mathds{E}\left\lbrack\sum_{m=1}^{N}\sum_{k=1}^{N}x_m x_k\right\rbrack\right) \\
+  \end{aligned}
+\end{equation}
+
+We have these following equalities:
+\begin{equation}
+  \begin{aligned}
+    & \mathds{E}\lbrack x_n^2 \rbrack = \mu^2 + \sigma^2 \\
+    & \mathds{E}\left\lbrack x_n\sum_{m=1}^{N}x_m\right\rbrack = 
+        \mathds{E}\left\lbrack x_n^2 \right\rbrack + \sum_{m = 1}^{N-1}\mathds{E}\lbrack x_n \rbrack \mathds{E} \lbrack x_m \rbrack = N\mu^2 + \sigma^2 \\
+    & \mathds{E}\left\lbrack\sum_{m=1}^{N}\sum_{k=1}^{N}x_m x_k\right\rbrack\ = N \mathds{E} \lbrack x_n^2 \rbrack + 2 \sum_{m=1}^{N-1}\sum_{k=m+1}^{N} \mathds{E} \lbrack x_m \rbrack \mathds{E} \lbrack x_k \rbrack = N^2\mu^2 + N\sigma^2\\
+  \end{aligned}
+\end{equation}
+
+Replace results from (2) to equation (1), we have:
+
+\begin{equation}
+  \begin{aligned}
+    \mathds{E}\lbrack\sigma_{\scalebox{0.7}{ML}}^2\rbrack 
+      &= \frac{1}{N}\sum_{n=1}^{N}\left( \mu^2 + \sigma^2 - 2\left(\mu^2 + \frac{1}{N}\sigma^2\right) + \mu^2 + \frac{1}{N}\sigma^2 \right) \\
+      &= \left( \frac{N-1}{N} \right) \sigma^2\ \  \blacksquare
+  \end{aligned}
+\end{equation}
 %%% Ex1 SOLUTION END %%%
 \fi
 
-\problem \points{15} \textbf{Recurrence Relation Resolution}
+\problem \textbf{Prove the second formula in Slide 36}
 
-For each of the following recurrence relations,
-pick the correct asymptotic runtime:
-
-\begin{exerciseparts}
-
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-T(x, y) &=& \Theta(x + y) + T(x / 2, y / 2).
-\end{array}
-$$
-
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+Entropy is maximized when: $\forall i : p_i = \frac{1}{M}$
 
 \ifsolution \solution{}
 %%% PROBLEM 2(a) SOLUTION START %%%
-1
+The entropy of an M-state discrete variable $x$ can be written as:
+$$ \mbox{H}(x) = -\sum_{i=1}^{M}p(x_i)\ln p(x_i) = \sum_{i=1}^{M} p(x_i) \ln \frac{1}{p(x_i)}$$
+Since $\ln(x)$ is concave, therefore we can apply the reverse Jensen's inequality:
+$$ f\left( \sum_{i=1}^{M} \lambda_i x_i \right) \geq \sum_{i=1}^{M} \lambda_i f(x_i) $$
+From the above inequality, we have:
+$$ \mbox{H}(x) \leq \ln \left( \sum_{i=1}^{M} p(x_i) \frac{1}{p(x_i)} \right) = \ln M$$
+The equal sign can be achieved with:
+$$ p_i = \frac{1}{M} $$
+Hence, we have proved that the entropy is bounded by $\ln M$ and it happens when $p_i = \frac{1}{M}$.
 %%% PROBLEM 2(a) SOLUTION END %%%
 \fi
 
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-T(x, y) &=& \Theta(x) + T(x, y / 2).
-\end{array}
-$$
+\problem \textbf{Prove entropy maxima for a distribution}
 
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+Prove that entropy of a Gaussian distribution with mean $\mu$ and variance $\sigma^2$ is the upper bound for entrpy of some distribution with same mean and variance.
 
 \ifsolution \solution{}
-%%% PROBLEM 2(b) SOLUTION START %%%
-1
-%%% PROBLEM 2(b) SOLUTION END %%%
+Consider a distribution $p(x)$ with fixed mean $\mu$ and variance $\sigma^2$. The entropy of the normal distribution with same entropy and variance is:
+$$ \mbox{H}(\mathcal{N}(x;\mu,\sigma^2)) = \frac{1}{2}\ln (2\pi e \sigma^2) $$
+Use the upper bound above, we have:
+\begin{equation*}
+  \begin{aligned}
+    \mbox{H}(p) & \leq - \int p(x) \ln \mathcal{N}(x;\mu,\sigma^2)dx \\
+    & \leq - \int p(x) \ln \left(\frac{1}{\sqrt{2\pi \sigma^2}}\exp(-\frac{(x-\mu)^2}{2\sigma^2})\right) \\
+    & \leq \frac{1}{2\sigma^2} \int p(x)(x-\mu)^2 dx  + \frac{1}{2}\ln (2\pi \sigma^2) \\
+    & \leq \frac{1}{2} \ln (2 \pi e \sigma^2) = \mbox{H}(\mathcal{N}(x;\mu,\sigma^2)) 
+  \end{aligned}
+\end{equation*}
+Therefore, the entropy upper bound a any distribution $p(x)$ with fixed $\mu$ and $\sigma^2$ is the entropy of the Gaussian distribution with same $\mu$ and $\sigma^2$.
 \fi
 
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(x, y) &=& \Theta(x) + S(x, y / 2), \\
-S(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-S(x, y) &=& \Theta(y) + T(x / 2, y).
-\end{array}
-$$
-
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 2(c) SOLUTION START %%%
-1
-%%% PROBLEM 2(c) SOLUTION END %%%
-\fi
-
-\end{exerciseparts}
-
-\section*{Peak-Finding}
-
-In Lecture 1,
-you saw the peak-finding problem.
-As a reminder,
-a \emph{peak} in a matrix
-is a location with the property that its four neighbors
-(north, south, east, and west)
-have value less than or equal to the value of the peak.
-We have posted Python code for solving this problem
-to the website in a file called \texttt{ps1.zip}.
-In the file \texttt{algorithms.py},
-there are four different algorithms
-which have been written
-to solve the peak-finding problem,
-only some of which are correct.
-Your goal is to figure out
-which of these algorithms are correct
-and which are efficient.
-
-\problem \points{16} \textbf{Peak-Finding Correctness}
-
-\begin{problemparts}
-
-\problempart \points{4} Is \texttt{algorithm1} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 3(a) SOLUTION START %%%
-1
-%%% PROBLEM 3(a) SOLUTION END %%%
-\fi
-
-\problempart \points{4} Is \texttt{algorithm2} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 3(b) SOLUTION START %%%
-1
-%%% PROBLEM 3(b) SOLUTION END %%%
-\fi
-
-\problempart \points{4} Is \texttt{algorithm3} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 3(c) SOLUTION START %%%
-1
-%%% PROBLEM 3(c) SOLUTION END %%%
-\fi
-
-\problempart \points{4} Is \texttt{algorithm4} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 3(d) SOLUTION START %%%
-1
-%%% PROBLEM 3(d) SOLUTION END %%%
-\fi
-
-\end{problemparts}
-
-\problem \points{16} \textbf{Peak-Finding Efficiency}
-
-\begin{problemparts}
-
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm1} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 4(a) SOLUTION START %%%
-1
-%%% PROBLEM 4(a) SOLUTION END %%%
-\fi
-
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm2} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 4(b) SOLUTION START %%%
-1
-%%% PROBLEM 4(b) SOLUTION END %%%
-\fi
-
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm3} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 4(c) SOLUTION START %%%
-1
-%%% PROBLEM 4(c) SOLUTION END %%%
-\fi
-
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm4} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 4(d) SOLUTION START %%%
-1
-%%% PROBLEM 4(d) SOLUTION END %%%
-\fi
-
-\end{problemparts}
-
-\problem \points{19} \textbf{Peak-Finding Proof}
-
-Please modify the proof below to construct a proof of correctness
-for the \emph{most efficient correct algorithm}
-among \texttt{algorithm2}, \texttt{algorithm3}, and \texttt{algorithm4}.
-
-The following is the proof of correctness
-for \texttt{algorithm1},
-which was sketched in Lecture 1.
-
-\begin{quote}
-We wish to show that \texttt{algorithm1}
-will always return a peak,
-as long as the problem is not empty.
-To that end,
-we wish to prove the following two statements:
-
-{\bf 1. If the peak problem is not empty,
-then \texttt{algorithm1} will always return a location.}
-Say that we start with a problem of size $m \times n$.
-The recursive subproblem examined by \texttt{algorithm1}
-will have dimensions
-$m \times \lfloor n / 2 \rfloor$ or 
-$m \times \left(n - \lfloor n / 2 \rfloor - 1 \right)$.
-Therefore, the number of columns in the problem
-strictly decreases with each recursive call
-as long as $n > 0$.
-So \texttt{algorithm1} either returns a location at some point,
-or eventually examines a subproblem with a non-positive
-number of columns.
-The only way for the number of columns to become strictly negative,
-according to the formulas that determine the size of the subproblem,
-is to have $n = 0$ at some point.
-So if \texttt{algorithm1} doesn't return a location,
-it must eventually examine an empty subproblem.
-
-We wish to show that there is no way that this can occur.
-Assume, to the contrary,
-that \texttt{algorithm1} does examine an empty subproblem.
-Just prior to this,
-it must examine a subproblem of size
-$m \times 1$ or $m \times 2$.
-If the problem is of size $m \times 1$,
-then calculating the maximum of the central column
-is equivalent to calculating the maximum of the entire problem.
-Hence, the maximum that the algorithm finds must be a peak,
-and it will halt and return the location.
-If the problem has dimensions $m \times 2$,
-then there are two possibilities:
-either the maximum of the central column is a peak
-(in which case the algorithm will halt and return the location),
-or it has a strictly better neighbor in the other column
-(in which case the algorithm will recurse
-on the non-empty subproblem with dimensions $m \times 1$,
-thus reducing to the previous case).
-So \texttt{algorithm1} can never recurse into an empty subproblem,
-and therefore \texttt{algorithm1} must eventually return a location.
-
-{\bf 2. If \texttt{algorithm1} returns a location,
-it will be a peak in the original problem.}
-If \texttt{algorithm1} returns a location $(r_1, c_1)$,
-then that location must have the best value in column $c_1$,
-and must have been a peak within some recursive subproblem.
-Assume, for the sake of contradiction,
-that $(r_1, c_1)$ is not also a peak within the original problem.
-Then as the location $(r_1, c_1)$ is passed up the chain of recursive calls,
-it must eventually reach a level where it stops being a peak.
-At that level, the location $(r_1, c_1)$
-must be adjacent to the dividing column $c_2$ (where $|c_1 - c_2| = 1$),
-and the values must satisfy the inequality
-$val(r_1, c_1) < val(r_1, c_2)$.
-
-Let $(r_2, c_2)$ be
-the location of the maximum value found by \texttt{algorithm1}
-in the dividing column.
-As a result, it must be that $val(r_1, c_2) \le val(r_2, c_2)$.
-Because the algorithm chose to recurse
-on the half containing $(r_1, c_1)$,
-we know that $val(r_2, c_2) < val(r_2, c_1)$.
-Hence, we have the following chain of inequalities:
-$$val(r_1, c_1) < val(r_1, c_2) \le val(r_2, c_2) < val(r_2, c_1)$$
-But in order for \texttt{algorithm1} to return $(r_1, c_1)$ as a peak,
-the value at $(r_1, c_1)$ must have been the greatest in its column,
-making $val(r_1, c_1) \ge val(r_2, c_1)$.
-Hence, we have a contradiction.
-\end{quote}
-
-\ifsolution \solution{}
-%%% PROBLEM 5 SOLUTION START %%%
-Write your proof here.
-%%% PROBLEM 5 SOLUTION END %%%
-\fi
-
-\problem \points{19} \textbf{Peak-Finding Counterexamples}
-
-For each incorrect algorithm,
-upload a Python file giving a counterexample
-(i.e. a matrix for which the algorithm returns a location
-that is not a peak).
-
-\ifsolution \solution{}
-%%% PROBLEM 6 SOLUTION START %%%
-\begin{verbatim}
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-\end{verbatim}
-%%% PROBLEM 6 SOLUTION END %%%
-\fi
 
 \end{exercises}
 
