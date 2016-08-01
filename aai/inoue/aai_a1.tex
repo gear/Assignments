@@ -38,6 +38,7 @@ There are 5 exercises for each lecture:
   \item Lecture No.5 - Exercise 3-1 to 3-3.
   \item Lecture No.6 - Exercise 4-1 to 4-3.
   \item Lecture No.7 - Exercise 5-1 to 5-3.
+  \item Lecture No.8 - Exercise 6-1 to 6-2.
 \end{enumerate}
 
 \setlength{\parindent}{0pt}
@@ -50,7 +51,6 @@ There are 5 exercises for each lecture:
 %%% COLLABORATORS START %%%
 None.
 %%% COLLABORATORS END %%%
-
 \begin{exercises}
 
 \problem
@@ -62,367 +62,247 @@ statement ``Some P's are not Q's''.
 \ifsolution \solution{}
 %%% Ex1 SOLUTION START %%%
 By equivalent translation to first-order logic, we have the following
-representation:
+representation: $$\neg (\forall x(P(x) \rightarrow Q(x))$$
+$$\equiv \exists x \neg (P(x) \rightarrow Q(x))$$
+$$\equiv \exists x \neg ( \neg P(x) \vee Q(x))$$
+$$\equiv \exists x (P(x) \wedge \neg Q(x))$$
+Therefore, we can claim that ``It is not true that all P's are not Q's'' is logically equivalent to ``Some P's are not Q's''
+
 %%% Ex1 SOLUTION END %%%
 \fi
 
-\problem \points{15} \textbf{Recurrence Relation Resolution}
+\problem
 
-For each of the following recurrence relations,
-pick the correct asymptotic runtime:
-
-\begin{exerciseparts}
-
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-T(x, y) &=& \Theta(x + y) + T(x / 2, y / 2).
-\end{array}
-$$
-
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
+Prove that the following formulas are valid:
+$$\forall x (P(x) \wedge Q(x)) \rightarrow \exists x(P(x) \vee Q(x)) $$
+$$\neg \forall x P(x) \leftrightarrow \exists x \neg P(x) $$
 \ifsolution \solution{}
-%%% PROBLEM 2(a) SOLUTION START %%%
-1
-%%% PROBLEM 2(a) SOLUTION END %%%
+%%% Ex2 SOLUTION START %%%
+First, we have: $\forall x (P(x) \wedge Q(x)) \rightarrow \exists x(P(x) \vee Q(x)) $
+$$\equiv \neg \forall x (P(x) \wedge Q(x))\vee \exists x (P(x) \vee Q(x)) $$
+$$\equiv \exists x \neg (P(x) \wedge Q(x))\vee \exists x (P(x) \vee Q(x)) $$
+$$ \equiv \exists x(\neg P(x) \vee \neg Q(x)) \vee \exists x (P(x) \vee Q(x)) $$
+If the left part of the last formula isn't true, then both P(x) and Q(x) are true $\forall$ x and the right part is absolutely true. If the right section is not true, then P(x) and Q(x) are not true $\forall$ x and the left section is absolutely true. Therefore, we claim this formula is valid.
+
+Second, viewing the case for $\rightarrow$ assuming that the case $\leftarrow$ is valid, we have:
+$$\neg \forall x P(x) \rightarrow \exists x \neg P(x)$$
+$$\equiv \neg \neg \forall x P(x) \vee \neg \exists x \neg P(x)$$
+$$\equiv \forall x P(x) \vee \neg \forall x P(x) $$
+Viewing the case for $\leftarrow$ assuming that the case $\rightarrow$ is valid, we have:
+$$\exists x P(x) \rightarrow \neg \forall x P(x) $$
+$$\equiv \neg \exists x \neg P(x) \vee \neg \forall x P(x)$$
+$$\equiv \neg \exists x \neg P(x) \vee \exists x \neg P(x)$$
+Therefore, the formula is valid.
+%%% Ex2 SOLUTION END %%%
 \fi
 
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-T(x, y) &=& \Theta(x) + T(x, y / 2).
-\end{array}
-$$
+\problem
 
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
+Prove that the following formula is not valid:
+$$ \exists x (P(x) \wedge Q(x)) \leftrightarrow \exists  x P(x) \wedge \exists x Q(x) $$
 \ifsolution \solution{}
-%%% PROBLEM 2(b) SOLUTION START %%%
-1
-%%% PROBLEM 2(b) SOLUTION END %%%
+%%% Ex3 SOLUTION START %%%
+We only need to prove the necessity condition is wrong. Assume there are two constant A and B. When P(x) is satisfied by only A, and Q(x) is satisfied by only B, there exists no x which can satisfy both P(x) and Q(x). Therefore, the formula is not valid.
+
+%%% Ex3 SOLUTION END %%%
 \fi
 
-\problempart \points{5}
-Select the correct asymptotic complexity
-of an algorithm with runtime $T(n, n)$
-where 
-$$
-\begin{array}{rcll}
-T(x, c) &=& \Theta(x) & \textrm{ for $c \le 2$}, \\
-T(x, y) &=& \Theta(x) + S(x, y / 2), \\
-S(c, y) &=& \Theta(y) & \textrm{ for $c \le 2$, and} \\
-S(x, y) &=& \Theta(y) + T(x / 2, y).
-\end{array}
-$$
+\textbf{Exercise 2-1.}
 
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+Suppose the formula $T = \{P \rightarrow R , Q \rightarrow R\}$ and $\varphi = P \rightarrow R$.Using Hilbert System, prove that $\varphi$ is a theorem of T.
 
 \ifsolution \solution{}
-%%% PROBLEM 2(c) SOLUTION START %%%
-1
-%%% PROBLEM 2(c) SOLUTION END %%%
+From the assumption, we derive the following formula:
+$$((P \rightarrow Q) \rightarrow (Q \rightarrow R)) \rightarrow ((P \rightarrow Q ) \rightarrow (P \rightarrow R))$$
+By MP, we have:
+$$\frac{P \rightarrow Q \qquad (P \rightarrow Q) \rightarrow (P \rightarrow R) }{P \rightarrow R} $$
+Therefore, $\varphi$ is a theorem of T.
 \fi
 
-\end{exerciseparts}
+\textbf{Excercise 2-2.}
 
-\section*{Peak-Finding}
-
-In Lecture 1,
-you saw the peak-finding problem.
-As a reminder,
-a \emph{peak} in a matrix
-is a location with the property that its four neighbors
-(north, south, east, and west)
-have value less than or equal to the value of the peak.
-We have posted Python code for solving this problem
-to the website in a file called \texttt{ps1.zip}.
-In the file \texttt{algorithms.py},
-there are four different algorithms
-which have been written
-to solve the peak-finding problem,
-only some of which are correct.
-Your goal is to figure out
-which of these algorithms are correct
-and which are efficient.
-
-\problem \points{16} \textbf{Peak-Finding Correctness}
-
-\begin{problemparts}
-
-\problempart \points{4} Is \texttt{algorithm1} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
+Using DPLL, show that the next clausal theory is unsatisfiable:
+$$S = \{\neg P \vee Q \vee R, \neg Q \vee R, Q \vee \neg R, \neg Q \vee \neg R, P \}$$
 
 \ifsolution \solution{}
-%%% PROBLEM 3(a) SOLUTION START %%%
-1
-%%% PROBLEM 3(a) SOLUTION END %%%
+Assume S is the formula as input of DPLL:
+$$(\neg P \vee Q \vee R) \wedge (\neg Q \vee R) \wedge (Q \vee \neg R) \wedge (\neg Q \vee \neg R) \wedge (P)) $$
+There is a unit P, so we can simplify the formula by unit propagation:
+$$(Q \vee R) \wedge (\neg Q \vee R) \wedge (Q \vee \neg R) \wedge(\neg Q \vee \neg R) $$
+DPLL selects the variable Q and selects $(S \wedge Q)$:
+$$(Q \vee R) \wedge (\neg Q \vee R) \wedge (Q \vee \neg R) \wedge(\neg Q \vee \neg R) \wedge (Q) $$
+DPLL assigns Q = T and calls $(R \wedge \neg R)$. Since this is unsatisfiable, DPLL calls $(S \wedge \neg Q)$:
+$$(Q \vee R) \wedge (\neg Q \vee R) \wedge (Q \vee \neg R) \wedge(\neg Q \vee \neg R) \wedge (\neg Q) $$
+DPLL assigns Q = F and calls $(R \wedge \neg R)$. So DPLL returns unsatisfiable. Therefore, S is unsatisfiable
 \fi
 
-\problempart \points{4} Is \texttt{algorithm2} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
+\textbf{Exercise 2-3.}
+
+State the reason why WalkSAT is not complete.
+
+WalkSAT is not complete because, firstly, it conducts stochastic local search, secondly, while WalkSAT can show the satisfiability it can not show the unsatisfiability, and finally, WalkSAT will return unknown when cannot reach the solution in a specific time.
+
+\textbf{Exercise 2-3.}
+
+What is a problem of the direct encoding of CSP to SAT? Is
+there any other encoding method to solve the problem?
+
+The problem of direct encoding is that is doesn't count the relationship of the order of variables and constants. As a result, the size of SAT which is transfered form CSP will be very large.
+
+Order encoding will improve the problem. It represents the order of variables and constants. Therefore the size of SAT transfered will be smaller than using encoding.
+
+\textbf{Exercise 3-1.}
+
+Translate the following prenex normal form to the
+Skolem normal form:
+$$\forall y \forall z \exists u (\neg p(x,z) \vee q(x,y,u))\wedge (\neg p(y,z) \vee q(q,y,u))$$
+\ifsolution \solution{}
+We have: $\forall y \forall z \exists u (\neg p(x,z) \vee q(x,y,u))\wedge (\neg p(y,z) \vee q(q,y,u))$
+
+$\equiv \forall y \forall z (\neg p(x,z) \vee q(x,y,f(y.z))\wedge (\neg p(y,z) \vee q(q,y,f(y,z)))$ where $f(y,z)$ is  skolem function.
+\fi
+
+\textbf{Exercise 3-2.}
+
+Prove that groundparent(hanako,ichiro) is a logical
+consequence of the definite program: 
+$$P= \{groundparent(x,y) \leftarrow parent(x,z),parent(x,z). Parent(x,y) \leftarrow father(x,y). parent(x,y) \leftarrow mother(x,y). father(makoto,ichiro). mother(hanako,makoto). \}$$
+\ifsolution \solution{}
+Using SLD resolution to P and while considering $\leftarrow$ grandparent(hanako,ichiro) as the goal, we lead to an empty clause as in Fig 1.Therefore, groundparent(hanako,ichiro) is the consequence of P.
+\fi
+
+\textbf{Exercise 3-3.}
+
+Selling unregistered guns is a crime. “Red” has some
+unregistered guns and he bought those from “Lefty”. Derive
+that “Lefty” is criminal.
 
 \ifsolution \solution{}
-%%% PROBLEM 3(b) SOLUTION START %%%
-1
-%%% PROBLEM 3(b) SOLUTION END %%%
+We define a logic program as follow:
+\begin{center}
+criminal(x) means x is criminal sell(x,y) 
+
+means x sold y
+\end{center}
+And the definite program is follow:
+\begin{center}
+P = {criminal(x)$\leftarrow $
+sell(x,unregistered guns) sell(Lefty,unregistered guns)}
+\end{center}
+
+By SLD resolution, we derive an empty clause as in Fig 2, so Lefty is criminal. 
 \fi
 
-\problempart \points{4} Is \texttt{algorithm3} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
+\textbf{Exercises 4-1.}
+
+Why our world is not symmetric, that is, there are much more negative facts than positive ones? How can our human cope with this situation?
+
+Our world is not symmetric because, when people suffer from negative fact, they had negative mind and they might induce negative fact, while people in their position condition, they won't cause positive fact.
+
+We can deal with this situation by patience and benevolence. Which means that we have to refrain ourselves from doing negative fact when we in negative mind. And we have to cause positive fact when we are positive. By doing this, negative facts will be minimized and positive ones is greatly increased.
+
+\textbf{Exercise 4-2.}
+Compute the stable models of the problem:
+$$P = \{p \leftarrow \textbf{not} \ p, \ p \leftarrow q. \ q \leftarrow \textbf{not} \ r. \ r \leftarrow \textbf{not} \ q \}$$
+\ifsolution \solution{}
+The stable model of $P = {p \leftarrow not \ p. \ p \leftarrow \ q. \ q \leftarrow not \ r. \ r \leftarrow not \ q.}$ is the set$\{p,q\}$. 
+\fi
+
+\textbf{Exercise 4-3.}
+(Lottery paradox) Suppose 1000 fair lottery ticket in which only the one ticket is winning. It is rational to predict that ticket $\#$ 1 will not win. Since the lottery is fair, it is also rational to assume that ticket $\#$2 will not win either. Indeed, it is rational to accept for any number k (k = 1,...,1000) that ticket $\#$ k will not win. However, accepting all these statements entails that it is rational to accept that no ticker will win, which contradicts with the fact that one will win. Describe this problem in formalism of nonmonotonic reasoning and show that the problem does not appear in it.
 
 \ifsolution \solution{}
-%%% PROBLEM 3(c) SOLUTION START %%%
-1
-%%% PROBLEM 3(c) SOLUTION END %%%
+We describe the sentences by using default logic. First, the default is ''the lottery tickets are normally not win''. We describe the sentence as the following:
+$$\frac{lottery(x): \neg win(x)}{\neg win(x)}$$
+where lottery(x) means x is a ticket, win(x) means x is the winning ticket. Since we have the assumption that all 1000 tickets are fair and there will always is a winning one, describing the statements in first order logic, we have:
+$$\exists x(lottery(x) \rightarrow win(x))$$
+Assume ticket $t_k$ is winning one, then the following formula is true:
+$$lottery(t_k) \rightarrow win(t_k)$$
+Substiting $x$ by $t_k$ in the default, we derive $\neg win(t_k)$ is not true. Therefore, there is no paradox.
 \fi
 
-\problempart \points{4} Is \texttt{algorithm4} correct?
-\begin{enumerate}
-\item Yes.
-\item No.
-\end{enumerate}
+\textbf{Exercise 5-1.}
+
+Write a successor state axiom for Block world, which replaces 
+the axioms (2), (3) and (4).
 
 \ifsolution \solution{}
-%%% PROBLEM 3(d) SOLUTION START %%%
-1
-%%% PROBLEM 3(d) SOLUTION END %%%
+
+$(2) \ poss(a,s)$ $\rightarrow$
+$$[On(x,z,do(a,s))\wedge \ Clear(y,do(a,s)) \leftrightarrow (a = Move(x,z)) \vee ((On(x,z,s) \wedge Clear(y,s)) \vee a , Move(x,y))]$$
+
+$(3) \ poss(a,s) \wedge a , \ Move(x,z) \rightarrow \  (On(x,y,do(a,s)) \leftrightarrow  On(x,y,s))$
+
+$(4) \ poss(a,s) \wedge a , \ Move(y,x) \rightarrow (Clear(x,do(a,s)) \leftrightarrow Clear(x,s))$ 
 \fi
 
-\end{problemparts}
+\textbf{Exercise 5-2.}
 
-\problem \points{16} \textbf{Peak-Finding Efficiency}
-
-\begin{problemparts}
-
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm1} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+Consider a solution to the ramification problem.
 
 \ifsolution \solution{}
-%%% PROBLEM 4(a) SOLUTION START %%%
-1
-%%% PROBLEM 4(a) SOLUTION END %%%
+The notion of a solitary stratiﬁed theory is defined by combining the notion of solitary theory and stratiﬁed logic program. A solitary stratiﬁed theory is a stratiﬁed logic program that allows negation in the consequent. There is a closed-form solution to the frame and ramiﬁcation problems for axiomatizations whose syntactic representation of ramiﬁcation constraints and eﬀect axioms, collectively form a solitary stratiﬁed theory. 7 steps syntactic manipulation procedure which results in a closed-form solution to the frame and ramiﬁcation problems are deﬁned. Let T be a solitary stratiﬁed theory, with stratiﬁcation $(T_1,T_2,··· ,T_n) $. 
+
+\textbf{Step1}. For every fluent $F_i$ defined in an eﬀect axioms of $T_i$ generate at most one general positive and one general negative eﬀect axiom. 
+
+\textbf{Step2}. For every fluent $F_i$ defined in a ramification constraint of $T_i$,generate general positive and negative ramification axioms, relativized to situation (do(a,s)). 
+
+\textbf{Step3}. Combine the two sets of axioms above,to define extended positive and negative effect axioms, for every fluent $F_i$
+
+\textbf{Step4}. Make the following completeness assumption regarding the effects and ramifications. All the conditions under which an action a can lead, directly or indirectly, to ﬂuent F becoming true or false in the successor state are characterized in the extended positive and negative effect axioms for ﬂuent F.
+
+\textbf{Step5}. From the completeness assumption, generate explanation closure axioms.
+
+\textbf{Step6}.
+From the extended positive and negative effect axioms and the explanation closure axioms, define intermediate successor state axioms for each fluent $F_i$.
+
+\textbf{Step7}. By regressing the intermediate successor state axioms, generate (ﬁnal) successor state axioms. This ﬁnal successor state axioms provide a closed-form solution to the ramiﬁcation problems.
 \fi
 
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm2} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+\textbf{Exercise 5-3.}
+
+Can intelligence emerge from machines/computers? State your opinion with reasons for it.
 
 \ifsolution \solution{}
-%%% PROBLEM 4(b) SOLUTION START %%%
-1
-%%% PROBLEM 4(b) SOLUTION END %%%
+
+I think human-level intelligence can and will emerge within this century. My belief based on the demand of artificial intelligence and the natural science discovery. With the maturity of digital technology and emergence of quantum computing, we are now in need of smarter machine more than ever. We produce 2.5 Quintillion Bytes per day, which is out of human ability to analyze. Without smart machines, we will soon be drown with our own data. Furthermore, artificial intelligence has been making our lives more comfortable everyday. Thus, human-level intelligence is one of mankind's top priority. 
+
+In a nutshell, a human body is a biological machine which operates by the laws of physics. The human's brain, albeit complicated, still follows the laws physics. Like all the natural sciences, the study of artificial intelligence can be broken down to observation and modeling. Every years, we create sophisticated tools to monitor how our brain works. The results from biology and cognitive science are viewed as ``ground-truth'' for models in computer science. This process then repeats over and over until we find the best model for our brain's operation. In the recent 100 years, we have discovered more technology and we did all the time before. I believe with the current speed of technology discovery and the high demand for artificial intelligence, our dream machine is within the foreseeable future.
 \fi
 
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm3} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
+\textbf{Exercise 6-1.}
+
+Show two simple examples of applications of abduction in such areas as design, diagnosis, discovery, dperception, intension recognition, and natural language understanding.
 
 \ifsolution \solution{}
-%%% PROBLEM 4(c) SOLUTION START %%%
-1
-%%% PROBLEM 4(c) SOLUTION END %%%
+
+\textbf{Example 1:} Consider the following simplistic knowledge base and assumables for a diagnostic assistant:
+
+\begin{itemize}
+  \setlength{\parskip}{0pt}
+  \item bronchitis \leftarrow influenza.
+  \item bronchitis \leftarrow smokes.
+  \item coughing \leftarrow bronchitis.
+  \item wheezing \leftarrow bronchitis.
+  \item fever \leftarrow influenza.
+  \item soreThroat \leftarrow influenza.
+  \item false \leftarrow smokes $\wedge$ nonsmoker.
+  \item \textbf{assumable} smokes, nonsmoker, influenza.
+\end{itemize}
+
+If the agent observes wheezing, there are two minimal explainations: \\
+\vspace{5em} \{influenza\} and \{smokes\} \\
+The explainations imply bronchitis and coughing.
+
+\textbf{Example 2:} Refrigerator Design:
+
+While refrigerators are originally simple
+
+
 \fi
 
-\problempart \points{4} What is the worst-case runtime of \texttt{algorithm4} on a problem of size $n \times n$?
-\begin{enumerate}
-\item $\Theta(\log n)$.
-\item $\Theta(n)$.
-\item $\Theta(n \log n)$.
-\item $\Theta(n \log^2 n)$.
-\item $\Theta(n^2)$.
-\item $\Theta(2^n)$.
-\end{enumerate}
-
-\ifsolution \solution{}
-%%% PROBLEM 4(d) SOLUTION START %%%
-1
-%%% PROBLEM 4(d) SOLUTION END %%%
-\fi
-
-\end{problemparts}
-
-\problem \points{19} \textbf{Peak-Finding Proof}
-
-Please modify the proof below to construct a proof of correctness
-for the \emph{most efficient correct algorithm}
-among \texttt{algorithm2}, \texttt{algorithm3}, and \texttt{algorithm4}.
-
-The following is the proof of correctness
-for \texttt{algorithm1},
-which was sketched in Lecture 1.
-
-\begin{quote}
-We wish to show that \texttt{algorithm1}
-will always return a peak,
-as long as the problem is not empty.
-To that end,
-we wish to prove the following two statements:
-
-{\bf 1. If the peak problem is not empty,
-then \texttt{algorithm1} will always return a location.}
-Say that we start with a problem of size $m \times n$.
-The recursive subproblem examined by \texttt{algorithm1}
-will have dimensions
-$m \times \lfloor n / 2 \rfloor$ or 
-$m \times \left(n - \lfloor n / 2 \rfloor - 1 \right)$.
-Therefore, the number of columns in the problem
-strictly decreases with each recursive call
-as long as $n > 0$.
-So \texttt{algorithm1} either returns a location at some point,
-or eventually examines a subproblem with a non-positive
-number of columns.
-The only way for the number of columns to become strictly negative,
-according to the formulas that determine the size of the subproblem,
-is to have $n = 0$ at some point.
-So if \texttt{algorithm1} doesn't return a location,
-it must eventually examine an empty subproblem.
-
-We wish to show that there is no way that this can occur.
-Assume, to the contrary,
-that \texttt{algorithm1} does examine an empty subproblem.
-Just prior to this,
-it must examine a subproblem of size
-$m \times 1$ or $m \times 2$.
-If the problem is of size $m \times 1$,
-then calculating the maximum of the central column
-is equivalent to calculating the maximum of the entire problem.
-Hence, the maximum that the algorithm finds must be a peak,
-and it will halt and return the location.
-If the problem has dimensions $m \times 2$,
-then there are two possibilities:
-either the maximum of the central column is a peak
-(in which case the algorithm will halt and return the location),
-or it has a strictly better neighbor in the other column
-(in which case the algorithm will recurse
-on the non-empty subproblem with dimensions $m \times 1$,
-thus reducing to the previous case).
-So \texttt{algorithm1} can never recurse into an empty subproblem,
-and therefore \texttt{algorithm1} must eventually return a location.
-
-{\bf 2. If \texttt{algorithm1} returns a location,
-it will be a peak in the original problem.}
-If \texttt{algorithm1} returns a location $(r_1, c_1)$,
-then that location must have the best value in column $c_1$,
-and must have been a peak within some recursive subproblem.
-Assume, for the sake of contradiction,
-that $(r_1, c_1)$ is not also a peak within the original problem.
-Then as the location $(r_1, c_1)$ is passed up the chain of recursive calls,
-it must eventually reach a level where it stops being a peak.
-At that level, the location $(r_1, c_1)$
-must be adjacent to the dividing column $c_2$ (where $|c_1 - c_2| = 1$),
-and the values must satisfy the inequality
-$val(r_1, c_1) < val(r_1, c_2)$.
-
-Let $(r_2, c_2)$ be
-the location of the maximum value found by \texttt{algorithm1}
-in the dividing column.
-As a result, it must be that $val(r_1, c_2) \le val(r_2, c_2)$.
-Because the algorithm chose to recurse
-on the half containing $(r_1, c_1)$,
-we know that $val(r_2, c_2) < val(r_2, c_1)$.
-Hence, we have the following chain of inequalities:
-$$val(r_1, c_1) < val(r_1, c_2) \le val(r_2, c_2) < val(r_2, c_1)$$
-But in order for \texttt{algorithm1} to return $(r_1, c_1)$ as a peak,
-the value at $(r_1, c_1)$ must have been the greatest in its column,
-making $val(r_1, c_1) \ge val(r_2, c_1)$.
-Hence, we have a contradiction.
-\end{quote}
-
-\ifsolution \solution{}
-%%% PROBLEM 5 SOLUTION START %%%
-Write your proof here.
-%%% PROBLEM 5 SOLUTION END %%%
-\fi
-
-\problem \points{19} \textbf{Peak-Finding Counterexamples}
-
-For each incorrect algorithm,
-upload a Python file giving a counterexample
-(i.e. a matrix for which the algorithm returns a location
-that is not a peak).
-
-\ifsolution \solution{}
-%%% PROBLEM 6 SOLUTION START %%%
-\begin{verbatim}
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-\end{verbatim}
-%%% PROBLEM 6 SOLUTION END %%%
-\fi
 
 \end{exercises}
+
 
 \end{document}

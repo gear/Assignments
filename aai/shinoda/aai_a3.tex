@@ -1,0 +1,241 @@
+%
+% ART.T548 - Advanced artificial intelligence 
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{dsfont}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{subcaption}
+
+\input{macros}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{2}
+\newcommand{\releasedate}{Thursday, July 28, 2016}
+\newcommand{\partaduedate}{Monday, August 1, 2016}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\makeatletter
+\newcommand*{\indep}{%
+\mathbin{%
+\mathpalette{\@indep}{}%
+}%
+}
+\newcommand*{\nindep}{%
+\mathbin{%                   % The final symbol is a binary math operator
+\mathpalette{\@indep}{\not}% \mathpalette helps for the adaptation
+% of the symbol to the different math styles.
+}%
+}
+\newcommand*{\@indep}[2]{%
+% #1: math style
+% #2: empty or \not
+\sbox0{$#1\perp\m@th$}%        box 0 contains \perp symbol
+\sbox2{$#1=$}%                 box 2 for the height of =
+\sbox4{$#1\vcenter{}$}%        box 4 for the height of the math axis
+\rlap{\copy0}%                 first \perp
+\dimen@=\dimexpr\ht2-\ht4-.2pt\relax
+% The equals symbol is centered around the math axis.
+% The following equations are used to calculate the
+% right shift of the second \perp:
+% [1] ht(equals) - ht(math_axis) = line_width + 0.5 gap
+% [2] right_shift(second_perp) = line_width + gap
+% The line width is approximated by the default line width of 0.4pt
+\kern\dimen@
+{#2}%
+% {\not} in case of \nindep;
+% the braces convert the relational symbol \not to an ordinary
+% math object without additional horizontal spacing.
+\kern\dimen@
+\copy0 %                       second \perp
+} 
+\makeatother
+
+\begin{document}
+
+\handout{Quiz 2 - Lecture 13 (Prof. Shinoda)}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\newcommand{\solution}{\textbf{Solution:}}
+\begin{wraptable}[8]{l}{0.3\textwidth}
+  \centering
+  \begin{tabular}{ccc|c}
+    a & b & c & P(a,b,c) \\ \hline
+    0 & 0 & 0 & 0.192 \\
+    0 & 0 & 1 & 0.144 \\
+    0 & 1 & 0 & 0.048 \\
+    0 & 1 & 1 & 0.216 \\
+    1 & 0 & 0 & 0.192 \\
+    1 & 0 & 1 & 0.064 \\
+    1 & 1 & 0 & 0.048 \\
+    1 & 1 & 1 & 0.096 \\
+  \end{tabular}
+  \caption{Join probability}
+\end{wraptable}
+
+\hspace{2em}
+
+\noindent
+Consider the probability table of random variables $a$, $b$, and $c$
+given in Table 1. Answer these following questions: 
+
+\begin{enumerate}
+  \item Prove that $a \nindep b$.
+  \item Prove that $ a \indep b \ | \ c$.
+  \item Show $P(a,b,c) = P(a)P(c \ | \ a)P(b \ | \ c)$.
+  \item Illustrate a DAG correspondes to question 3.
+\end{enumerate}
+
+\setlength{\parindent}{0pt}
+
+\hspace{1em}
+
+\hrulefill
+
+\textbf{Collaborators:}
+%%% COLLABORATORS START %%%
+None.
+%%% COLLABORATORS END %%%
+
+\begin{exercises}
+
+\problem \textbf{Prove $a \nindep b$}
+
+\ifsolution \solution{}
+%%% Ex1 SOLUTION START %%%
+Assume: $a \indep b \Leftrightarrow P(a,b) = P(a)P(b)$. We have a counter example:
+
+\begin{equation*}
+  \begin{aligned}
+    P(b=0) & = \sum_{a,c} P(a,b=0,c) = 0.192+0.144+0.192+0.064=0.592 \\
+    P(a=0) & = \sum_{b,c} P(a=0,b,c) = 0.192+0.064+0.048+0.096=0.4 \\
+    P(a=0,b=0) & = \sum_{c} P(a=0,b=0,c) = 0.192+0.144 = 0.336 \\
+               & \neq P(a=0)P(b=0) = 0.4 \times 0.592 = 0.2368
+  \end{aligned}
+\end{equation*}
+
+Therefore, $a \nindep b$.
+%%% Ex1 SOLUTION END %%%
+\fi
+
+\problem \textbf{Prove $a \indep b \ | \ c$}
+
+\ifsolution \solution{}
+%%% PROBLEM 2(a) SOLUTION START %%%
+We have the conditional probabilities:
+\begin{equation*}
+  \begin{aligned}
+    P(a,b \ | \ c) & = \frac{P(a,b,c)}{P(c)} \\
+    P(a \ | \ c) & = \frac{\sum_{b}P(a,b,c)}{P(c)} \\
+    P(b \ | \ c) & = \frac{\sum_{a}P(a,b,c)}{P(c)} \\
+  \end{aligned}
+\end{equation*}
+
+We also have:
+\begin{equation*}
+  \begin{aligned}
+    P(c=1) & = \sum_{a,b} P(a,b,c=1) = 0.216+0.144+0.064+0.096=0.52 \\
+    P(c=0) & = \sum_{b,b} P(a,b,c=1) = 1-0.52 = 0.48 \\
+  \end{aligned}
+\end{equation*}
+
+We have table of join probability conditioned on $c$:
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ccc|cc}
+    a & b & c & $P(a,b \ | \ c)$ & $P(a \ | \ c) P(b \ | \ c)$ \\ \hline
+    0 & 0 & 0 & 0.4 & 0.4   \\
+    0 & 0 & 1 & 0.277 & 0.277  \\
+    0 & 1 & 0 & 0.1 & 0.1  \\
+    0 & 1 & 1 & 0.415 & 0.415 \\
+    1 & 0 & 0 & 0.4 & 0.4 \\
+    1 & 0 & 1 & 0.123 & 0.123 \\
+    1 & 1 & 0 & 0.1 & 0.1 \\
+    1 & 1 & 1 & 0.185 & 0.185 \\
+  \end{tabular}
+  \caption{Join probability conditioned on c}
+\end{table}
+
+From Table 2, we have:
+$$ P(a,b \ | \ c) = P(a \ | \ c)P(b \ | \ c) $$
+
+Therefore, $a \indep c \ | \ c$.
+%%% PROBLEM 2(a) SOLUTION END %%%
+\fi
+
+\problem \textbf{Show $P(a,b,c) = P(a)P(c \ | \ a)P(b \ | \ c)$}
+
+\ifsolution \solution{}
+Using sum rule similar to the previous questions, we have these following
+probability tables:
+
+\begin{table}[hb!]
+  \begin{subtable}{.3\linewidth}
+    \centering
+      \begin{tabular}{c|c}
+        a & $P(a)$ \\ \hline
+        0 & 0.6 \\
+        1 & 0.4 \\
+      \end{tabular}
+      \caption{$P(a)$}
+  \end{subtable}
+  %
+  \begin{subtable}{.3\linewidth}
+    \centering
+      \begin{tabular}{cc|c}
+        c & a & $P(c \ | \ a)$ \\ \hline
+        0 & 0 & 0.4 \\
+        0 & 1 & 0.6 \\
+        1 & 0 & 0.6 \\
+        1 & 1 & 0.4 \\
+      \end{tabular}
+      \caption{$P(a)$}
+  \end{subtable}
+  %
+  \begin{subtable}{.3\linewidth}
+    \centering
+      \begin{tabular}{cc|c}
+        b & c & $P(b \ | \ c)$ \\ \hline
+        0 & 0 & 0.8 \\
+        0 & 1 & 0.4 \\
+        1 & 0 & 0.2 \\
+        1 & 1 & 0.6 \\
+      \end{tabular}
+      \caption{$P(a)$}
+  \end{subtable}
+
+  \caption{Conditional probability tables}
+\end{table}
+
+Multiply the probabilities in Table 3 gives us the result:
+$$ P(a,b,c) = P(a)P(c \ | \ a)P(b \ | \ c) $$
+\fi
+
+\pagebreak
+
+\problem \textbf{Illustrate a DAD corresponds to question 3}
+
+\ifsolution \solution{}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{dag}
+  \caption{DAG corresponding to question 3.}
+\end{figure}
+
+\fi
+
+\end{exercises}
+
+\end{document}
