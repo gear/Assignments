@@ -1,0 +1,71 @@
+%
+% ART.T548 - Advanced artificial intelligence 
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{amsmath}
+
+\input{macros}
+
+
+% Fill these in!
+
+\newcommand{\releasedate}{August 1st, 2016}
+\newcommand{\partaduedate}{August 5th, 2016}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\begin{document}
+
+\handout{Assignment 2}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\begin{center}
+This report specifies on summarizing the content of Stanford Machine Learning lecture 1 (CS229) and
+give comments about Tokyo Tech's ML course.\\
+
+\vspace{2em}
+
+\textbf{Lecture content}
+
+\end{center}
+\begin{enumerate}
+\item \textbf{Supervised Learning}
+
+There are two type of supervised learning problem: progression problem and classification problem.
+\begin{itemize}
+\item Progression problems are problems in which the value they'll try to predict is continuous. For example, they have a collected data of housing price by square footage. They have a house need selling and depend on our house's area, they need to predict the price.
+\item Classification problems are problems in which the value
+they'll try to predict is discrete. For example, trying to predict a tumor is either malignant or benign depending on its size.  
+\end{itemize}
+Hotheyver, the general idea of supervised learning is that they provide the algorithm a data set, and they want the algorithm to learn the association bettheyen the inputs and the outputs, and give us the right anstheyr.
+\item \textbf{Learning Theory}
+
+Learning theory gives an understanding of how and why a learning algorithms work so that it can be applied as effectively as possible. For example, learning theory can guarantee that a learning algorithm will be at least 99.9 percent accurate, which means they can prove theorems showing when an algorithm holds
+
+Learning theory also gives insight to an algorithm such as understanding what algorithms can approximate different function theyll and how much training data is needed. Learning theory will have anstheyr the question should they spend more time on collecting data or is it enough data.
+
+\item \textbf{Unsupervised Learning}
+
+Speaking loosely, in an unsupervised learning problem, the data they got is just a structure and they do not know what is the right anstheyr. And and algorithm may find structure in the data in the form of the data being partitioned into two clusters.
+
+For example, unsupervised learning algorithms can be applied to understand gene data (trying to look at genes as individuals and group them into clusters based on properties of what genes they respond to), grouping pixels together, or separate distracting noise from main one in speakers.
+ 
+\item \textbf{Reinforcement Learning}
+
+The basic idea behind a reinforcement learning algorithm is called a reward function. They think of reinforcement learning resemble training a dog. Overtime, when they reward a dog when it do good and punish when it do bad, it will gradually know what thing to do.
+
+Similarly, reinforcement learning is applied to train a robot to do something. For example, to make a autonomous helicopter, they call "punish function" when the helicopter make a bad decision and crash, and call "reward function" when it flies properly. Over time, it will know how to make a sequence of right decision and control itself more effectively.
+
+\end{enumerate}
+
+\begin{center}
+\textbf{Tokyo Tech's lecture comparision}
+\end{center}
+
+Compare to Stanford University's course, I ML course's content in Tokyo Tech lacks of recent development in the fields and programming assignments. For example, associating with every Standford lecture is a problem set and programming assignment. I believe doing programming assignments is the best way to understand an algorithms, especially machine learning algorithm. On the other hand, this course from Stanford is an undergraduate-level course while in Tokyo Tech, the similar content is designed for a graduate-level course. Finally, I would like to give comment about the algorithms that are taught in Tokyo Tech's course. While these algorithms are useful in practice, they are more related to Data Mining than to Machine Learning and pattern matching.
+
+\end{document}
+

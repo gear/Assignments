@@ -280,13 +280,13 @@ Show two simple examples of applications of abduction in such areas as design, d
 
 \begin{itemize}
   \setlength{\parskip}{0pt}
-  \item bronchitis \leftarrow influenza.
-  \item bronchitis \leftarrow smokes.
-  \item coughing \leftarrow bronchitis.
-  \item wheezing \leftarrow bronchitis.
-  \item fever \leftarrow influenza.
-  \item soreThroat \leftarrow influenza.
-  \item false \leftarrow smokes $\wedge$ nonsmoker.
+  \item bronchitis $\leftarrow$ influenza.
+  \item bronchitis $\leftarrow$ smokes.
+  \item coughing $\leftarrow$ bronchitis.
+  \item wheezing $\leftarrow$ bronchitis.
+  \item fever $\leftarrow$ influenza.
+  \item soreThroat $\leftarrow$ influenza.
+  \item false $\leftarrow$ smokes $\wedge$ nonsmoker.
   \item \textbf{assumable} smokes, nonsmoker, influenza.
 \end{itemize}
 
@@ -296,11 +296,24 @@ The explainations imply bronchitis and coughing.
 
 \textbf{Example 2:} Refrigerator Design:
 
-While refrigerators are originally simple
+While refrigerators are originally simple devices, today we can find a variety of sophisticated designs depending on such requirements as capcity, cooling temperature and humidity, how to store and handle food, and where to use. Some examples of refrigerators that can be found include traditional design with a large compartment for normal temperature and a freezer, advanced design with multiple compartments including drawer-type storage and even a door in a door and special design for supermarkets. Main requirements:
+\begin{itemize}
+  \item FR1: to store food and to provide access to it, and
+  \item FR2: to keep the food cool. 
+\end{itemize}
 
-
+The decomposition of FR this way until we identify sufficient information regarding FRs and DPs with which we may proceed to basic design stage. For instance, regarding the identified enclosed, cooled stograge, we need to consider accessibility. We notice that the knowledge describing accessibility was combined with the knowledge about the behavior of cooled air for ``better'' design. This combination process is exactly the result of abduction to integrate these two pieces of knowledge and illustrates the power of ``abduction for integration'' to arrive at creative design.
 \fi
 
+\textbf{Exercise 6-2.}
+
+Discuss the possibility to apply logic-based AI techniques, in particular knowledge representation and reasoning, to your past and current research topics. If a method is applicable to your domain, consider how to formalize the domain and solve a problem based on it. Instead, if you consider that it is difficult to apply any logic-based method to your domain, analyze what is lacking in such a method and consider how other techniques can be combined with it to solve a problem.
+
+\ifsolution \solution{}
+
+My research involves analyzing complex network from a statistical point of view. Right now, I focus on analyzing the information gain of a random walk and a biased-random walk on a network. I think for now, the application of AI techinques which mentioned in this course is hard to employ in my work. The reason for such situation is due to the nature of my own work and my interest. Firstly, my research on random walk consider symbolic representation of nodes in graph only. Secondly, I belive it is more important to study artificial intelligence from the statistical point of view, which represent knowledge in potentials and vectors rather than using pre-defined logic sets or structured databases.
+
+\fi
 
 \end{exercises}
 
