@@ -1,0 +1,297 @@
+%
+% MCS.T411 - Computational Complexity
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{dsfont}
+
+\input{macros}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{1}
+\newcommand{\releasedate}{September 29, 2016~~}
+\newcommand{\partaduedate}{Tuesday,  15}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\begin{document}
+
+\handout{Assignment \theproblemsetnum}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\newcommand{\solution}{\textbf{Solution:}}
+
+Analyze \texttt{weather.nominal.arff} using Weka \texttt{3.6.14}
+
+\setlength{\parindent}{0pt}
+
+\medskip
+
+\hrulefill
+
+\textbf{Collaborators:}
+%%% COLLABORATORS START %%%
+None.
+%%% COLLABORATORS END %%%
+
+\begin{exercises}
+
+\problem \textbf{Compute posterior distribution for the class}
+
+Use NaiveBayesSimple to find a Bayesian classifier (Laplace estimator = 1 
+is used in order to avoid frequency problems). Compute P(``yes'') and 
+P(``no'') of the following instances.
+
+\begin{exerciseparts}
+  \exercisepart Windy = True
+
+  \ifsolution \solution{}
+    Given the evidence Windy = True, with independence assumption
+    and Bayes rule, we have the probability of answer ``yes'' as:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{Windy = True}) & = 
+        \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})}
+      \end{aligned}
+    \end{equation*}
+    Because of the independence assumption between attributes, 
+    we have the prior for Windy = True as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{Windy = True}) 
+          = \ & \mbox{P}(\mbox{Windy = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})\ \ + \\
+            & \mbox{P}(\mbox{Windy = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.3636 \times 0.625 + 0.5714 \times 0.375 \\
+          = \ & 0.4415
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Windy = True:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{Windy = True}) 
+        = & \ \frac{\mbox{P}(\mbox{Windy = True} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{Windy = True})} \\
+        = & \ \frac{0.3636 \times 0.625}{0.4415} \\
+        = & \ \boldsymbol{0.5} \\
+        \mbox{P}(\mbox{``no''} | \mbox{Windy = True}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{Windy = True})  \\
+        = & \ \boldsymbol{0.5}
+      \end{aligned}
+    \end{equation*}
+  \fi
+
+  \exercisepart Humidity = High, Windy = True
+
+  \ifsolution \solution{}
+    Similar to question 1-(a), we have the join prior probability
+    for the case Humidity = High (abbr. H = High), Windy = True
+    (abbr. W = True) as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High, W = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})\ \ + \\
+            & \mbox{P}(\mbox{H = High, W = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''})
+      \end{aligned}
+    \end{equation*}
+    Apply the attribute independence assumption, we have the following
+    fractorization of the conditional join probability:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{H = High}|\mbox{``yes''}) \times 
+                \mbox{P}(\mbox{W = True}|\mbox{``yes''}) \times \mbox{P}(\mbox{``yes''})\ \ + \\
+              & \mbox{P}(\mbox{H = High}|\mbox{``no''}) \times
+                \mbox{P}(\mbox{W = True}|\mbox{``no''}) \times \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.3636 \times 0.3636 \times 0.625 + 0.5714 \times 0.7142 \times 0.375 \\
+          = \ & 0.2357
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Windy = True and Humidity = High:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{H = High, W = True}) 
+        = & \ \frac{\mbox{P}(\mbox{W = True, H = High} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{H = High, W = True})} \\
+        = & \ \frac{0.3636 \times 0.3636 \times 0.625}{0.2357} \\
+        = & \ \boldsymbol{0.35} \\
+        \mbox{P}(\mbox{``no''} | \mbox{H = High, W = True}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{H = High, Windy = True})  \\
+        = & \ \boldsymbol{0.65}
+      \end{aligned}
+    \end{equation*}
+  \fi 
+
+  \exercisepart Temperature = Hot, Humidity = High, Windy = True
+
+  \ifsolution \solution{}
+    Similar to question 1-(a,b), we have the join prior probability
+    for the case Temperature = Hot (abbr. T = Hot) Humidity = High 
+    (abbr. H = High), Windy = True (abbr. W = True) as follow:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{T = Hot, H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{T = Hot, H = High, W = True}|\mbox{``yes''})  \times \mbox{P}(\mbox{``yes''})
+          \\ & + \ 
+             \mbox{P}(\mbox{T = Hot, H = High, W = True}|\mbox{``no''})  \times \mbox{P}(\mbox{``no''})
+      \end{aligned}
+    \end{equation*}
+    Apply the attribute independence assumption, we have the following
+    fractorization of the conditional join probability:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{T = Hot, H = High, W = True}) 
+          = \ & \mbox{P}(\mbox{T = Hot}|\mbox{``yes''}) \times
+                \mbox{P}(\mbox{H = High}|\mbox{``yes''}) \times \\
+              & \ \ \ \mbox{P}(\mbox{W = True}|\mbox{``yes''}) \times \mbox{P}(\mbox{``yes''})\ \ + \\
+              & \mbox{P}(\mbox{T = Hot}|\mbox{``no''}) \times
+                \mbox{P}(\mbox{H = High}|\mbox{``no''}) \times \\
+              & \ \ \ \mbox{P}(\mbox{W = True}|\mbox{``no''}) \mbox{P}(\mbox{``no''}) \\
+          = \ & 0.25 \times 0.3636 \times 0.3636 \times 0.625 + 
+              0.375 \times 0.5714 \times 0.7142 \times 0.375 \\
+          = \ & 0.078
+      \end{aligned}
+    \end{equation*}
+    We have the posterior distribution for the class given Temperature = Hot, Windy = True, and Humidity = High:
+    \begin{equation*}
+      \begin{aligned}
+        \mbox{P}(\mbox{``yes''} | \mbox{T = Hot, H = High, W = True}) 
+        = & \ \frac{\mbox{P}(\mbox{T = Hot, W = True, H = High} | \mbox{``yes''}) \times
+        \mbox{P}(\mbox{``yes''})}{\mbox{P}(\mbox{T = Hot, H = High, W = True})} \\
+        = & \ \frac{0.25 \times 0.3636 \times 0.3636 \times 0.625}{0.078} \\
+        = & \ \boldsymbol{0.26} \\
+        \mbox{P}(\mbox{``no''} | \mbox{T = Hot, H = High, W = True}) 
+        = & \ 1 - \mbox{P}(\mbox{``yes''} | \mbox{T = Hot, H = High, Windy = True})  \\
+        = & \ \boldsymbol{0.74}
+      \end{aligned}
+    \end{equation*}
+  \fi
+\end{exerciseparts}
+
+\problem \textbf{J48 decision tree}
+
+\begin{exerciseparts}
+
+\exercisepart 
+Use J48 to find a decision tree.
+
+\ifsolution \solution{}
+The decision tree found by J48 with defaut setting is:
+\begin{figure}[h]
+  \includegraphics[width=0.8\textwidth]{j48tree.pdf}
+  \centering
+\end{figure}
+\fi
+
+\exercisepart
+Check its accuracy to the original data by hand.
+
+\ifsolution \solution{}
+The accuracy of the tree over the training data is \textbf{100\%}.
+This result is due to the tree is created by using full
+dataset. However, the accuracy of the tree is only 50\% if
+checked with 10-fold cross-validation.
+\fi
+
+\exercisepart
+Why is ``\texttt{outlook}'' selected as its root attribute? 
+Compare with other attribute (temperature, humidity and windy)
+and answer quantitatively.
+
+\ifsolution \solution{}
+``\texttt{outlook}'' is selected as its root attribute because its
+information gain is the largest out of all attributes. We can compute
+the expected information of each attribute as follow:
+\begin{equation*}
+  \begin{aligned}
+    \mathds{E} \ [\mathcal{I} (\mbox{Outlook})] & = \mbox{info}([2,3],[4,0],[3,2]) = 0.693 \\
+    \mathds{E} \ [\mathcal{I} (\mbox{Temperature})] & = \mbox{info}([3,1],[2,2],[4,2]) = 0.911 \\
+    \mathds{E} \ [\mathcal{I} (\mbox{Humidity})] & = \mbox{info}([6,1],[3,4]) = 0.788 \\
+    \mathds{E} \ [\mathcal{I} (\mbox{Windy})] & = \mbox{info}([6,2],[3,3]) = 0.892 \\
+  \end{aligned}
+\end{equation*}
+Infomation gain for each attribute: 
+\begin{equation*}
+  \begin{aligned}
+    \mathds{G} (\mbox{Outlook}) & = \mbox{info}([9,5]) - 0.693 = 0.247 \\
+    \mathds{G} (\mbox{Temperature}) & = \mbox{info}([9,5]) - 0.911 = 0.029 \\
+    \mathds{G} (\mbox{Humidity}) & = \mbox{info}([9,5]) - 0.788 = 0.152 \\
+    \mathds{G} (\mbox{Windy}) & = \mbox{info}([9,5]) - 0.892 = 0.048 \\
+  \end{aligned}
+\end{equation*}
+Attribute \textbf{outlook} gives the largest information gain. 
+Therefore it is selected as the root attribute.
+\fi
+
+\end{exerciseparts}
+
+\problem \textbf{Use Prism to find rules}
+
+\begin{exerciseparts}
+
+\exercisepart
+Show all rules.
+
+\ifsolution \solution{}
+The rules derived from Prism algorithm: \\
+\texttt{=== Classifier model (full training set)} \\
+\texttt{Prism rules} \\
+\texttt{-----------} \\
+\texttt{If outlook = overcast then yes} \\
+\texttt{If humidity = normal} \\
+\texttt{~~~and windy = FALSE then yes} \\
+\texttt{If temperature = mild} \\
+\texttt{~~~and humidity = normal then yes} \\
+\texttt{If outlook = rainy} \\
+\texttt{~~~and windy = FALSE then yes} \\
+\texttt{If outlook = sunny} \\
+\texttt{~~~and humidity = high then no} \\
+\texttt{if outlook = rainy} \\
+\texttt{~~~and windy = TRUE then no} \\
+\texttt{Time taken to build model: 0.01 seconds}
+\fi
+
+\exercisepart
+Check the accuracy (confidence) and the converage
+(support) of each rule to the original data by hand.
+
+\ifsolution \solution{}
+\begin{itemize}
+  \item \texttt{If outlook = overcast then yes}: Support = 4; accuracy = 100\%.
+  \item \texttt{If humidity = normal and windy = FALSE then yes}: Support = 4; accuracy = 100\%.
+  \item \texttt{If temperature = mild and humidity = normal then yes}: Support = 2; accuracy = 100\%.
+  \item \texttt{If outlook = rainy and windy = FALSE then yes}: Support = 3; accuracy = 100\%.
+  \item \texttt{If outlook = sunny and humidity = high then o}: Support = 3; accuracy = 100\%.
+  \item \texttt{If outlook = rainy and windy = TRUE then no}: Support = 2; accuracy = 100\%.
+\end{itemize}
+\fi
+
+\exercisepart
+Compare (i) the above rules and (ii) rules coverted from the above
+decision tree. Is there any instance that is not covered by the 
+rules (i) or rules (ii)?
+
+\ifsolution \solution{}
+There is a slight difference between (i) and (ii) is there is
+two rules in set (i) are replaced by a single rule in set (i).
+\texttt{If humidity = normal and windy = FALSE then yes} \\
+\texttt{If temperature = mild and humidity = normal then yes} \\
+is replaced by:
+\texttt{If outlook = sunny and humidity = normal then yes} \\
+
+Checking by hand we can see that both rule sets covered the
+dataset. There is no instance that is not covered.
+\fi
+\end{exerciseparts}
+\end{exercises}
+\end{document}
