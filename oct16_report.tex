@@ -1,0 +1,161 @@
+%
+% Montly report: October 2016
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{dsfont}
+
+\input{macros}
+
+\usepackage{color, colortbl}
+\usepackage{longtable}
+\definecolor{Gray}{gray}{0.8}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{1}
+\newcommand{\releasedate}{October 06, 2016~~}
+\newcommand{\partaduedate}{October 11}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\begin{document}
+
+\handout{\textsc{Monthly Report - Oct 2016}}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\newcommand{\solution}{\textbf{My plan:}}
+
+\begin{enumerate}
+  \item Research activities in August and September.
+  \item Research plan in October.
+  \item Problems in research (if any).
+\end{enumerate}
+
+\setlength{\parindent}{0pt}
+
+\medskip
+
+\hrulefill
+
+\textbf{Collaborators:}
+%%% COLLABORATORS START %%%
+Choong Jun Jin, Kaushalya, Nukui, Sunil.
+%%% COLLABORATORS END %%%
+
+\vspace{1em}
+
+\section{Research activities in August and September}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{| c | p{6.5cm} | p{6.5cm} |}
+  \hline
+  & \textbf{\textsc{August - 2016}} & \textbf{\textsc{September - 2016}} \\ \hline
+  \textbf{\textsc{Topic}} & Network embedding and motifs in network. & 
+  Vandalism detection and knowledge graph.\\ \hline
+  \textbf{\textsc{Idea}} & Use the graph's motif as a guide for the random
+  walk in network embedding. The biased random walked generated
+  by my model emphasizes on the local motif community of the network.
+  Besides the motif walk, I also proposed the inverse motif walk
+  to discover not-motif-community to use as negative samples.
+  & Detect vandalism in Wikidata by
+  neural random forest, or train a specialized neural network
+  to detect edge-case vandalism output by the traditional random
+  forest model. For triple scoring, I mined the Google's rank score
+  for each person's name using Google Knowledge Graph API. By using
+  the aforementioned Google's score and the similarity score
+  learned by Skipgram model from Wikidata's text corpus, we train
+  a simple feed-forward neural network to classify the popularity
+  of each name-job or name-country on a scale of 0 to 7. \\ \hline
+  \textbf{\textsc{Activities}} & I have conducted extensive experiments
+  on BlogCatalog3 dataset (undirected triangle motif), and some 
+  premilinary experiments on other datasets (bipartite and larger
+  datasets). My model (named MAGE) shows superiority compared to 
+  previous models. The reason for such performance lies at the
+  number and quality of the negative samples obtained. I also
+  wrote a paper and submitted to AAAI`17. The result for AAAI`17
+  will be available on December 2016. & I have assembled a team
+  of 4 (Nukui-san dropped out due to his own project) to participate
+  in WSDM Cup 2017. This year WSDM Cup 2017 consists of 2 task:
+  Vandalism detection on Wikidata and Triple scoring. Details
+  are given in the reference.\\ \hline
+  \textbf{\textsc{References}} & Deepwalk \cite{deepwalk}; 
+  Planetoid \cite{planetoid}; LINE \cite{line}; node2vec \cite{n2v};
+  MAGE source code \cite{mage}. & WSDM Cup 2017 \cite{wsdmcup}; 
+  Vandalism detection \cite{van1}; Triple scoring \cite{trip1}. \\ \hline
+  \end{longtable}
+\end{center}
+
+\section{Research plan in October}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{| c | p{12cm} |}
+  \hline
+  & \textbf{\textsc{October - 2016}} \\ \hline
+  \textbf{\textsc{Topic}} & Rare event detection, knowledge graph,
+  and submodular models on graph.\\ \hline
+  \textbf{\textsc{Plan}} & I will continue to develop my ideas for
+  the WSDM Cup 2017 as mentioned in the previous seciton. October 15th,
+  we will submit our first prototype of both systems (vandalism detection
+  and triple scoring). On the other hand, I am studying about set theory
+  and graphical submodular models because I want to conduct a concrete 
+  mathematics proof for my motif walk model, which was submitted to
+  AAAI`17 last month. Furthermore, I have great interest in submodularity
+  and random processes, I plan to write my Master thesis on this topic.
+  \\ \hline
+  \textbf{\textsc{References}} & Submodularity \cite{submodularity}; 
+  Submodularity in graph \cite{sgraph}; Matroid \cite{matroid}.
+  \\ \hline
+  \end{longtable}
+\end{center}
+\medskip
+
+\begin{thebibliography}{99}
+
+\bibitem{deepwalk}
+Perozzi, Bryan and Al-Rfou, Rami and Skiena, Steven. \textit{Deepwalk: Online learning of social representations}. Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining, 2014.
+
+\bibitem{planetoid}
+Zhilin Yang and William W. Cohen and Ruslan Salakhutdinov. \textit{Revisiting Semi-Supervised Learning with Graph Embeddings}. Proceedings of the 33rd International Conference on Machine Learning, 2016.
+
+\bibitem{line}
+Tang, Jian and Qu, Meng and Wang, Mingzhe and Zhang, Ming and Yan, Jun and Mei, Qiaozhu. \textit{Line: Large-scale information network embedding}. Proceedings of the 24th International Conference on World Wide Web, 2015.
+
+\bibitem{n2v}
+Grover, Aditya and Leskovec, Jure. \textit{node2vec: Scalable Feature Learning for Networks}. Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 2016.
+
+\bibitem{mage}
+Nguyen, Hoang and Nukui, Shun and Murata, Tsuyoshi. \textit{https://github.com/anonsyuushi/mage}. Anonymous code submitted to AAAI`17.
+
+\bibitem{wsdmcup}
+WSDM Cup 2017. \textit{http://www.wsdm-cup-2017.org/}. Homepage for WSDM Cup 2017 containing two tasks: Vandalism dectection and Triple scoring.
+
+\bibitem{van1}
+Stefan Heindorf, Martin Potthast, Benno Stein, and Gregor Engels. \textit{Vandalism Detection in Wikidata}. In Proceedings of the 25th ACM International Conference on Information and Knowledge Management, 2016.
+
+\bibitem{trip1}
+Hannah Bast, Bjorn Buchhold, and Elmar HauBmann. \textit{Relevance Scores for Triples from Type-Like Relations}. In SIGIR, 2015.
+
+\bibitem{submodularity}
+Krause, Andreas, and Daniel Golovin. \textit{Submodular function maximization.}. Practical Approaches to Hard Problems 3.19 (2012): 8.
+
+\bibitem{sgraph}
+Frank, Andras. \textit{Submodular functions in graph theory}. Discrete Mathematics 111.1 (1993): 231-243.
+
+\bibitem{matroid}
+Oxley, James G. \textit{Matroid theory}. Vol 3. Oxford University Press, USA, 2006.
+
+\end{thebibliography}
+
+\end{document}
