@@ -1,0 +1,99 @@
+%
+% Montly report: December 2016
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{dsfont}
+
+\input{macros}
+
+\usepackage{color, colortbl}
+\usepackage{longtable}
+\definecolor{Gray}{gray}{0.8}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{1}
+\newcommand{\releasedate}{December 01, 2016~~}
+\newcommand{\partaduedate}{November 28}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\begin{document}
+
+\handout{\textsc{Monthly Report - Dec 2016}}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\newcommand{\solution}{\textbf{My plan:}}
+
+\begin{enumerate}
+  \item Research activities in November.
+  \item Research plan in October.
+\end{enumerate}
+
+\setlength{\parindent}{0pt}
+
+\medskip
+
+\hrulefill
+
+\textbf{Collaborators:}
+%%% COLLABORATORS START %%%
+None.
+%%% COLLABORATORS END %%%
+
+\vspace{1em}
+
+\section{Research activities in November}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{| c | p{6.5cm} | p{6.5cm} |}
+  \hline
+  & \textbf{\textsc{Motif-Aware Graph Embedding}} & \textbf{\textsc{Distributed Embedding}} \\ \hline
+  \textbf{\textsc{Topic}} & Improve graph embeddings by using dominant motifs. & 
+  Collaboration with Defago-sensei's lab on distributed computing.\\ \hline
+  \textbf{\textsc{Idea}} & Comparing my embedding method with other existing methods
+  on new planar graph datasets and bipartite datasets.
+  & Application of graph embedding on a distributed environment and computing
+  the embedding in a distributed settings. 
+  \textbf{\textsc{Activities}} & Firstly, I have published my code \texttt{[https://github.com/gear/motifwalk]}.
+  Secondly, I have revised my previous implementations and test procedure. I also have
+  revised other authors' implementations. Finally, I have chosen new undirected graph datasets
+  with community ground truth to compare my algorithm with. I decided to use the 
+
+  & I have assembled a team
+  of 4 to participate
+  in WSDM Cup 2017. This year WSDM Cup 2017 consists of 2 task:
+  Vandalism detection on Wikidata and Triple scoring. Details
+  are given in the reference.\\ \hline
+  \end{longtable}
+\end{center}
+
+\section{Research plan in November}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{| c | p{12cm} |}
+  \hline
+  & \textbf{\textsc{November - 2016}} \\ \hline
+  \textbf{\textsc{Topic}} & Rare event detection, knowledge graph,
+  and submodular models on graph.\\ \hline
+  \textbf{\textsc{Plan}} & About the WSDM Cup 2017, we will finalize our approach
+  and create a prototype for submission by the end of November. About my research,
+  by the end of November, I will have substantial knowledge about random processes
+  on graph and write a literature review.
+  \\ \hline
+  \end{longtable}
+\end{center}
+
+\end{document}
