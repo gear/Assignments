@@ -1,0 +1,183 @@
+%
+% Montly report: March 2017
+% Author: Hoang Nguyen
+%
+\documentclass[12pt,twoside]{article}
+
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[sfdefault]{FiraSans}
+\usepackage{fontawesome}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{pbox}
+
+\input{macros}
+
+\usepackage{color, colortbl, soul}
+\usepackage{longtable}
+\definecolor{Gray}{gray}{0.8}
+
+\definecolor{Navy}{rgb}{0.0,0.1372549,0.24313725}
+\definecolor{Gold}{rgb}{0.79607843,0.67843137,0.20784314}
+\definecolor{Velvet}{rgb}{0.45882353,0.04313725,0.21176471}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+
+% Fill these in!
+\newcommand{\theproblemsetnum}{1}
+\newcommand{\releasedate}{April 07, 2017~~}
+\newcommand{\partaduedate}{April 07}
+\newcommand{\tabUnit}{3ex}
+\newcommand{\tabT}{\hspace*{\tabUnit}}
+
+\begin{document}
+
+\handout{\textsc{Monthly Report - March 2017}}{\releasedate}
+
+\newif\ifsolution
+\solutiontrue
+\newcommand{\solution}{\textbf{My plan:}}
+
+\begin{enumerate}
+  \setlength{\itemsep}{0.1em}
+  \item Research activities in March 2017.
+  \item Research plan in April 2017.
+\end{enumerate}
+
+\setlength{\parindent}{0pt}
+
+\medskip
+
+\hrulefill
+
+\textbf{Collaborators:}
+%%% COLLABORATORS START %%%
+Arie-san, Choong-san, Kaushalya-san.
+%%% COLLABORATORS END %%%
+
+\vspace{2em}
+
+\section{Research activities in March}
+
+\setulcolor{Gold}
+\setul{0.5ex}{0.3ex}
+\subsection*{\ul{Motif in Complex Network}}
+\vspace{-1.5em}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{p{0.8\textwidth} p{0.2\textwidth}}
+
+  \textbf{Update current results.} I compiled some network datasets and run experiments
+  on node labeling. These networks are quite large (YouTube, Wikipedia, Synthetic network)
+  so the full motif analysis is not possible. My experiment is conducted assuming these
+  networks have motifs similar to other (smaller) social networks and citation networks.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Gold}March 01} \\ \faArrowRight \ {\color{Gold}Mar 16}} \\
+
+  \textbf{Rebuttal IJCAI'17.} I have received and wrote 4 rebuttals to the reviewers.
+  Although the discussion period has started for IJCAI'17 (after the reviewer received
+  the rebuttals), I haven't received any reply from the reviewers as of the time this
+  report is written. The rebuttals can be found here: {\color{Velvet}\texttt{https://goo.gl/pBj5dz}}.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Gold}March 29} \\ \faArrowRight \ {\color{Gold}Mar 31}} \\
+
+  \textbf{Wavelet basis.} To earn a deeper understanding of my methods and graph convolution
+  method, I have reviewed my linear algebra. During this period, I studied discrete Fourier
+  transformation, discrete Cosine transformation, wavelet transformation, and other related
+  techniques. The highlight of my study here is that my method of using the motif Laplacian
+  matrix as the basis for graph convolution can be understand as the dilation operation
+  in convolutional neural network.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Gold}March 10} \\ \faArrowRight \ {\color{Gold}April 03}} \\
+
+  \end{longtable}
+\end{center}
+
+\pagebreak
+
+\setulcolor{Navy}
+\setul{0.5ex}{0.3ex}
+\subsection*{\ul{CREST-Deep Compression}}
+\vspace{-1.5em}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{p{0.8\textwidth} p{0.2\textwidth}}
+
+  \textbf{Study loss surface of a deep model.} Since my network compression approach is discrete
+  optimization, I need to understand about: 1. Loss surface properties with respect to the network
+  weights; and 2. The theoretical background to measure accuracies of a deep network. There are some
+  interesting conclusion and insight from papers, which I will present in my future progress presentation.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Navy}March 12} \\ \faArrowRight \ {\color{Navy}Mar 31}} \\
+
+  \textbf{Build Caffe from source.} I have successfully build the deep learning tool Caffe from source
+  and written a tutorial for building it on our website {\color{Velvet}\texttt{net-titech}}.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Navy}March 25} \\ \faArrowRight \ {\color{Navy}Mar 26}} \\
+
+  \textbf{Research Progress Presentation.} I have summarized the research progress and idea of
+  our project members and presented in the CREST-Deep project meeting. The slide can be found
+  here: \texttt{\color{Velvet}https://goo.gl/mKb7a7}.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Navy}March 10} \\ \faArrowRight \ {\color{Navy}April 03}} \\
+
+  \end{longtable}
+\end{center}
+
+\section{Research plan in April}
+
+\setulcolor{Gold}
+\setul{0.5ex}{0.3ex}
+\subsection*{\ul{Motif in Complex Network}}
+\vspace{-1.5em}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{p{0.8\textwidth} p{0.2\textwidth}}
+
+  \textbf{Fix paper according to reviewers.} As the reviewers of IJCAI suggested, I will
+  make same changes in my paper. I will make one short and one longer version for possible
+  journal submission.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Gold}April 14} \\ \faArrowRight \ {\color{Gold}Apr 20}} \\
+
+  \textbf{Determinantal Point Process.} Determinantal Point Process is a time-consuming process
+  to select a diverse set of items (with respect to some pre-defined diversity scoring function).
+  The application to graph of this process is still unexplored and vague (there are some work but
+  the quality is not high). I will work with Arie-san on applying the DPP to complex network. My
+  goal is to compare the DPP (time-consuming, good performance) with my diversity submodularity
+  model (fast estimation, the performance might be lower than DPP). The result from here will give
+  me great insight about network coverage, network summarization, and also experimental data for my thesis.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Gold}April 20} \\ \faArrowRight \ {\color{Gold}Apr 30}} \\
+
+  \end{longtable}
+\end{center}
+
+\setulcolor{Navy}
+\setul{0.5ex}{0.3ex}
+\subsection*{\ul{CREST-Deep Compression}}
+\vspace{-1.5em}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{longtable}{p{0.8\textwidth} p{0.2\textwidth}}
+
+  \textbf{Compress weight matrices using JPEG algorithms.} Following the professors' suggestion in my
+  presentation on April 4th, I will recreate the result from deep neural network compression papers
+  (Hans, Ullrich, etc.) and deploy cuda-JPEG to extract model on-demand. There can be some performance
+  trade-off, but overall the result might be interesting as we will run compressed model on general
+  purpose processors (Nvidia GPUs).
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Navy}April 05} \\ \faArrowRight \ {\color{Navy}Apr 21}} \\
+
+  \textbf{Develop method to perform convolution with JPEG images.} The convolution operation can be
+  done in the frequencies domain (i.e. using DCT coefficients) in the same manner as in the spatial
+  domain. Taking advantage of this fact, we can directly use the compressed image or video as input
+  and run on compressed network. This idea heavily depends on implementation, therefore I will contact
+  Shinoda Lab to discuss about their video and image input format.
+  & \pbox{0.2\textwidth}{\vspace{1em} {\color{Navy}April 22} \\ \faArrowRight \ {\color{Navy}Apr 30}} \\
+
+  \end{longtable}
+\end{center}
+
+\end{document}
